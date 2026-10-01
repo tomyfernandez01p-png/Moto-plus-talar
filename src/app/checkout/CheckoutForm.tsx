@@ -10,7 +10,7 @@ import { crearPedidoAction } from "./actions";
 
 const METODOS_PAGO_LABEL: Record<MetodoPago, string> = {
   mercadopago: "Mercado Pago (tarjeta, dinero en cuenta, etc.)",
-  transferencia: "Transferencia bancaria",
+  transferencia: "Transferencia bancaria (Banco Nación o Banco Provincia)",
   efectivo: "Efectivo (al retirar / recibir)",
   tarjeta: "Tarjeta",
 };

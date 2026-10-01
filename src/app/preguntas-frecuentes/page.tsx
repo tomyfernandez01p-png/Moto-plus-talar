@@ -23,7 +23,7 @@ export default async function FaqPage() {
       q: "¿Qué medios de pago aceptan?",
       a: [
         config.metodos_pago?.mercadopago && "Mercado Pago",
-        config.metodos_pago?.transferencia && "Transferencia bancaria",
+        config.metodos_pago?.transferencia && "Transferencia bancaria (Banco Nación o Banco Provincia)",
         config.metodos_pago?.efectivo && "Efectivo",
       ]
         .filter(Boolean)
