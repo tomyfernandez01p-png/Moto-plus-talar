@@ -1,0 +1,72 @@
+import type { Metadata } from "next";
+import "./globals.css";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { CookieConsent } from "@/components/layout/CookieConsent";
+import { CartDrawer } from "@/components/layout/CartDrawer";
+import { CartProvider } from "@/lib/cart/cart-context";
+import { getConfiguracion } from "@/lib/config.server";
+import { jsonLdScript } from "@/lib/json-ld";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const config = await getConfiguracion();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: config.seo?.title || config.nombre_negocio,
+      template: `%s | ${config.nombre_negocio}`,
+    },
+    description: config.seo?.description || config.rubro || undefined,
+    openGraph: {
+      title: config.seo?.title || config.nombre_negocio,
+      description: config.seo?.description || undefined,
+      siteName: config.nombre_negocio,
+      locale: "es_AR",
+      type: "website",
+    },
+    icons: { icon: config.logo_url || config.favicon_url || "/brand/logo-placeholder.svg" },
+  };
+}
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const config = await getConfiguracion();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: config.nombre_negocio,
+    image: config.logo_url || undefined,
+    telephone: config.whatsapp || undefined,
+    email: config.email || undefined,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: config.direccion || undefined,
+      addressLocality: config.ciudad || undefined,
+      addressRegion: config.provincia || undefined,
+      addressCountry: "AR",
+    },
+    sameAs: [config.instagram_url, config.facebook_url].filter(Boolean),
+  };
+
+  return (
+    <html lang="es-AR" className="dark">
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
+        />
+        <CartProvider>
+          <Header />
+          <main className="min-h-[60vh]">{children}</main>
+          <Footer />
+          <WhatsAppFloat config={config} />
+          <CookieConsent texto={config.cookies_texto} />
+          <CartDrawer />
+        </CartProvider>
+      </body>
+    </html>
+  );
+}

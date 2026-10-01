@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Logo">
+  <!--
+    Marca temporal genérica (NO es el logo real de Moto Plus Talar).
+    Se usa solo hasta que un administrador suba el logo real desde
+    /admin/configuracion (campo "Logo"), que queda guardado en la base
+    de datos (configuracion.logo_url) y reemplaza este placeholder en
+    todo el sitio automáticamente, sin volver a tocar código.
+  -->
+  <circle cx="32" cy="32" r="32" fill="#1A1A1A" />
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#FF6A00" stroke-width="2" />
+  <text x="32" y="40" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="22" fill="#FFFFFF">MPT</text>
+</svg>
