@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { SearchBar } from "./SearchBar";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -18,26 +19,33 @@ export function MobileMenu({
   cuentasActivas: boolean;
 }) {
   const [abierto, setAbierto] = useState(false);
+  // El menú se "porta" a document.body (ver más abajo) en vez de quedar
+  // anidado dentro del <header>, así que necesitamos saber que ya estamos
+  // en el cliente (document no existe durante el render en el servidor).
+  const [montado, setMontado] = useState(false);
 
-  return (
-    <>
+  useEffect(() => {
+    setMontado(true);
+  }, []);
+
+  // Mientras el menú está abierto, bloqueamos el scroll del fondo para que
+  // no se pueda desplazar la página por detrás del overlay.
+  useEffect(() => {
+    if (!abierto) return;
+    const previo = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previo;
+    };
+  }, [abierto]);
+
+  const menu = (
+    <div className="fixed inset-0 z-50 md:hidden">
       <button
-        onClick={() => setAbierto(true)}
-        aria-label="Abrir menú"
-        className="flex h-11 w-11 items-center justify-center rounded-lg text-base-white md:hidden"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-6 w-6">
-          <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-
-      {abierto && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <button
-            className="absolute inset-0 bg-black/60"
-            aria-label="Cerrar menú"
-            onClick={() => setAbierto(false)}
-          />
+        className="absolute inset-0 bg-black/60"
+        aria-label="Cerrar menú"
+        onClick={() => setAbierto(false)}
+      />
           <div className="absolute inset-y-0 left-0 w-[85%] max-w-sm overflow-y-auto bg-base-dark p-5">
             <div className="mb-4 flex items-center justify-between">
               <span className="text-lg font-bold text-base-white">Menú</span>
@@ -93,8 +101,27 @@ export function MobileMenu({
               </div>
             </nav>
           </div>
-        </div>
-      )}
+    </div>
+  );
+
+  return (
+    <>
+      <button
+        onClick={() => setAbierto(true)}
+        aria-label="Abrir menú"
+        className="flex h-11 w-11 items-center justify-center rounded-lg text-base-white md:hidden"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-6 w-6">
+          <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      {/* Se renderiza con un portal directo a document.body: si quedara
+          anidado dentro del <header> (que tiene backdrop-blur), ese
+          backdrop-filter crea un "containing block" propio para los hijos
+          `fixed`, y el menú terminaba limitado a la altura del header en
+          vez de cubrir toda la pantalla ("se veía cortado"). */}
+      {abierto && montado && createPortal(menu, document.body)}
     </>
   );
 }
