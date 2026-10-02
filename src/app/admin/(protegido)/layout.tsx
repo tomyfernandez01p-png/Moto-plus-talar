@@ -32,14 +32,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     redirect("/admin/login");
   }
 
+  const navVisible = nav.filter((item) => !item.soloAdmin || perfil.rol === "administrador");
+
   return (
     <div className="flex min-h-screen bg-base-black">
       <aside className="hidden w-60 shrink-0 flex-col overflow-y-auto border-r border-base-border bg-base-dark p-4 md:flex">
         <span className="mb-6 px-2 text-sm font-bold text-base-white">Moto Plus Talar</span>
         <nav className="flex flex-col gap-1">
-          {nav
-            .filter((item) => !item.soloAdmin || perfil.rol === "administrador")
-            .map((item) => (
+          {navVisible.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -65,9 +65,40 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       </aside>
 
       <div className="flex-1">
-        <div className="border-b border-base-border p-4 md:hidden">
-          <span className="text-sm font-bold text-base-white">Admin — Moto Plus Talar</span>
-        </div>
+        {/* Menú mobile: <details>/<summary> nativo, no necesita JS de cliente.
+            La sidebar de arriba está oculta en mobile (hidden md:flex), así
+            que sin esto no había ninguna forma de navegar entre secciones
+            del admin desde el celular. */}
+        <details className="border-b border-base-border bg-base-dark p-4 md:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-bold text-base-white">
+            <span>Admin — Moto Plus Talar</span>
+            <span className="text-base-muted">☰</span>
+          </summary>
+          <nav className="mt-3 flex flex-col gap-1">
+            {navVisible.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-base-muted hover:bg-base-surface hover:text-base-white"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="mt-3 flex flex-col gap-2 border-t border-base-border pt-3">
+            <span className="px-3 text-xs text-base-muted">
+              {perfil.nombre || user.email} · {perfil.rol}
+            </span>
+            <form action={cerrarSesionAction}>
+              <button className="w-full rounded-lg px-3 py-2 text-left text-sm text-base-muted hover:bg-base-surface hover:text-base-white">
+                Cerrar sesión
+              </button>
+            </form>
+            <Link href="/" className="px-3 text-xs text-base-muted hover:text-base-white">
+              ← Volver al sitio
+            </Link>
+          </div>
+        </details>
         <main className="p-4 md:p-8">{children}</main>
       </div>
     </div>
