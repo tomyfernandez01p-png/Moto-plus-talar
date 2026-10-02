@@ -6,7 +6,9 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { CartDrawer } from "@/components/layout/CartDrawer";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { CartProvider } from "@/lib/cart/cart-context";
+import { FavoritosProvider } from "@/lib/favoritos/FavoritosProvider";
 import { getConfiguracion } from "@/lib/config.server";
 import { jsonLdScript } from "@/lib/json-ld";
 
@@ -72,12 +74,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
         />
         <CartProvider>
-          <Header />
-          <main className="min-h-[60vh]">{children}</main>
-          <Footer />
-          <WhatsAppFloat config={config} />
-          <CookieConsent texto={config.cookies_texto} />
-          <CartDrawer />
+          <FavoritosProvider>
+            <Header />
+            <main className="min-h-[60vh]">{children}</main>
+            <Footer />
+            <WhatsAppFloat config={config} />
+            <CookieConsent texto={config.cookies_texto} />
+            <CartDrawer />
+            <MobileBottomNav cuentasActivas={config.cuentas_clientes_activas} />
+          </FavoritosProvider>
         </CartProvider>
       </body>
     </html>

@@ -98,3 +98,64 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ====================================================================
+   Transformación visual premium (2026-10): utilidades compartidas.
+   Todo en CSS puro -- sin librerías nuevas -- a propósito (ver brief:
+   "evitar librerías pesadas si se puede resolver con CSS").
+   ==================================================================== */
+
+/* Respeta el "notch"/home-indicator en iOS para la barra inferior mobile
+   y para el footer de hojas (sheets) ancladas abajo. */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.h-safe-bottom {
+  height: env(safe-area-inset-bottom, 0px);
+}
+
+/* Textura "grain" muy sutil para fondos oscuros grandes (hero, banners):
+   un patrón de puntos repetido por CSS, sin imagen ni impacto de
+   performance. Puramente decorativo, no afecta contraste del texto. */
+.bg-grain {
+  position: relative;
+}
+.bg-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+/* Fade en los bordes de carruseles horizontales (scroll-snap), para dar
+   la señal visual de "hay más contenido al costado" sin recortar tarjetas. */
+.fade-edge-x {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 24px,
+    black calc(100% - 24px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 24px,
+    black calc(100% - 24px),
+    transparent 100%
+  );
+}
+
+/* Foco visible consistente para navegación por teclado, sin depender de
+   los estilos default del navegador (que algunos componentes con
+   `outline-none` propio tapaban). */
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid #ff6a00;
+  outline-offset: 2px;
+}
