@@ -7,6 +7,7 @@ import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { CartProvider } from "@/lib/cart/cart-context";
 import { FavoritosProvider } from "@/lib/favoritos/FavoritosProvider";
 import { getConfiguracion } from "@/lib/config.server";
@@ -75,13 +76,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
         <CartProvider>
           <FavoritosProvider>
-            <Header />
-            <main className="min-h-[60vh]">{children}</main>
-            <Footer />
-            <WhatsAppFloat config={config} />
+            <SiteChrome
+              header={<Header />}
+              footer={<Footer />}
+              whatsappFloat={<WhatsAppFloat config={config} />}
+              bottomNav={<MobileBottomNav cuentasActivas={config.cuentas_clientes_activas} />}
+            >
+              {children}
+            </SiteChrome>
             <CookieConsent texto={config.cookies_texto} />
             <CartDrawer />
-            <MobileBottomNav cuentasActivas={config.cuentas_clientes_activas} />
           </FavoritosProvider>
         </CartProvider>
       </body>
