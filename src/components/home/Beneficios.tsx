@@ -58,16 +58,22 @@ const items = [
 
 export function Beneficios() {
   return (
-    <section className="border-y border-base-border bg-base-surface/40">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-10 sm:grid-cols-3 md:grid-cols-5 md:px-6">
-        {items.map((item) => (
-          <div key={item.texto} className="flex flex-col items-center gap-2.5 text-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
+    <section className="relative z-10 border-y border-base-border bg-base-surface/40">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-8 sm:grid-cols-3 md:grid-cols-5 md:px-6">
+        {items.map((item, i) => (
+          <div
+            key={item.texto}
+            className="group flex animate-fade-in-up flex-col items-center gap-2.5 rounded-2xl p-3 text-center transition-colors duration-200 hover:bg-base-surface"
+            style={{ animationDelay: `${i * 70}ms` }}
+          >
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange transition-all duration-300 ease-smooth group-hover:-translate-y-0.5 group-hover:bg-brand-orange group-hover:text-white group-hover:shadow-glow-sm">
               <svg {...svgProps} className="h-6 w-6">
                 {item.icono}
               </svg>
             </span>
-            <span className="text-xs font-medium text-base-muted">{item.texto}</span>
+            <span className="text-xs font-medium text-base-muted group-hover:text-base-white">
+              {item.texto}
+            </span>
           </div>
         ))}
       </div>

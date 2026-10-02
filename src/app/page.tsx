@@ -3,6 +3,7 @@ import { getConfiguracion } from "@/lib/config.server";
 import { Hero } from "@/components/home/Hero";
 import { Beneficios } from "@/components/home/Beneficios";
 import { CategoriasGrid } from "@/components/home/CategoriasGrid";
+import { CategoryCarousel } from "@/components/home/CategoryCarousel";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
 import { MarcasCarousel } from "@/components/home/MarcasCarousel";
 import { BuscadorMoto } from "@/components/home/BuscadorMoto";
@@ -18,7 +19,7 @@ export default async function HomePage() {
   const secciones = config.secciones_home ?? {};
 
   const [
-    { data: categorias },
+    { data: categoriasBase },
     { data: destacados },
     { data: ofertas },
     { data: nuevos },
@@ -27,7 +28,7 @@ export default async function HomePage() {
   ] = await Promise.all([
     supabase
       .from("categorias")
-      .select("nombre, slug, imagen_url")
+      .select("id, nombre, slug, imagen_url")
       .is("categoria_padre_id", null)
       .eq("activo", true)
       .order("orden"),
@@ -65,6 +66,21 @@ export default async function HomePage() {
       : Promise.resolve({ data: [] }),
   ]);
 
+  // Conteo real de productos por categoría (brief #9: "+85 productos" solo
+  // si el dato existe de verdad). Son solo ~7 categorías de primer nivel,
+  // así que el costo de una query liviana por cada una es despreciable, y
+  // esta página ya está cacheada 60s (`revalidate` arriba).
+  const categorias = await Promise.all(
+    (categoriasBase ?? []).map(async (cat) => {
+      const { count } = await supabase
+        .from("productos")
+        .select("id", { count: "exact", head: true })
+        .eq("categoria_id", cat.id)
+        .eq("activo", true);
+      return { ...cat, cantidadProductos: count ?? undefined };
+    })
+  );
+
   return (
     <>
       {secciones.hero !== false && <Hero config={config} />}
@@ -73,9 +89,12 @@ export default async function HomePage() {
           <BuscadorMoto motos={motos ?? []} />
         </ScrollReveal>
       )}
+      {secciones.categorias !== false && categorias.length > 3 && (
+        <CategoryCarousel categorias={categorias} />
+      )}
       {secciones.categorias !== false && (
         <ScrollReveal className="bg-base-dark/60">
-          <CategoriasGrid categorias={categorias ?? []} />
+          <CategoriasGrid categorias={categorias} />
         </ScrollReveal>
       )}
       {secciones.destacados && (

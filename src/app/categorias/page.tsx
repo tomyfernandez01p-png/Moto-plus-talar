@@ -12,12 +12,23 @@ export const metadata: Metadata = { title: "Categorías" };
  */
 export default async function CategoriasPage() {
   const supabase = createClient();
-  const { data: categorias } = await supabase
+  const { data: categoriasBase } = await supabase
     .from("categorias")
-    .select("nombre, slug, imagen_url")
+    .select("id, nombre, slug, imagen_url")
     .is("categoria_padre_id", null)
     .eq("activo", true)
     .order("orden");
+
+  const categorias = await Promise.all(
+    (categoriasBase ?? []).map(async (cat) => {
+      const { count } = await supabase
+        .from("productos")
+        .select("id", { count: "exact", head: true })
+        .eq("categoria_id", cat.id)
+        .eq("activo", true);
+      return { ...cat, cantidadProductos: count ?? undefined };
+    })
+  );
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 md:px-6">
@@ -25,7 +36,7 @@ export default async function CategoriasPage() {
       <p className="mb-2 text-sm text-base-muted">
         Todo lo que tu moto necesita, organizado por categoría.
       </p>
-      <CategoriasGrid categorias={categorias ?? []} />
+      <CategoriasGrid categorias={categorias} titulo="" />
     </div>
   );
 }
