@@ -5,10 +5,12 @@ import { Beneficios } from "@/components/home/Beneficios";
 import { CategoriasGrid } from "@/components/home/CategoriasGrid";
 import { CategoryCarousel } from "@/components/home/CategoryCarousel";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
+import { OfferBanner } from "@/components/home/OfferBanner";
+import { WhatsAppBanner } from "@/components/home/WhatsAppBanner";
 import { MarcasCarousel } from "@/components/home/MarcasCarousel";
 import { BuscadorMoto } from "@/components/home/BuscadorMoto";
 import { GoogleReviews } from "@/components/home/GoogleReviews";
-import { InfoLocalYRedes } from "@/components/home/InstagramCTA";
+import { StoreLocation } from "@/components/home/StoreLocation";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export const revalidate = 60;
@@ -81,54 +83,69 @@ export default async function HomePage() {
     })
   );
 
+  // Orden de secciones siguiendo el brief de transformación visual (#27):
+  // Header > Hero > Beneficios > Buscador > Categorías > Ofertas >
+  // Destacados > Banner WhatsApp > Marcas > Novedades > Reseñas >
+  // Ubicación > Footer. Cada bloque sigue aislado detrás de su propio flag
+  // de `config.secciones_home`, exactamente como antes.
   return (
     <>
       {secciones.hero !== false && <Hero config={config} />}
+
+      {secciones.beneficios !== false && <Beneficios />}
+
       {secciones.buscador_moto && (
-        <ScrollReveal>
+        <ScrollReveal className="bg-base-dark/60">
           <BuscadorMoto motos={motos ?? []} />
         </ScrollReveal>
       )}
+
       {secciones.categorias !== false && categorias.length > 3 && (
         <CategoryCarousel categorias={categorias} />
       )}
       {secciones.categorias !== false && (
-        <ScrollReveal className="bg-base-dark/60">
+        <ScrollReveal>
           <CategoriasGrid categorias={categorias} />
         </ScrollReveal>
       )}
+
+      {secciones.ofertas && (ofertas ?? []).length > 0 && (
+        <ScrollReveal className="bg-base-dark/60">
+          <OfferBanner productos={ofertas ?? []} />
+          <ProductCarousel titulo="En oferta" productos={ofertas ?? []} verTodoHref="/productos?oferta=1" />
+        </ScrollReveal>
+      )}
+
       {secciones.destacados && (
         <ScrollReveal>
           <ProductCarousel titulo="Productos destacados" productos={destacados ?? []} verTodoHref="/productos?destacado=1" />
         </ScrollReveal>
       )}
-      {secciones.ofertas && (
+
+      <ScrollReveal className="bg-base-dark/60">
+        <WhatsAppBanner config={config} />
+      </ScrollReveal>
+
+      {secciones.marcas && (marcas ?? []).length > 0 && (
         <ScrollReveal className="bg-base-dark/60">
-          <ProductCarousel titulo="En oferta" productos={ofertas ?? []} verTodoHref="/productos?oferta=1" />
+          <MarcasCarousel marcas={marcas ?? []} />
         </ScrollReveal>
       )}
+
       {secciones.nuevos && (
         <ScrollReveal>
           <ProductCarousel titulo="Recién llegados" productos={nuevos ?? []} verTodoHref="/productos?nuevo=1" />
         </ScrollReveal>
       )}
-      {secciones.marcas && (
-        <ScrollReveal className="bg-base-dark/60">
-          <MarcasCarousel marcas={marcas ?? []} />
-        </ScrollReveal>
-      )}
-      {secciones.beneficios !== false && (
-        <ScrollReveal>
-          <Beneficios />
-        </ScrollReveal>
-      )}
+
       {secciones.reviews && (
         <ScrollReveal>
           <GoogleReviews config={config} />
         </ScrollReveal>
       )}
+
       <ScrollReveal className="bg-base-dark/60">
-        <InfoLocalYRedes config={config} />
+        <StoreLocation config={config} />
       </ScrollReveal>
     </>
   );

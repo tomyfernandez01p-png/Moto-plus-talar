@@ -20,6 +20,11 @@ export function mensajeGenerico() {
   return "Hola Moto Plus Talar, quiero hacer una consulta.";
 }
 
+/** Mensaje del banner "¿No sabés qué repuesto necesitás?" (brief #16). */
+export function mensajeConsultaFoto() {
+  return "Hola Moto Plus Talar, no estoy seguro de qué repuesto necesito. ¿Les puedo mandar una foto?";
+}
+
 /**
  * Link de WhatsApp hacia un teléfono cualquiera (por ejemplo, el de un
  * cliente que hizo un pedido), a diferencia de `whatsappLink()` en

@@ -6,10 +6,14 @@ import { whatsappLink } from "@/lib/config";
 import { getConfiguracion } from "@/lib/config.server";
 import { jsonLdScript } from "@/lib/json-ld";
 import { mensajeConsultaProducto, mensajeCompatibilidad } from "@/lib/whatsapp";
+import { formatPrecio } from "@/lib/format";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { AddToCartActions } from "@/components/product/AddToCartActions";
+import { FavoritoButton } from "@/components/product/FavoritoButton";
 import { Price } from "@/components/ui/Price";
 import { Badge } from "@/components/ui/Badge";
+import { Tabs } from "@/components/ui/Tabs";
+import { IconWhatsApp, IconTruck, IconStore } from "@/components/ui/Icons";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
 
 interface Props {
@@ -74,7 +78,10 @@ export default async function ProductoPage({ params }: Props) {
       </nav>
 
       <div className="grid gap-8 md:grid-cols-2">
-        <ProductGallery imagenes={imagenes} nombre={producto.nombre} />
+        <div className="relative">
+          <ProductGallery imagenes={imagenes} nombre={producto.nombre} />
+          <FavoritoButton productoId={producto.id} className="absolute right-3 top-3 z-10" />
+        </div>
 
         <div className="flex flex-col gap-4">
           {producto.marca_nombre && (
@@ -109,58 +116,115 @@ export default async function ProductoPage({ params }: Props) {
             href={whatsappLink(config, mensajeConsultaProducto(producto))}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-center text-sm font-semibold text-[#25D366] underline underline-offset-2"
+            className="flex items-center justify-center gap-2 text-center text-sm font-semibold text-[#25D366] underline-offset-2 hover:underline"
           >
+            <IconWhatsApp className="h-4 w-4 shrink-0" />
             ¿No sabés si sirve para tu moto? Consultanos por WhatsApp
           </a>
-
-          {producto.caracteristicas.length > 0 && (
-            <div className="mt-2 rounded-xl border border-base-border p-4">
-              <h2 className="mb-2 text-sm font-bold text-base-white">Características</h2>
-              <dl className="grid grid-cols-1 gap-1.5 text-sm sm:grid-cols-2">
-                {producto.caracteristicas.map((c, i) => (
-                  <div key={i} className="flex justify-between gap-2 border-b border-base-border/50 py-1">
-                    <dt className="text-base-muted">{c.label}</dt>
-                    <dd className="text-base-white">{c.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          )}
-
-          {compatibilidad.length > 0 && (
-            <div className="rounded-xl border border-base-border p-4">
-              <h2 className="mb-2 text-sm font-bold text-base-white">Compatibilidad</h2>
-              <ul className="flex flex-col gap-1 text-sm text-base-muted">
-                {compatibilidad.map((c) => (
-                  <li key={c.id}>
-                    {c.marca_moto} {c.modelo_moto}
-                    {c.anio_desde && ` (${c.anio_desde}${c.anio_hasta ? `–${c.anio_hasta}` : "+"})`}
-                    {c.cilindrada && ` · ${c.cilindrada}cc`}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={whatsappLink(config, mensajeCompatibilidad(producto))}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-block text-xs font-semibold text-[#25D366] underline"
-              >
-                Consultar por otra moto
-              </a>
-            </div>
-          )}
         </div>
       </div>
 
-      {producto.descripcion_completa && (
-        <div className="mt-10 max-w-3xl">
-          <h2 className="mb-3 text-lg font-bold text-base-white">Descripción</h2>
-          <p className="whitespace-pre-line text-sm text-base-muted">
-            {producto.descripcion_completa}
-          </p>
-        </div>
-      )}
+      <div className="mt-10">
+        <Tabs
+          tabs={[
+            {
+              id: "descripcion",
+              label: "Descripción",
+              content: (
+                <p className="whitespace-pre-line text-sm text-base-muted">
+                  {producto.descripcion_completa || producto.descripcion_corta || "Sin descripción adicional."}
+                </p>
+              ),
+            },
+            ...(producto.caracteristicas.length > 0
+              ? [
+                  {
+                    id: "caracteristicas",
+                    label: "Características",
+                    content: (
+                      <dl className="grid grid-cols-1 gap-1.5 text-sm sm:grid-cols-2">
+                        {producto.caracteristicas.map((c, i) => (
+                          <div
+                            key={i}
+                            className="flex justify-between gap-2 border-b border-base-border/50 py-1.5"
+                          >
+                            <dt className="text-base-muted">{c.label}</dt>
+                            <dd className="font-medium text-base-white">{c.value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    ),
+                  },
+                ]
+              : []),
+            {
+              id: "compatibilidad",
+              label: "Compatibilidad",
+              content:
+                compatibilidad.length > 0 ? (
+                  <>
+                    <ul className="flex flex-col gap-1.5 text-sm text-base-muted">
+                      {compatibilidad.map((c) => (
+                        <li key={c.id} className="border-b border-base-border/50 py-1.5">
+                          <span className="font-medium text-base-white">
+                            {c.marca_moto} {c.modelo_moto}
+                          </span>
+                          {c.anio_desde && ` · ${c.anio_desde}${c.anio_hasta ? `–${c.anio_hasta}` : "+"}`}
+                          {c.cilindrada && ` · ${c.cilindrada}cc`}
+                        </li>
+                      ))}
+                    </ul>
+                    <a
+                      href={whatsappLink(config, mensajeCompatibilidad(producto))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-block text-xs font-semibold text-[#25D366] underline"
+                    >
+                      Consultar por otra moto
+                    </a>
+                  </>
+                ) : (
+                  <div className="flex flex-col items-start gap-2 text-sm text-base-muted">
+                    <p>Todavía no cargamos la compatibilidad de este producto.</p>
+                    <a
+                      href={whatsappLink(config, mensajeCompatibilidad(producto))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-[#25D366] underline"
+                    >
+                      Consultanos si sirve para tu moto
+                    </a>
+                  </div>
+                ),
+            },
+            {
+              id: "envio",
+              label: "Envío",
+              content: (
+                <ul className="flex flex-col gap-3 text-sm text-base-muted">
+                  {config.metodos_envio?.retiro_activo !== false && (
+                    <li className="flex items-start gap-2.5">
+                      <IconStore className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
+                      Retiro en el local: {config.direccion}, {config.ciudad}.
+                    </li>
+                  )}
+                  {config.metodos_envio?.envio_activo !== false && (
+                    <li className="flex items-start gap-2.5">
+                      <IconTruck className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
+                      Envío a todo el país
+                      {config.metodos_envio?.envio_gratis_desde
+                        ? ` — gratis en compras desde ${formatPrecio(config.metodos_envio.envio_gratis_desde)}.`
+                        : config.metodos_envio?.costo_envio_fijo
+                        ? ` (${formatPrecio(config.metodos_envio.costo_envio_fijo)}).`
+                        : ". El costo se coordina por WhatsApp."}
+                    </li>
+                  )}
+                </ul>
+              ),
+            },
+          ]}
+        />
+      </div>
 
       {relacionados.length > 0 && (
         <ProductCarousel titulo="También te puede interesar" productos={relacionados} />

@@ -201,15 +201,18 @@ export function MobileMenu({
                 <IconInstagram className="h-4 w-4" /> Instagram
               </a>
             )}
-            <a
-              href={mapsComoLlegarUrl(config)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-right hover:text-base-white"
-            >
-              <IconMapPin className="h-4 w-4 shrink-0" />
-              {config.direccion}, {config.ciudad}
-            </a>
+            {config.direccion && (
+              <a
+                href={mapsComoLlegarUrl(config)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-right hover:text-base-white"
+              >
+                <IconMapPin className="h-4 w-4 shrink-0" />
+                {config.direccion}
+                {config.ciudad ? `, ${config.ciudad}` : ""}
+              </a>
+            )}
           </div>
         </div>
       </div>

@@ -43,11 +43,9 @@ export function ProductCard({ producto }: { producto: VistaProducto }) {
         <div className="absolute left-2 top-2 flex flex-col gap-1">
           {producto.en_oferta && (
             <Badge tono="orange" className="shadow-glow-sm">
-              -
               {producto.precio_anterior
-                ? Math.round((1 - producto.precio_vigente / producto.precio_anterior) * 100)
-                : ""}
-              %
+                ? `-${Math.round((1 - producto.precio_vigente / producto.precio_anterior) * 100)}%`
+                : "Oferta"}
             </Badge>
           )}
           {producto.es_nuevo && !producto.en_oferta && <Badge tono="neutral">Nuevo</Badge>}

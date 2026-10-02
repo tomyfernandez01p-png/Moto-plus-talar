@@ -11,6 +11,12 @@ export function WhatsAppFloat({ config }: { config: Configuracion }) {
   // El admin queda completamente separado del sitio público (brief #21/#34):
   // ningún elemento flotante del storefront se superpone a sus pantallas.
   if (pathname?.startsWith("/admin")) return null;
+  // El checkbox "Botón flotante de WhatsApp" en /admin/configuracion
+  // (secciones_home.whatsapp) existía pero no estaba conectado a ningún
+  // lado -- el botón siempre se mostraba sin importar lo que el admin
+  // eligiera. Se respeta acá; por defecto es `true`, así que el
+  // comportamiento no cambia para nadie que no lo haya tocado.
+  if (config.secciones_home?.whatsapp === false) return null;
 
   return (
     <a

@@ -14,9 +14,16 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
   if (!tieneApiKey) {
     return (
       <section className="mx-auto max-w-7xl px-4 py-10 md:px-6">
-        <div className="rounded-2xl border border-dashed border-base-border p-6 text-center text-sm text-base-muted">
-          [DEMO] Reseñas de Google: configurá <code>GOOGLE_PLACES_API_KEY</code> y{" "}
-          <code>GOOGLE_PLACE_ID</code> para traer las reseñas reales del local.
+        <div className="flex flex-col items-center gap-2 rounded-3xl border border-dashed border-base-border bg-base-surface/40 p-8 text-center">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-base-surface text-base-muted">
+            ★
+          </span>
+          <p className="text-sm font-medium text-base-white">Reseñas de Google — próximamente</p>
+          <p className="max-w-md text-xs text-base-muted">
+            Este bloque va a mostrar reseñas reales del local en cuanto se conecte la integración
+            con Google (configurá <code>GOOGLE_PLACES_API_KEY</code> y <code>GOOGLE_PLACE_ID</code>).
+            No se muestran testimonios de ejemplo.
+          </p>
         </div>
       </section>
     );

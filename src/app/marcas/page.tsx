@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { isDataUrl } from "@/lib/utils";
 
@@ -27,7 +28,7 @@ export default async function MarcasPage() {
       {marcas && marcas.length > 0 ? (
         <div className="grid grid-cols-2 gap-3 pt-4 sm:grid-cols-3 md:grid-cols-5">
           {marcas.map((m) => (
-            <a
+            <Link
               key={m.slug}
               href={`/marca/${m.slug}`}
               className="group relative flex h-24 items-center justify-center rounded-2xl border border-base-border bg-base-surface p-4 grayscale transition-all duration-200 ease-smooth hover:-translate-y-0.5 hover:border-brand-orange/50 hover:grayscale-0 hover:shadow-card-hover"
@@ -45,7 +46,7 @@ export default async function MarcasPage() {
                   {m.nombre}
                 </span>
               )}
-            </a>
+            </Link>
           ))}
         </div>
       ) : (

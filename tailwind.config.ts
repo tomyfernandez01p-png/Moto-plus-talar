@@ -94,10 +94,6 @@ const config: Config = {
           "0%, 100%": { opacity: "0.5" },
           "50%": { opacity: "1" },
         },
-        "press": {
-          "0%": { transform: "scale(1)" },
-          "100%": { transform: "scale(0.96)" },
-        },
       },
       animation: {
         "fade-in-up": "fade-in-up 0.6s cubic-bezier(0.4,0,0.2,1) both",

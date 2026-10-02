@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getConfiguracion } from "@/lib/config.server";
+import { IconMapPin, IconWhatsApp } from "@/components/ui/Icons";
 
 export async function Footer() {
   const config = await getConfiguracion();
@@ -20,11 +21,13 @@ export async function Footer() {
   const anio = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-base-border bg-base-black text-base-muted">
+    <footer className="relative border-t border-base-border bg-base-black text-base-muted">
+      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-orange/40 to-transparent" />
+
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-12 sm:grid-cols-3 md:grid-cols-5 md:px-6">
         <div className="col-span-2 flex flex-col gap-3 md:col-span-1">
           <div className="flex items-center gap-2">
-            <div className="relative h-10 w-10 overflow-hidden rounded-full">
+            <div className="relative h-10 w-10 overflow-hidden rounded-full ring-1 ring-base-border">
               <Image
                 src={config.logo_url || "/brand/logo-placeholder.svg"}
                 alt={config.nombre_negocio}
@@ -32,23 +35,48 @@ export async function Footer() {
                 className="object-cover"
               />
             </div>
-            <span className="text-base font-extrabold text-base-white">{config.nombre_negocio}</span>
+            <div>
+              <span className="block text-base font-extrabold leading-tight text-base-white">
+                {config.nombre_negocio}
+              </span>
+              <span className="block text-[11px] uppercase tracking-wide text-base-muted">
+                Repuestos · Accesorios · Mecánica
+              </span>
+            </div>
           </div>
           {config.direccion && (
-            <p className="text-sm">
+            <p className="flex items-start gap-1.5 text-sm">
+              <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
               {config.direccion}, {config.ciudad}, {config.provincia}
             </p>
           )}
-          {config.whatsapp && <p className="text-sm">WhatsApp: {config.whatsapp}</p>}
+          {config.whatsapp && (
+            <p className="flex items-center gap-1.5 text-sm">
+              <IconWhatsApp className="h-4 w-4 shrink-0 text-[#25D366]" />
+              {config.whatsapp}
+            </p>
+          )}
           {config.email && <p className="text-sm">{config.email}</p>}
           <div className="flex gap-3 pt-1">
             {config.instagram_url && (
-              <a href={config.instagram_url} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a
+                href={config.instagram_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-base-border transition-colors hover:border-brand-orange/50 hover:text-base-white"
+              >
                 <IconInstagram />
               </a>
             )}
             {config.facebook_url && (
-              <a href={config.facebook_url} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <a
+                href={config.facebook_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-base-border transition-colors hover:border-brand-orange/50 hover:text-base-white"
+              >
                 <IconFacebook />
               </a>
             )}
@@ -60,11 +88,16 @@ export async function Footer() {
           <ul className="flex flex-col gap-2 text-sm">
             {(categorias ?? []).map((c) => (
               <li key={c.slug}>
-                <Link href={`/categoria/${c.slug}`} className="hover:text-base-white">
+                <Link href={`/categoria/${c.slug}`} className="transition-colors hover:text-base-white">
                   {c.nombre}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/categorias" className="font-semibold text-brand-orange hover:underline">
+                Ver todas →
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -73,11 +106,16 @@ export async function Footer() {
           <ul className="flex flex-col gap-2 text-sm">
             {(marcas ?? []).map((m) => (
               <li key={m.slug}>
-                <Link href={`/marca/${m.slug}`} className="hover:text-base-white">
+                <Link href={`/marca/${m.slug}`} className="transition-colors hover:text-base-white">
                   {m.nombre}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/marcas" className="font-semibold text-brand-orange hover:underline">
+                Ver todas →
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -85,22 +123,25 @@ export async function Footer() {
           <h3 className="mb-3 text-sm font-bold text-base-white">Información</h3>
           <ul className="flex flex-col gap-2 text-sm">
             <li>
-              <Link href="/nosotros" className="hover:text-base-white">Nosotros</Link>
+              <Link href="/nosotros" className="transition-colors hover:text-base-white">Nosotros</Link>
             </li>
             <li>
-              <Link href="/preguntas-frecuentes" className="hover:text-base-white">Preguntas frecuentes</Link>
+              <Link href="/preguntas-frecuentes" className="transition-colors hover:text-base-white">Preguntas frecuentes</Link>
             </li>
             <li>
-              <Link href="/terminos" className="hover:text-base-white">Términos y condiciones</Link>
+              <Link href="/contacto" className="transition-colors hover:text-base-white">Contacto</Link>
             </li>
             <li>
-              <Link href="/privacidad" className="hover:text-base-white">Política de privacidad</Link>
+              <Link href="/terminos" className="transition-colors hover:text-base-white">Términos y condiciones</Link>
             </li>
             <li>
-              <Link href="/cambios-y-devoluciones" className="hover:text-base-white">Cambios y devoluciones</Link>
+              <Link href="/privacidad" className="transition-colors hover:text-base-white">Política de privacidad</Link>
             </li>
             <li>
-              <Link href="/envios" className="hover:text-base-white">Envíos</Link>
+              <Link href="/cambios-y-devoluciones" className="transition-colors hover:text-base-white">Cambios y devoluciones</Link>
+            </li>
+            <li>
+              <Link href="/envios" className="transition-colors hover:text-base-white">Envíos</Link>
             </li>
           </ul>
         </div>
@@ -109,13 +150,16 @@ export async function Footer() {
           <h3 className="mb-3 text-sm font-bold text-base-white">Mi cuenta</h3>
           <ul className="flex flex-col gap-2 text-sm">
             <li>
-              <Link href="/cuenta" className="hover:text-base-white">Mi cuenta</Link>
+              <Link href="/cuenta" className="transition-colors hover:text-base-white">Mi cuenta</Link>
             </li>
             <li>
-              <Link href="/cuenta/pedidos" className="hover:text-base-white">Mis pedidos</Link>
+              <Link href="/cuenta/pedidos" className="transition-colors hover:text-base-white">Mis pedidos</Link>
             </li>
             <li>
-              <Link href="/carrito" className="hover:text-base-white">Carrito</Link>
+              <Link href="/favoritos" className="transition-colors hover:text-base-white">Favoritos</Link>
+            </li>
+            <li>
+              <Link href="/carrito" className="transition-colors hover:text-base-white">Carrito</Link>
             </li>
           </ul>
         </div>
