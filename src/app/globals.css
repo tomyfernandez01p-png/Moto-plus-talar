@@ -4,6 +4,29 @@
 
 :root {
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Tema oscuro (default). Valores en "R G B" para usarse como
+     rgb(var(--x) / <alpha-value>) desde Tailwind. Coinciden exactamente
+     con los hex que el sitio ya usaba, para no cambiar nada visualmente
+     hasta que alguien elija el tema claro. */
+  --color-base-black: 10 10 11; /* #0A0A0B */
+  --color-base-dark: 21 21 23; /* #151517 */
+  --color-base-surface: 29 29 32; /* #1D1D20 */
+  --color-base-border: 42 42 46; /* #2A2A2E */
+  --color-base-muted: 138 138 147; /* #8A8A93 */
+  --color-base-white: 255 255 255; /* #FFFFFF */
+}
+
+/* Tema claro: se activa agregando esta clase al <html> (ver ThemeToggle.tsx
+   y el script de inicialización en layout.tsx). Mismos nombres de token,
+   paleta invertida. */
+html.theme-light {
+  --color-base-black: 255 255 255;
+  --color-base-dark: 244 244 245;
+  --color-base-surface: 236 236 238;
+  --color-base-border: 216 216 220;
+  --color-base-muted: 107 107 118;
+  --color-base-white: 10 10 11;
 }
 
 html {
@@ -11,9 +34,10 @@ html {
 }
 
 body {
-  background-color: #0a0a0b;
-  color: #ffffff;
+  background-color: rgb(var(--color-base-black));
+  color: rgb(var(--color-base-white));
   overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 ::selection {
@@ -41,7 +65,7 @@ body {
 .skeleton {
   position: relative;
   overflow: hidden;
-  background-color: #1d1d20; /* base-surface */
+  background-color: rgb(var(--color-base-surface));
 }
 .skeleton::after {
   content: "";

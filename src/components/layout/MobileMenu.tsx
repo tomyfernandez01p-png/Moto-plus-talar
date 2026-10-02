@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { SearchBar } from "./SearchBar";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface Categoria {
   nombre: string;
@@ -88,6 +89,7 @@ export function MobileMenu({
                     Mi cuenta
                   </Link>
                 )}
+                <ThemeToggle className="w-full rounded-lg px-3 py-3 text-left text-base hover:bg-base-surface" />
               </div>
             </nav>
           </div>

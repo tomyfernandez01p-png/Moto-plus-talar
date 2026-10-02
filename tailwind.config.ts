@@ -6,13 +6,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Variables CSS (ver globals.css): permiten el toggle de tema
+        // claro/oscuro sin tocar las ~100+ clases `bg-base-*`/`text-base-*`
+        // ya usadas en todo el sitio. <alpha-value> preserva modificadores
+        // de opacidad como `bg-base-dark/95`.
         base: {
-          black: "#0A0A0B",
-          dark: "#151517",
-          surface: "#1D1D20",
-          border: "#2A2A2E",
-          muted: "#8A8A93",
-          white: "#FFFFFF",
+          black: "rgb(var(--color-base-black) / <alpha-value>)",
+          dark: "rgb(var(--color-base-dark) / <alpha-value>)",
+          surface: "rgb(var(--color-base-surface) / <alpha-value>)",
+          border: "rgb(var(--color-base-border) / <alpha-value>)",
+          muted: "rgb(var(--color-base-muted) / <alpha-value>)",
+          white: "rgb(var(--color-base-white) / <alpha-value>)",
         },
         brand: {
           orange: "#FF6A00",

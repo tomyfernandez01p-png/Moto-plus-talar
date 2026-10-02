@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { cerrarSesionAction } from "@/app/cuenta/actions";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 const nav = [
   { href: "/admin", label: "Dashboard" },
@@ -53,6 +54,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <span className="px-3 text-xs text-base-muted">
             {perfil.nombre || user.email} · {perfil.rol}
           </span>
+          <ThemeToggle className="w-full rounded-lg px-3 py-2 text-left text-sm text-base-muted hover:bg-base-surface hover:text-base-white" />
           <form action={cerrarSesionAction}>
             <button className="w-full rounded-lg px-3 py-2 text-left text-sm text-base-muted hover:bg-base-surface hover:text-base-white">
               Cerrar sesión
@@ -89,6 +91,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <span className="px-3 text-xs text-base-muted">
               {perfil.nombre || user.email} · {perfil.rol}
             </span>
+            <ThemeToggle className="w-full rounded-lg px-3 py-2 text-left text-sm text-base-muted hover:bg-base-surface hover:text-base-white" />
             <form action={cerrarSesionAction}>
               <button className="w-full rounded-lg px-3 py-2 text-left text-sm text-base-muted hover:bg-base-surface hover:text-base-white">
                 Cerrar sesión

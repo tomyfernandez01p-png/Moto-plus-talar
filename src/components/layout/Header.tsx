@@ -7,6 +7,7 @@ import { SearchBar } from "./SearchBar";
 import { MobileMenu } from "./MobileMenu";
 import { CartButton } from "./CartButton";
 import { AccountButton } from "./AccountButton";
+import { ThemeToggle } from "./ThemeToggle";
 
 export async function Header() {
   const config = await getConfiguracion();
@@ -25,6 +26,7 @@ export async function Header() {
       {/* fila superior: cuenta / whatsapp — solo desktop */}
       <div className="hidden border-b border-base-border/60 bg-base-black md:block">
         <div className="mx-auto flex max-w-7xl items-center justify-end gap-6 px-6 py-1.5 text-xs text-base-muted">
+          <ThemeToggle className="hover:text-base-white" />
           {config.cuentas_clientes_activas && (
             <Link href="/cuenta" className="hover:text-base-white">
               Mi cuenta

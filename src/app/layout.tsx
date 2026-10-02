@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -52,8 +53,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   };
 
   return (
-    <html lang="es-AR" className="dark">
+    <html lang="es-AR">
       <body>
+        {/* Aplica el tema guardado ANTES del primer paint, para que no se
+            vea un flash del tema oscuro (default) si el usuario había
+            elegido el claro. Ver ThemeToggle.tsx. */}
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`
+            try {
+              if (localStorage.getItem("theme") === "light") {
+                document.documentElement.classList.add("theme-light");
+              }
+            } catch (e) {}
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
