@@ -27,5 +27,14 @@ export function mensajeGenerico() {
  */
 export function waLinkParaTelefono(telefono: string, mensaje: string) {
   const soloDigitos = telefono.replace(/\D/g, "");
-  return `https://wa.me/${soloDigitos}?text=${encodeURIComponent(mensaje)}`;
+  // Normalización mínima y segura: si el cliente cargó el formato típico
+  // "11 2297-8803" (área + número, 10 dígitos, sin 0, sin 15, sin código de
+  // país) le anteponemos "54 9" para que el link de WhatsApp sea válido.
+  // No tocamos ningún otro formato: adivinar mal podría mandar el mensaje
+  // a otra persona.
+  const digitos =
+    soloDigitos.length === 10 && !soloDigitos.startsWith("54")
+      ? `549${soloDigitos}`
+      : soloDigitos;
+  return `https://wa.me/${digitos}?text=${encodeURIComponent(mensaje)}`;
 }

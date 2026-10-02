@@ -19,7 +19,7 @@ const CONFIG_POR_DEFECTO: Configuracion = {
   favicon_url: null,
   email: "motoplustalar@gmail.com",
   whatsapp: "+54 9 11 2297-8803",
-  whatsapp_link: "https://wa.me/1122978803",
+  whatsapp_link: "https://wa.me/5491122978803",
   direccion: "Av. Hipólito Yrigoyen 2188",
   ciudad: "El Talar",
   provincia: "Buenos Aires",

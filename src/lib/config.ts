@@ -15,7 +15,7 @@ import type { Database } from "@/types/database";
 export type Configuracion = Database["public"]["Tables"]["configuracion"]["Row"];
 
 export function whatsappLink(config: Configuracion, mensaje: string) {
-  const base = config.whatsapp_link || "https://wa.me/1122978803";
+  const base = config.whatsapp_link || "https://wa.me/5491122978803";
   return `${base}?text=${encodeURIComponent(mensaje)}`;
 }
 

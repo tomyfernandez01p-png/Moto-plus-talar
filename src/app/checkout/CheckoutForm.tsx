@@ -122,7 +122,12 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
           <input name="nombre" required placeholder="Nombre" className={inputClass} />
           <input name="apellido" required placeholder="Apellido" className={inputClass} />
           <input name="email" type="email" required placeholder="Email" className={inputClass} />
-          <input name="telefono" required placeholder="Teléfono" className={inputClass} />
+          <input
+            name="telefono"
+            required
+            placeholder="Teléfono (ej: 11 2297-8803, sin 0 ni 15)"
+            className={inputClass}
+          />
           <input name="dniCuit" placeholder="DNI / CUIT (opcional)" className={inputClass} />
         </div>
       </section>
