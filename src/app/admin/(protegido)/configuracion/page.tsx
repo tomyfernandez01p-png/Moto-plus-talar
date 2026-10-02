@@ -2,6 +2,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { guardarConfiguracionAction } from "./actions";
+import { WhatsappInput } from "./WhatsappInput";
 
 const inputClass =
   "w-full rounded-lg border border-base-border bg-base-dark px-3 py-2.5 text-sm text-base-white placeholder:text-base-muted focus:border-brand-orange focus:outline-none";
@@ -50,7 +51,7 @@ export default async function AdminConfiguracionPage() {
             </div>
             <div>
               <label className={labelClass}>WhatsApp (con código de país)</label>
-              <input name="whatsapp" defaultValue={config.whatsapp ?? ""} placeholder="+54 9 11 2297-8803" className={inputClass} />
+              <WhatsappInput defaultValue={config.whatsapp ?? ""} inputClass={inputClass} />
             </div>
             <div className="sm:col-span-2">
               <label className={labelClass}>Dirección</label>
