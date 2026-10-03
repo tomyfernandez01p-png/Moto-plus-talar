@@ -5,8 +5,6 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 const opciones = [
   { value: "relevancia", label: "Relevancia" },
   { value: "novedad", label: "Más nuevos" },
-  { value: "precio_asc", label: "Precio: menor a mayor" },
-  { value: "precio_desc", label: "Precio: mayor a menor" },
 ];
 
 export function OrdenSelect() {
