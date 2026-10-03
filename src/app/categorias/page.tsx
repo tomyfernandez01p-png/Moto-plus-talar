@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { CategoriasGrid } from "@/components/home/CategoriasGrid";
+import { CATEGORIAS_SERVICIO } from "@/lib/categorias-servicio";
 
 export const metadata: Metadata = { title: "Categorías" };
 
@@ -36,7 +37,7 @@ export default async function CategoriasPage() {
       <p className="mb-2 text-sm text-base-muted">
         Todo lo que tu moto necesita, organizado por categoría.
       </p>
-      <CategoriasGrid categorias={categorias} titulo="" />
+      <CategoriasGrid categorias={[...categorias, ...CATEGORIAS_SERVICIO]} titulo="" />
     </div>
   );
 }

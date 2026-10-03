@@ -11,6 +11,14 @@ interface Categoria {
   imagen_url: string | null;
   /** Conteo real (query propia), opcional: nunca se inventa un número. */
   cantidadProductos?: number;
+  /**
+   * Para categorías "de verdad" (tabla `categorias`) se arma solo con el
+   * slug (`/categoria/[slug]`). Algunas tarjetas no son una categoría de
+   * producto sino un servicio que se ofrece (ej: "Mecánica" → /mecanica):
+   * ahí se pisa con un href explícito en vez de inventar una categoría de
+   * producto que no existe.
+   */
+  href?: string;
 }
 
 /**
@@ -27,6 +35,7 @@ const BAJADAS: Record<string, string> = {
   accesorios: "Para equipar y personalizar tu moto",
   baterias: "Arranque confiable, cero sorpresas",
   lamparas: "Iluminación clara para andar seguro",
+  mecanica: "Service, frenos, eléctrico y más",
 };
 
 export function CategoriasGrid({
@@ -52,7 +61,7 @@ export function CategoriasGrid({
         {categorias.map((cat, i) => (
           <Link
             key={cat.slug}
-            href={`/categoria/${cat.slug}`}
+            href={cat.href ?? `/categoria/${cat.slug}`}
             style={{ animationDelay: `${i * 50}ms` }}
             className="group relative flex aspect-[4/5] animate-fade-in-up flex-col justify-end overflow-hidden rounded-2xl border border-base-border bg-base-surface transition-all duration-300 ease-smooth hover:-translate-y-1 hover:border-brand-orange/50 hover:shadow-card-hover"
           >

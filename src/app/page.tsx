@@ -4,6 +4,7 @@ import { Hero } from "@/components/home/Hero";
 import { Beneficios } from "@/components/home/Beneficios";
 import { CategoriasGrid } from "@/components/home/CategoriasGrid";
 import { CategoryCarousel } from "@/components/home/CategoryCarousel";
+import { CATEGORIAS_SERVICIO } from "@/lib/categorias-servicio";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
 import { OfferBanner } from "@/components/home/OfferBanner";
 import { PromoBanner } from "@/components/home/PromoBanner";
@@ -93,6 +94,12 @@ export default async function HomePage() {
   // un slug inventado que podría no existir.
   const categoriaAccesorios = categorias.find((c) => c.slug === "accesorios" || c.nombre.toLowerCase().includes("accesorio"));
 
+  // Categorías + "categorías de servicio" (ver lib/categorias-servicio.ts):
+  // la dueña también hace mecánica, que no es algo que se vende sino algo
+  // que se hace, así que no vive en la tabla `categorias` de productos pero
+  // sí tiene que aparecer junto al resto en esta sección de la Home.
+  const categoriasParaMostrar = [...categorias, ...CATEGORIAS_SERVICIO];
+
   // Orden de secciones (vuelta 2 del rediseño visual): Hero > Beneficios >
   // Categorías > Ofertas > Banner promocional > Buscar por mi moto >
   // Destacados > Marcas > Novedades > Banner WhatsApp > Reseñas >
@@ -107,12 +114,12 @@ export default async function HomePage() {
 
       {secciones.beneficios !== false && <Beneficios />}
 
-      {secciones.categorias !== false && categorias.length > 3 && (
-        <CategoryCarousel categorias={categorias} />
+      {secciones.categorias !== false && categoriasParaMostrar.length > 3 && (
+        <CategoryCarousel categorias={categoriasParaMostrar} />
       )}
       {secciones.categorias !== false && (
         <ScrollReveal className="bg-base-dark/40">
-          <CategoriasGrid categorias={categorias} subtitulo="Todo para mantener y equipar tu moto." />
+          <CategoriasGrid categorias={categoriasParaMostrar} subtitulo="Todo para mantener y equipar tu moto." />
         </ScrollReveal>
       )}
 

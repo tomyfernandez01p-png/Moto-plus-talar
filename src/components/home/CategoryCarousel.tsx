@@ -8,6 +8,8 @@ interface Categoria {
   nombre: string;
   slug: string;
   imagen_url: string | null;
+  /** Ver CategoriasGrid.tsx: override para tarjetas que son un servicio, no una categoría de producto. */
+  href?: string;
 }
 
 /**
@@ -28,7 +30,7 @@ export function CategoryCarousel({ categorias }: { categorias: Categoria[] }) {
         {categorias.map((cat) => (
           <Link
             key={cat.slug}
-            href={`/categoria/${cat.slug}`}
+            href={cat.href ?? `/categoria/${cat.slug}`}
             className="group relative flex h-28 w-40 shrink-0 items-end overflow-hidden rounded-2xl border border-base-border bg-base-surface p-3 transition-all duration-200 ease-smooth [scroll-snap-align:start] hover:border-brand-orange/50 hover:shadow-card-hover"
           >
             {cat.imagen_url ? (
