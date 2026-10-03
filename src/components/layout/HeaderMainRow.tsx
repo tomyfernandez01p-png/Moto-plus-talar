@@ -111,6 +111,9 @@ export function HeaderMainRow({
         <Link href="/mi-moto" className="transition-colors hover:text-brand-orange">
           ¿Qué moto tenés?
         </Link>
+        <Link href="/mecanica" className="transition-colors hover:text-brand-orange">
+          Mecánica
+        </Link>
         <Link href="/nosotros" className="transition-colors hover:text-brand-orange">
           Nosotros
         </Link>

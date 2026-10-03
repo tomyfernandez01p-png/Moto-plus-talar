@@ -11,6 +11,7 @@ const nav = [
   { href: "/admin/categorias", label: "Categorías" },
   { href: "/admin/marcas", label: "Marcas" },
   { href: "/admin/pedidos", label: "Pedidos" },
+  { href: "/admin/mecanica", label: "Turnos de mecánica" },
   { href: "/admin/clientes", label: "Clientes" },
   { href: "/admin/banners", label: "Banners" },
   // Solo administrador: incluye claves públicas de integraciones, textos

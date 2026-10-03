@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const svgProps = {
   viewBox: "0 0 24 24",
   fill: "none",
@@ -7,9 +9,16 @@ const svgProps = {
   strokeLinejoin: "round" as const,
 };
 
-const items = [
+interface ItemBeneficio {
+  texto: string;
+  href?: string;
+  icono: React.ReactNode;
+}
+
+const items: ItemBeneficio[] = [
   {
     texto: "Mecánica con turno",
+    href: "/mecanica",
     icono: (
       <path d="M14.7 6.3a3.5 3.5 0 0 0-4.9 4.9L4 17v3h3l5.8-5.8a3.5 3.5 0 0 0 4.9-4.9l-2.4 2.4-2-2 2.4-2.4Z" />
     ),
@@ -60,22 +69,37 @@ export function Beneficios() {
   return (
     <section className="relative z-10 bg-base-black">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-10 sm:grid-cols-3 md:grid-cols-5 md:px-6">
-        {items.map((item, i) => (
-          <div
-            key={item.texto}
-            className="group flex animate-fade-in-up flex-col items-center gap-3 rounded-2xl border border-base-border bg-base-surface p-5 text-center transition-all duration-300 ease-smooth hover:-translate-y-1 hover:border-brand-orange/40 hover:shadow-card-hover"
-            style={{ animationDelay: `${i * 70}ms` }}
-          >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange transition-all duration-300 ease-smooth group-hover:bg-brand-orange group-hover:text-white group-hover:shadow-glow-sm">
-              <svg {...svgProps} className="h-6 w-6">
-                {item.icono}
-              </svg>
-            </span>
-            <span className="text-xs font-semibold leading-snug text-base-white sm:text-sm">
-              {item.texto}
-            </span>
-          </div>
-        ))}
+        {items.map((item, i) => {
+          const claseItem =
+            "group flex animate-fade-in-up flex-col items-center gap-3 rounded-2xl border border-base-border bg-base-surface p-5 text-center transition-all duration-300 ease-smooth hover:-translate-y-1 hover:border-brand-orange/40 hover:shadow-card-hover";
+          const contenido = (
+            <>
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange transition-all duration-300 ease-smooth group-hover:bg-brand-orange group-hover:text-white group-hover:shadow-glow-sm">
+                <svg {...svgProps} className="h-6 w-6">
+                  {item.icono}
+                </svg>
+              </span>
+              <span className="text-xs font-semibold leading-snug text-base-white sm:text-sm">
+                {item.texto}
+              </span>
+            </>
+          );
+
+          return item.href ? (
+            <Link
+              key={item.texto}
+              href={item.href}
+              className={claseItem}
+              style={{ animationDelay: `${i * 70}ms` }}
+            >
+              {contenido}
+            </Link>
+          ) : (
+            <div key={item.texto} className={claseItem} style={{ animationDelay: `${i * 70}ms` }}>
+              {contenido}
+            </div>
+          );
+        })}
       </div>
     </section>
   );

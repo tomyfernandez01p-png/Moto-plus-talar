@@ -17,6 +17,7 @@ export type EstadoPedido =
 export type EstadoPago = "pendiente" | "aprobado" | "rechazado" | "cancelado" | "reembolsado";
 export type TipoEntrega = "envio" | "retiro_local";
 export type MetodoPago = "mercadopago" | "tarjeta" | "transferencia" | "efectivo";
+export type EstadoSolicitudMecanica = "pendiente" | "aceptada" | "rechazada" | "completada";
 
 export interface Caracteristica {
   label: string;
@@ -369,6 +370,51 @@ export interface Database {
         Insert: Partial<Database["public"]["Tables"]["logs_acceso"]["Row"]> & { exito: boolean };
         Update: Partial<Database["public"]["Tables"]["logs_acceso"]["Row"]>;
       };
+      servicios_mecanica: {
+        Row: {
+          id: string;
+          nombre: string;
+          descripcion: string | null;
+          orden: number;
+          activo: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["servicios_mecanica"]["Row"]> & {
+          nombre: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["servicios_mecanica"]["Row"]>;
+      };
+      solicitudes_mecanica: {
+        Row: {
+          id: string;
+          numero: number;
+          usuario_id: string | null;
+          nombre: string;
+          apellido: string;
+          telefono: string;
+          email: string | null;
+          moto_marca: string | null;
+          moto_modelo: string | null;
+          servicios_ids: string[];
+          descripcion_problema: string | null;
+          repuesto_cliente: string | null;
+          repuesto_cliente_registrado_at: string | null;
+          disclaimer_aceptado: boolean;
+          disclaimer_aceptado_at: string | null;
+          estado: EstadoSolicitudMecanica;
+          notas_internas: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["solicitudes_mecanica"]["Row"]> & {
+          nombre: string;
+          apellido: string;
+          telefono: string;
+          disclaimer_aceptado: true;
+        };
+        Update: Partial<Database["public"]["Tables"]["solicitudes_mecanica"]["Row"]>;
+      };
     };
     Views: {
       vista_productos: {
@@ -399,6 +445,22 @@ export interface Database {
           p_metodo_pago?: MetodoPago | null;
         };
         Returns: string;
+      };
+      crear_solicitud_mecanica: {
+        Args: {
+          p_usuario_id: string | null;
+          p_nombre: string;
+          p_apellido: string;
+          p_telefono: string;
+          p_email: string | null;
+          p_moto_marca: string | null;
+          p_moto_modelo: string | null;
+          p_servicios_ids: string[];
+          p_descripcion_problema: string | null;
+          p_repuesto_cliente: string | null;
+          p_disclaimer_aceptado: boolean;
+        };
+        Returns: { id: string; numero: number };
       };
     };
   };

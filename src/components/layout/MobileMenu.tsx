@@ -66,6 +66,7 @@ export function MobileMenu({
     { href: "/productos?oferta=1", label: "Ofertas" },
     { href: "/marcas", label: "Marcas" },
     { href: "/mi-moto", label: "¿Qué moto tenés?" },
+    { href: "/mecanica", label: "Turno de mecánica" },
     { href: "/preguntas-frecuentes", label: "Ayuda" },
     { href: "/contacto", label: "Contacto" },
   ];

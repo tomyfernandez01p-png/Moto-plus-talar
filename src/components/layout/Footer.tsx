@@ -123,6 +123,9 @@ export async function Footer() {
           <h3 className="mb-3 text-sm font-bold text-base-white">Información</h3>
           <ul className="flex flex-col gap-2 text-sm">
             <li>
+              <Link href="/mecanica" className="transition-colors hover:text-base-white">Turno de mecánica</Link>
+            </li>
+            <li>
               <Link href="/nosotros" className="transition-colors hover:text-base-white">Nosotros</Link>
             </li>
             <li>

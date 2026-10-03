@@ -26,6 +26,44 @@ export function mensajeConsultaFoto() {
 }
 
 /**
+ * Mensaje pre-armado que recibe LA DUEÑA cuando un cliente manda el
+ * formulario de /mecanica: resume todo lo que ya quedó guardado en
+ * `solicitudes_mecanica` para que no tenga que entrar al panel de admin
+ * para enterarse de que hay una solicitud nueva. Ella sigue siendo quien
+ * decide si la acepta (acá solo avisa, no confirma nada).
+ */
+export function mensajeSolicitudMecanica(datos: {
+  numero: number;
+  nombre: string;
+  apellido: string;
+  telefono: string;
+  motoMarca?: string | null;
+  motoModelo?: string | null;
+  servicios: string[];
+  descripcionProblema?: string | null;
+  repuestoCliente?: string | null;
+}) {
+  const lineas = [
+    `Hola, soy ${datos.nombre} ${datos.apellido} y pedí un turno de mecánica (#${datos.numero}) por la web.`,
+    `Tel: ${datos.telefono}`,
+  ];
+  if (datos.motoMarca) {
+    lineas.push(`Moto: ${datos.motoMarca}${datos.motoModelo ? ` ${datos.motoModelo}` : ""}`);
+  }
+  if (datos.servicios.length > 0) {
+    lineas.push(`Servicios: ${datos.servicios.join(", ")}`);
+  }
+  if (datos.descripcionProblema) {
+    lineas.push(`Problema: ${datos.descripcionProblema}`);
+  }
+  if (datos.repuestoCliente) {
+    lineas.push(`Repuesto que quiero usar: ${datos.repuestoCliente}`);
+  }
+  lineas.push("Quedo atento/a a que me confirmen el turno.");
+  return lineas.join("\n");
+}
+
+/**
  * Link de WhatsApp hacia un teléfono cualquiera (por ejemplo, el de un
  * cliente que hizo un pedido), a diferencia de `whatsappLink()` en
  * `lib/config.ts` que siempre apunta al WhatsApp del negocio.
