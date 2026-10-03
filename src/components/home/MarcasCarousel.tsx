@@ -37,7 +37,17 @@ export function MarcasCarousel({ marcas }: { marcas: Marca[] }) {
                 />
               </div>
             ) : (
-              <span className="text-xs font-bold text-neutral-800">{m.nombre}</span>
+              // Sin logo todavía (ninguna marca tiene `logo_url` cargado hoy):
+              // un monograma con la inicial real de la marca en vez de un
+              // nombre chiquito perdido en una caja vacía.
+              <div className="flex flex-col items-center justify-center gap-1 transition-transform duration-200 ease-smooth group-hover:scale-105">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-orange/15 text-sm font-extrabold text-brand-orange">
+                  {m.nombre.slice(0, 2).toUpperCase()}
+                </span>
+                <span className="max-w-[88px] truncate text-[11px] font-semibold text-neutral-700">
+                  {m.nombre}
+                </span>
+              </div>
             )}
           </Link>
         ))}

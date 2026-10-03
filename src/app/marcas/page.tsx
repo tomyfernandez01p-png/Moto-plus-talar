@@ -42,9 +42,14 @@ export default async function MarcasPage() {
                   className="object-contain p-2 transition-transform duration-200 ease-smooth group-hover:scale-110"
                 />
               ) : (
-                <span className="text-center text-sm font-bold text-neutral-800">
-                  {m.nombre}
-                </span>
+                <div className="flex flex-col items-center justify-center gap-1.5 transition-transform duration-200 ease-smooth group-hover:scale-105">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-orange/15 text-base font-extrabold text-brand-orange">
+                    {m.nombre.slice(0, 2).toUpperCase()}
+                  </span>
+                  <span className="max-w-[100px] truncate text-center text-xs font-semibold text-neutral-700">
+                    {m.nombre}
+                  </span>
+                </div>
               )}
             </Link>
           ))}

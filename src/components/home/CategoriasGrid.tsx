@@ -65,16 +65,22 @@ export function CategoriasGrid({
                 className="object-cover opacity-60 transition-transform duration-500 ease-smooth group-hover:scale-110 group-hover:opacity-70"
               />
             ) : (
-              <>
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(255,106,0,0.16),transparent_60%)] transition-transform duration-500 ease-smooth group-hover:scale-110"
-                />
-                <CategoryIcon
-                  slug={cat.slug}
-                  className="pointer-events-none absolute right-3 top-3 h-14 w-14 text-brand-orange/20 transition-transform duration-500 ease-smooth group-hover:scale-110"
-                />
-              </>
+              // Sin foto todavía (ninguna categoría tiene `imagen_url` cargada
+              // hoy): en vez de un ícono apagado en la esquina, el ícono ES
+              // el protagonista visual de la tarjeta -- misma lógica que el
+              // Hero (gradiente + trazo propio en vez de fotos inventadas).
+              <div
+                aria-hidden
+                className={`absolute inset-0 flex items-center justify-center pb-8 ${
+                  i % 2 === 0
+                    ? "bg-[radial-gradient(circle_at_42%_36%,rgba(255,106,0,0.22),transparent_65%)]"
+                    : "bg-[radial-gradient(circle_at_58%_36%,rgba(255,106,0,0.22),transparent_65%)]"
+                }`}
+              >
+                <span className="flex h-20 w-20 items-center justify-center rounded-full border border-brand-orange/30 bg-brand-orange/15 text-brand-orange shadow-glow-sm transition-transform duration-500 ease-smooth group-hover:scale-110 sm:h-24 sm:w-24">
+                  <CategoryIcon slug={cat.slug} className="h-10 w-10 sm:h-12 sm:w-12" />
+                </span>
+              </div>
             )}
 
             {/* overlay oscuro: deja el texto legible sobre imagen o icono */}

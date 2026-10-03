@@ -40,9 +40,14 @@ export function CategoryCarousel({ categorias }: { categorias: Categoria[] }) {
                 className="object-cover opacity-50 transition-transform duration-300 ease-smooth group-hover:scale-110 group-hover:opacity-60"
               />
             ) : (
-              <span className="pointer-events-none absolute right-2 top-2 text-brand-orange/25">
-                <CategoryIcon slug={cat.slug} className="h-10 w-10" />
-              </span>
+              <div
+                aria-hidden
+                className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_50%_32%,rgba(255,106,0,0.2),transparent_65%)]"
+              >
+                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-brand-orange/25 bg-brand-orange/10 text-brand-orange/90">
+                  <CategoryIcon slug={cat.slug} className="h-6 w-6" />
+                </span>
+              </div>
             )}
             <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-base-black/90 via-base-black/20 to-transparent" />
             <span className="relative text-sm font-bold text-base-white group-hover:text-brand-orange">
