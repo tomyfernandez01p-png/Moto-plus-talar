@@ -9,9 +9,14 @@ import { IconHome, IconSearch, IconGrid, IconCart, IconUser } from "@/components
 
 /**
  * Barra de navegación inferior fija en mobile (brief #20): Inicio / Buscar /
- * Categorías / Carrito / Cuenta. Nunca se muestra en desktop (md:hidden) ni
+ * Explorar / Carrito / Cuenta. Nunca se muestra en desktop (md:hidden) ni
  * en /admin -- el panel de administración tiene su propia navegación y debe
  * quedar completamente separado del sitio público (brief #21/#34).
+ *
+ * La tercera pestaña apuntaba a /categorias (solo tarjetas de categoría, sin
+ * productos). Pedido del usuario: que diga "Explorar" y ahí esté toda la
+ * mercadería -- apunta a /productos (el catálogo completo) en vez de a la
+ * grilla de categorías.
  */
 export function MobileBottomNav({ cuentasActivas }: { cuentasActivas: boolean }) {
   const pathname = usePathname();
@@ -47,9 +52,9 @@ export function MobileBottomNav({ cuentasActivas }: { cuentasActivas: boolean })
             <IconSearch className="h-5 w-5" />
             Buscar
           </Link>
-          <Link href="/categorias" className={itemClass(esActivo("/categorias") || esActivo("/categoria"))}>
+          <Link href="/productos" className={itemClass(esActivo("/productos") || esActivo("/categoria"))}>
             <IconGrid className="h-5 w-5" />
-            Categorías
+            Explorar
           </Link>
           <button
             type="button"
