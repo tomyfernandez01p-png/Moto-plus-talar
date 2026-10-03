@@ -17,37 +17,43 @@ export async function Header() {
     .order("orden");
 
   return (
-    <header className="sticky top-0 z-30 border-b border-base-border bg-base-dark/95 backdrop-blur">
-      <AnnouncementBar config={config} />
+    // Solo la franja de navegación (logo/cuenta/carrito) queda fija al
+    // scrollear -- el buscador mobile de abajo va fuera del `sticky` a
+    // propósito para que se desplace con el resto del contenido en vez de
+    // quedar siempre tapando la pantalla.
+    <header className="relative z-30">
+      <div className="sticky top-0 z-30 border-b border-base-border bg-base-dark/95 backdrop-blur">
+        <AnnouncementBar config={config} />
 
-      {/* fila superior: cuenta / favoritos / whatsapp — solo desktop */}
-      <div className="hidden border-b border-base-border/60 bg-base-black md:block">
-        <div className="mx-auto flex max-w-7xl items-center justify-end gap-6 px-6 py-1.5 text-xs text-base-muted">
-          <ThemeToggle className="hover:text-base-white" />
-          <Link href="/favoritos" className="hover:text-base-white">
-            Favoritos
-          </Link>
-          {config.cuentas_clientes_activas && (
-            <Link href="/cuenta" className="hover:text-base-white">
-              Mi cuenta
+        {/* fila superior: cuenta / favoritos / whatsapp — solo desktop */}
+        <div className="hidden border-b border-base-border/60 bg-base-black md:block">
+          <div className="mx-auto flex max-w-7xl items-center justify-end gap-6 px-6 py-1.5 text-xs text-base-muted">
+            <ThemeToggle className="hover:text-base-white" />
+            <Link href="/favoritos" className="hover:text-base-white">
+              Favoritos
             </Link>
-          )}
-          {config.whatsapp && (
-            <a
-              href={config.whatsapp_link ?? undefined}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-base-white"
-            >
-              WhatsApp {config.whatsapp}
-            </a>
-          )}
+            {config.cuentas_clientes_activas && (
+              <Link href="/cuenta" className="hover:text-base-white">
+                Mi cuenta
+              </Link>
+            )}
+            {config.whatsapp && (
+              <a
+                href={config.whatsapp_link ?? undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-base-white"
+              >
+                WhatsApp {config.whatsapp}
+              </a>
+            )}
+          </div>
         </div>
+
+        <HeaderMainRow config={config} categorias={categorias ?? []} />
       </div>
 
-      <HeaderMainRow config={config} categorias={categorias ?? []} />
-
-      <div className="border-t border-base-border/60 px-4 pb-3 md:hidden">
+      <div className="border-b border-base-border/60 bg-base-dark/95 px-4 pb-3 pt-3 md:hidden">
         <SearchBar />
       </div>
     </header>

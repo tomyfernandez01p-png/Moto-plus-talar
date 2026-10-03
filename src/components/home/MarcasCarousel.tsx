@@ -24,7 +24,7 @@ export function MarcasCarousel({ marcas }: { marcas: Marca[] }) {
             // real (no todos quedan bien recortados en negro), así que una
             // tarjeta clara los muestra tal cual son en vez de aplicarles un
             // filtro gris que los deslava.
-            className="group flex h-20 w-28 shrink-0 items-center justify-center rounded-xl border border-transparent bg-neutral-100 p-3 shadow-sm transition-all duration-200 ease-smooth [scroll-snap-align:start] hover:-translate-y-0.5 hover:border-brand-orange hover:shadow-card-hover md:w-auto"
+            className="group flex h-20 w-28 shrink-0 items-center justify-center rounded-xl border border-transparent bg-neutral-100 p-3 shadow-card transition-all duration-200 ease-smooth [scroll-snap-align:start] hover:-translate-y-0.5 hover:border-brand-orange hover:shadow-card-hover md:w-auto"
           >
             {m.logo_url ? (
               <div className="relative h-full w-full transition-transform duration-200 ease-smooth group-hover:scale-110">

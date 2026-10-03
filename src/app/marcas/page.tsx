@@ -31,7 +31,7 @@ export default async function MarcasPage() {
             <Link
               key={m.slug}
               href={`/marca/${m.slug}`}
-              className="group relative flex h-24 items-center justify-center rounded-2xl border border-transparent bg-neutral-100 p-4 shadow-sm transition-all duration-200 ease-smooth hover:-translate-y-0.5 hover:border-brand-orange hover:shadow-card-hover"
+              className="group relative flex h-24 items-center justify-center rounded-2xl border border-transparent bg-neutral-100 p-4 shadow-card transition-all duration-200 ease-smooth hover:-translate-y-0.5 hover:border-brand-orange hover:shadow-card-hover"
             >
               {m.logo_url ? (
                 <Image
