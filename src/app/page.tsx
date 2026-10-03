@@ -6,6 +6,7 @@ import { CategoriasGrid } from "@/components/home/CategoriasGrid";
 import { CategoryCarousel } from "@/components/home/CategoryCarousel";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
 import { OfferBanner } from "@/components/home/OfferBanner";
+import { PromoBanner } from "@/components/home/PromoBanner";
 import { WhatsAppBanner } from "@/components/home/WhatsAppBanner";
 import { MarcasCarousel } from "@/components/home/MarcasCarousel";
 import { BuscadorMoto } from "@/components/home/BuscadorMoto";
@@ -27,6 +28,7 @@ export default async function HomePage() {
     { data: nuevos },
     { data: marcas },
     { data: motos },
+    { count: totalProductos },
   ] = await Promise.all([
     supabase
       .from("categorias")
@@ -66,6 +68,9 @@ export default async function HomePage() {
     secciones.buscador_moto
       ? supabase.from("motos").select("*").eq("activo", true)
       : Promise.resolve({ data: [] }),
+    // Conteo real para la franja de datos del Hero (brief: nunca "+500"
+    // inventado). Query liviana (head:true, sin traer filas).
+    supabase.from("productos").select("id", { count: "exact", head: true }).eq("activo", true),
   ]);
 
   // Conteo real de productos por categoría (brief #9: "+85 productos" solo
@@ -83,36 +88,53 @@ export default async function HomePage() {
     })
   );
 
-  // Orden de secciones siguiendo el brief de transformación visual (#27):
-  // Header > Hero > Beneficios > Buscador > Categorías > Ofertas >
-  // Destacados > Banner WhatsApp > Marcas > Novedades > Reseñas >
-  // Ubicación > Footer. Cada bloque sigue aislado detrás de su propio flag
-  // de `config.secciones_home`, exactamente como antes.
+  // Link real para el banner "Equipá tu moto": si existe una categoría de
+  // accesorios cargada de verdad, apunta ahí; si no, cae a /productos. Nunca
+  // un slug inventado que podría no existir.
+  const categoriaAccesorios = categorias.find((c) => c.slug === "accesorios" || c.nombre.toLowerCase().includes("accesorio"));
+
+  // Orden de secciones (vuelta 2 del rediseño visual): Hero > Beneficios >
+  // Categorías > Ofertas > Banner promocional > Buscar por mi moto >
+  // Destacados > Marcas > Novedades > Banner WhatsApp > Reseñas >
+  // Ubicación > Footer -- pensado para que la página se sienta llena de
+  // contenido real todo el scroll, sin tramos vacíos. Cada bloque sigue
+  // aislado detrás de su propio flag de `config.secciones_home`.
   return (
     <>
-      {secciones.hero !== false && <Hero config={config} />}
+      {secciones.hero !== false && (
+        <Hero config={config} totalProductos={totalProductos ?? undefined} totalMarcas={marcas?.length} />
+      )}
 
       {secciones.beneficios !== false && <Beneficios />}
-
-      {secciones.buscador_moto && (
-        <ScrollReveal className="bg-base-dark/60">
-          <BuscadorMoto motos={motos ?? []} />
-        </ScrollReveal>
-      )}
 
       {secciones.categorias !== false && categorias.length > 3 && (
         <CategoryCarousel categorias={categorias} />
       )}
       {secciones.categorias !== false && (
-        <ScrollReveal>
-          <CategoriasGrid categorias={categorias} />
+        <ScrollReveal className="bg-base-dark/40">
+          <CategoriasGrid categorias={categorias} subtitulo="Todo para mantener y equipar tu moto." />
         </ScrollReveal>
       )}
 
       {secciones.ofertas && (ofertas ?? []).length > 0 && (
         <ScrollReveal className="bg-base-dark/60">
           <OfferBanner productos={ofertas ?? []} />
-          <ProductCarousel titulo="En oferta" productos={ofertas ?? []} verTodoHref="/productos?oferta=1" />
+          <ProductCarousel titulo="Ofertas de la semana" productos={ofertas ?? []} verTodoHref="/productos?oferta=1" />
+        </ScrollReveal>
+      )}
+
+      <ScrollReveal>
+        <PromoBanner
+          titulo="Equipá tu moto"
+          subtitulo="Todo lo que necesitás en un solo lugar."
+          ctaTexto="Ver accesorios"
+          ctaHref={categoriaAccesorios ? `/categoria/${categoriaAccesorios.slug}` : "/productos"}
+        />
+      </ScrollReveal>
+
+      {secciones.buscador_moto && (
+        <ScrollReveal className="bg-base-surface/30">
+          <BuscadorMoto motos={motos ?? []} />
         </ScrollReveal>
       )}
 
@@ -121,10 +143,6 @@ export default async function HomePage() {
           <ProductCarousel titulo="Productos destacados" productos={destacados ?? []} verTodoHref="/productos?destacado=1" />
         </ScrollReveal>
       )}
-
-      <ScrollReveal className="bg-base-dark/60">
-        <WhatsAppBanner config={config} />
-      </ScrollReveal>
 
       {secciones.marcas && (marcas ?? []).length > 0 && (
         <ScrollReveal className="bg-base-dark/60">
@@ -137,6 +155,10 @@ export default async function HomePage() {
           <ProductCarousel titulo="Recién llegados" productos={nuevos ?? []} verTodoHref="/productos?nuevo=1" />
         </ScrollReveal>
       )}
+
+      <ScrollReveal className="bg-base-dark/60">
+        <WhatsAppBanner config={config} />
+      </ScrollReveal>
 
       {secciones.reviews && (
         <ScrollReveal>

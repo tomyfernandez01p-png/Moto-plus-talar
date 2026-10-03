@@ -31,7 +31,7 @@ export default async function MarcasPage() {
             <Link
               key={m.slug}
               href={`/marca/${m.slug}`}
-              className="group relative flex h-24 items-center justify-center rounded-2xl border border-base-border bg-base-surface p-4 grayscale transition-all duration-200 ease-smooth hover:-translate-y-0.5 hover:border-brand-orange/50 hover:grayscale-0 hover:shadow-card-hover"
+              className="group relative flex h-24 items-center justify-center rounded-2xl border border-transparent bg-neutral-100 p-4 shadow-sm transition-all duration-200 ease-smooth hover:-translate-y-0.5 hover:border-brand-orange hover:shadow-card-hover"
             >
               {m.logo_url ? (
                 <Image
@@ -39,10 +39,10 @@ export default async function MarcasPage() {
                   alt={m.nombre}
                   fill
                   unoptimized={isDataUrl(m.logo_url)}
-                  className="object-contain p-2"
+                  className="object-contain p-2 transition-transform duration-200 ease-smooth group-hover:scale-110"
                 />
               ) : (
-                <span className="text-center text-sm font-bold text-base-white group-hover:text-brand-orange">
+                <span className="text-center text-sm font-bold text-neutral-800">
                   {m.nombre}
                 </span>
               )}

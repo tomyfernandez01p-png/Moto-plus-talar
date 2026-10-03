@@ -20,10 +20,14 @@ export function MarcasCarousel({ marcas }: { marcas: Marca[] }) {
           <Link
             key={m.slug}
             href={`/marca/${m.slug}`}
-            className="flex h-20 w-28 shrink-0 items-center justify-center rounded-xl border border-base-border bg-base-surface p-3 grayscale transition-all duration-200 ease-smooth [scroll-snap-align:start] hover:-translate-y-0.5 hover:grayscale-0 hover:border-brand-orange/50 hover:shadow-card-hover md:w-auto"
+            // fondo claro a propósito: los logos de marca vienen en su color
+            // real (no todos quedan bien recortados en negro), así que una
+            // tarjeta clara los muestra tal cual son en vez de aplicarles un
+            // filtro gris que los deslava.
+            className="group flex h-20 w-28 shrink-0 items-center justify-center rounded-xl border border-transparent bg-neutral-100 p-3 shadow-sm transition-all duration-200 ease-smooth [scroll-snap-align:start] hover:-translate-y-0.5 hover:border-brand-orange hover:shadow-card-hover md:w-auto"
           >
             {m.logo_url ? (
-              <div className="relative h-full w-full">
+              <div className="relative h-full w-full transition-transform duration-200 ease-smooth group-hover:scale-110">
                 <Image
                   src={m.logo_url}
                   alt={m.nombre}
@@ -33,7 +37,7 @@ export function MarcasCarousel({ marcas }: { marcas: Marca[] }) {
                 />
               </div>
             ) : (
-              <span className="text-xs font-bold text-base-white">{m.nombre}</span>
+              <span className="text-xs font-bold text-neutral-800">{m.nombre}</span>
             )}
           </Link>
         ))}

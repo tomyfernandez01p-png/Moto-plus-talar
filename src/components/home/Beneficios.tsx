@@ -58,20 +58,20 @@ const items = [
 
 export function Beneficios() {
   return (
-    <section className="relative z-10 border-y border-base-border bg-base-surface/40">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-8 sm:grid-cols-3 md:grid-cols-5 md:px-6">
+    <section className="relative z-10 bg-base-black">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-10 sm:grid-cols-3 md:grid-cols-5 md:px-6">
         {items.map((item, i) => (
           <div
             key={item.texto}
-            className="group flex animate-fade-in-up flex-col items-center gap-2.5 rounded-2xl p-3 text-center transition-colors duration-200 hover:bg-base-surface"
+            className="group flex animate-fade-in-up flex-col items-center gap-3 rounded-2xl border border-base-border bg-base-surface p-5 text-center transition-all duration-300 ease-smooth hover:-translate-y-1 hover:border-brand-orange/40 hover:shadow-card-hover"
             style={{ animationDelay: `${i * 70}ms` }}
           >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange transition-all duration-300 ease-smooth group-hover:-translate-y-0.5 group-hover:bg-brand-orange group-hover:text-white group-hover:shadow-glow-sm">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange transition-all duration-300 ease-smooth group-hover:bg-brand-orange group-hover:text-white group-hover:shadow-glow-sm">
               <svg {...svgProps} className="h-6 w-6">
                 {item.icono}
               </svg>
             </span>
-            <span className="text-xs font-medium text-base-muted group-hover:text-base-white">
+            <span className="text-xs font-semibold leading-snug text-base-white sm:text-sm">
               {item.texto}
             </span>
           </div>
