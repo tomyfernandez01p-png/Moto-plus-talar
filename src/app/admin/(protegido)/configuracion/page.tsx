@@ -236,8 +236,8 @@ export default async function AdminConfiguracionPage() {
                 className={inputClass}
               />
               <p className="mt-1 text-xs text-base-muted">
-                Lo das de tu ficha de Google Business Profile ("Pedir reseñas" → copiar link). Con
-                esto cargado aparece un botón "Dejar una reseña" en la Home.
+                Lo das de tu ficha de Google Business Profile (&quot;Pedir reseñas&quot; → copiar
+                link). Con esto cargado aparece un botón &quot;Dejar una reseña&quot; en la Home.
               </p>
             </div>
           </div>
