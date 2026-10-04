@@ -27,11 +27,13 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
         <div className="relative overflow-hidden rounded-3xl border border-dashed border-base-border bg-base-surface/40 p-8">
           {/* tarjetas flotando de referencia visual: vacías a propósito, sin
               nombres ni citas inventadas -- adelantan la forma del bloque,
-              no un testimonio falso. */}
-          <div aria-hidden className="pointer-events-none absolute inset-0 hidden sm:block">
-            <div className="absolute left-[6%] top-5 h-16 w-36 animate-float-y rounded-2xl border border-base-border/80 bg-base-surface/70 opacity-40" />
-            <div className="absolute right-[8%] top-10 h-16 w-36 animate-float-y rounded-2xl border border-base-border/80 bg-base-surface/70 opacity-40 [animation-delay:1.3s]" />
-            <div className="absolute left-[36%] bottom-4 h-16 w-36 animate-float-y rounded-2xl border border-base-border/80 bg-base-surface/70 opacity-40 [animation-delay:0.7s]" />
+              no un testimonio falso. Antes solo se veían desde `sm:` --
+              en mobile (donde se prueba el sitio en esta vuelta) el bloque
+              quedaba igual que antes, sin ningún cambio visible. */}
+          <div aria-hidden className="pointer-events-none absolute inset-0">
+            <div className="absolute left-[4%] top-4 h-14 w-28 animate-float-y rounded-2xl border border-base-border bg-base-surface/80 opacity-70 sm:left-[6%] sm:top-5 sm:h-16 sm:w-36" />
+            <div className="absolute right-[4%] top-9 h-14 w-28 animate-float-y rounded-2xl border border-base-border bg-base-surface/80 opacity-70 [animation-delay:1.3s] sm:right-[8%] sm:top-10 sm:h-16 sm:w-36" />
+            <div className="absolute left-[32%] bottom-3 hidden h-16 w-36 animate-float-y rounded-2xl border border-base-border bg-base-surface/80 opacity-70 [animation-delay:0.7s] sm:block" />
           </div>
 
           <div className="relative flex flex-col items-center gap-2 text-center">
