@@ -30,12 +30,14 @@ export function SiteChrome({
   header,
   footer,
   whatsappFloat,
+  turnosFloat,
   bottomNav,
   children,
 }: {
   header: React.ReactNode;
   footer: React.ReactNode;
   whatsappFloat: React.ReactNode;
+  turnosFloat: React.ReactNode;
   bottomNav: React.ReactNode;
   children: React.ReactNode;
 }) {
@@ -62,6 +64,7 @@ export function SiteChrome({
       <main className="min-h-[60vh]">{children}</main>
       {footer}
       {whatsappFloat}
+      {turnosFloat}
       {bottomNav}
     </>
   );

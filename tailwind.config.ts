@@ -94,6 +94,15 @@ const config: Config = {
           "0%, 100%": { opacity: "0.5" },
           "50%": { opacity: "1" },
         },
+        /* --- agregado: marquee de marcas (home) y franja de "publicidad" --- */
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        "float-y": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
       },
       animation: {
         "fade-in-up": "fade-in-up 0.6s cubic-bezier(0.4,0,0.2,1) both",
@@ -109,6 +118,8 @@ const config: Config = {
         "slide-up-sheet": "slide-up-sheet 0.35s cubic-bezier(0.4,0,0.2,1) both",
         "fade-scale-in": "fade-scale-in 0.4s cubic-bezier(0.4,0,0.2,1) both",
         "glow-breathe": "glow-breathe 3.5s ease-in-out infinite",
+        marquee: "marquee 28s linear infinite",
+        "float-y": "float-y 4s ease-in-out infinite",
       },
     },
   },

@@ -118,6 +118,7 @@ export async function guardarConfiguracionAction(formData: FormData) {
         analytics_id: String(formData.get("google_analytics_id") || "").trim() || null,
         reviews_enabled: formData.get("google_reviews_enabled") === "on",
         search_console_verified: formData.get("google_search_console_verified") === "on",
+        review_url: String(formData.get("google_review_url") || "").trim() || null,
       },
       mercadopago_public_key: String(formData.get("mercadopago_public_key") || "").trim() || null,
       cookies_texto: String(formData.get("cookies_texto") || "").trim() || null,

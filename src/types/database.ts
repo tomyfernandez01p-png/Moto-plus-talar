@@ -319,6 +319,8 @@ export interface Database {
             analytics_id?: string | null;
             reviews_enabled?: boolean;
             search_console_verified?: boolean;
+            /** Link real de "dejar una reseña" (Google Business Profile, ej. https://g.page/r/.../review). Nunca inventado. */
+            review_url?: string | null;
           };
           mercadopago_public_key: string | null;
           cookies_texto: string | null;

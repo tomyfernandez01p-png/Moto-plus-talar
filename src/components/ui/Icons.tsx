@@ -199,3 +199,19 @@ export function IconStore(props: IconProps) {
     </svg>
   );
 }
+
+export function IconWrench(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M14.7 6.3a3.5 3.5 0 0 0-4.9 4.9L4 17v3h3l5.8-5.8a3.5 3.5 0 0 0 4.9-4.9l-2.4 2.4-2-2 2.4-2.4Z" />
+    </svg>
+  );
+}
+
+export function IconStar(props: IconProps) {
+  return (
+    <svg {...base} fill="currentColor" stroke="none" {...props}>
+      <path d="M12 3.5l2.47 5.21 5.53.74-4.08 3.97 1.02 5.58L12 16.2l-4.94 2.8 1.02-5.58-4.08-3.97 5.53-.74L12 3.5Z" />
+    </svg>
+  );
+}

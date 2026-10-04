@@ -43,7 +43,7 @@ const CONFIG_POR_DEFECTO: Configuracion = {
     description:
       "Repuestos y accesorios para motos en El Talar, Buenos Aires. Mecánica con turno, envíos a todo el país y retiro en el local.",
   },
-  google: { analytics_id: null, reviews_enabled: false, search_console_verified: false },
+  google: { analytics_id: null, reviews_enabled: false, search_console_verified: false, review_url: null },
   mercadopago_public_key: null,
   cookies_texto:
     "Usamos cookies para mejorar tu experiencia. Podés aceptar, rechazar las no esenciales o configurar tus preferencias.",

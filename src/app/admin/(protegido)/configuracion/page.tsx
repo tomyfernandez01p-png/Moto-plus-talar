@@ -227,6 +227,19 @@ export default async function AdminConfiguracionPage() {
                 Search Console verificado
               </label>
             </div>
+            <div className="sm:col-span-2">
+              <label className={labelClass}>Link para dejar una reseña</label>
+              <input
+                name="google_review_url"
+                defaultValue={config.google?.review_url ?? ""}
+                placeholder="https://g.page/r/.../review"
+                className={inputClass}
+              />
+              <p className="mt-1 text-xs text-base-muted">
+                Lo das de tu ficha de Google Business Profile ("Pedir reseñas" → copiar link). Con
+                esto cargado aparece un botón "Dejar una reseña" en la Home.
+              </p>
+            </div>
           </div>
           <p className="mt-2 text-xs text-base-muted">
             Las reseñas reales requieren GOOGLE_PLACES_API_KEY y GOOGLE_PLACE_ID configurados como

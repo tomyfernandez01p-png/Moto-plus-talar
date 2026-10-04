@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getConfiguracion } from "@/lib/config.server";
 import { Hero } from "@/components/home/Hero";
+import { BannerCarousel } from "@/components/home/BannerCarousel";
 import { Beneficios } from "@/components/home/Beneficios";
 import { CategoriasGrid } from "@/components/home/CategoriasGrid";
 import { CategoryCarousel } from "@/components/home/CategoryCarousel";
@@ -24,6 +25,7 @@ export default async function HomePage() {
 
   const [
     { data: categoriasBase },
+    { data: bannersBase },
     { data: destacados },
     { data: ofertas },
     { data: nuevos },
@@ -37,6 +39,10 @@ export default async function HomePage() {
       .is("categoria_padre_id", null)
       .eq("activo", true)
       .order("orden"),
+    // Banners de "publicidad" para el carrusel del tope (pedido del usuario,
+    // boceto propio de referencia). La tabla y su pantalla de carga en
+    // /admin/banners ya existían -- solo faltaba mostrarlos en el sitio.
+    supabase.from("banners").select("*").eq("activo", true).order("orden"),
     secciones.destacados
       ? supabase
           .from("vista_productos")
@@ -94,20 +100,34 @@ export default async function HomePage() {
   // un slug inventado que podría no existir.
   const categoriaAccesorios = categorias.find((c) => c.slug === "accesorios" || c.nombre.toLowerCase().includes("accesorio"));
 
+  // Vigencia real por fecha (brief del banner: "si no cargás fechas, queda
+  // siempre visible mientras esté activo"). Se filtra acá en vez de en la
+  // query para no pelear con Postgrest por el OR de nulls en dos columnas.
+  const ahora = new Date().toISOString();
+  const banners = (bannersBase ?? []).filter((b) => {
+    if (b.fecha_inicio && b.fecha_inicio > ahora) return false;
+    if (b.fecha_fin && b.fecha_fin < ahora) return false;
+    return true;
+  });
+
   // Categorías + "categorías de servicio" (ver lib/categorias-servicio.ts):
   // la dueña también hace mecánica, que no es algo que se vende sino algo
   // que se hace, así que no vive en la tabla `categorias` de productos pero
   // sí tiene que aparecer junto al resto en esta sección de la Home.
   const categoriasParaMostrar = [...categorias, ...CATEGORIAS_SERVICIO];
 
-  // Orden de secciones (vuelta 2 del rediseño visual): Hero > Beneficios >
-  // Categorías > Ofertas > Banner promocional > Buscar por mi moto >
-  // Destacados > Marcas > Novedades > Banner WhatsApp > Reseñas >
-  // Ubicación > Footer -- pensado para que la página se sienta llena de
-  // contenido real todo el scroll, sin tramos vacíos. Cada bloque sigue
-  // aislado detrás de su propio flag de `config.secciones_home`.
+  // Orden de secciones (vuelta 3 del rediseño visual, pedido del usuario):
+  // Publicidad (banners reales) > Hero > Beneficios > Categorías > Equipá tu
+  // moto > Encontrá tu repuesto (buscador) > Marcas (todas, en movimiento) >
+  // recién ahí los productos (Ofertas/Destacados/Novedades) > Banner
+  // WhatsApp > Reseñas > Ubicación > Footer. La idea del usuario era que la
+  // parte de arriba no sea una vidriera de productos sino publicidad +
+  // navegación/CTAs, y que los productos aparezcan más abajo. Cada bloque
+  // sigue aislado detrás de su propio flag de `config.secciones_home`.
   return (
     <>
+      <BannerCarousel banners={banners} />
+
       {secciones.hero !== false && (
         <Hero config={config} totalProductos={totalProductos ?? undefined} totalMarcas={marcas?.length} />
       )}
@@ -120,13 +140,6 @@ export default async function HomePage() {
       {secciones.categorias !== false && (
         <ScrollReveal className="bg-base-dark/40">
           <CategoriasGrid categorias={categoriasParaMostrar} subtitulo="Todo para mantener y equipar tu moto." />
-        </ScrollReveal>
-      )}
-
-      {secciones.ofertas && (ofertas ?? []).length > 0 && (
-        <ScrollReveal className="bg-base-dark/60">
-          <OfferBanner productos={ofertas ?? []} />
-          <ProductCarousel titulo="Ofertas de la semana" productos={ofertas ?? []} verTodoHref="/productos?oferta=1" />
         </ScrollReveal>
       )}
 
@@ -145,15 +158,22 @@ export default async function HomePage() {
         </ScrollReveal>
       )}
 
-      {secciones.destacados && (
-        <ScrollReveal>
-          <ProductCarousel titulo="Productos destacados" productos={destacados ?? []} verTodoHref="/productos?destacado=1" />
-        </ScrollReveal>
-      )}
-
       {secciones.marcas && (marcas ?? []).length > 0 && (
         <ScrollReveal className="bg-base-dark/60">
           <MarcasCarousel marcas={marcas ?? []} />
+        </ScrollReveal>
+      )}
+
+      {secciones.ofertas && (ofertas ?? []).length > 0 && (
+        <ScrollReveal>
+          <OfferBanner productos={ofertas ?? []} />
+          <ProductCarousel titulo="Ofertas de la semana" productos={ofertas ?? []} verTodoHref="/productos?oferta=1" />
+        </ScrollReveal>
+      )}
+
+      {secciones.destacados && (
+        <ScrollReveal className="bg-base-dark/60">
+          <ProductCarousel titulo="Productos destacados" productos={destacados ?? []} verTodoHref="/productos?destacado=1" />
         </ScrollReveal>
       )}
 
