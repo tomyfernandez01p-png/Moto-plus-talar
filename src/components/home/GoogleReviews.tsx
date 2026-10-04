@@ -1,19 +1,46 @@
 import type { Configuracion } from "@/lib/config";
 import { IconStar } from "@/components/ui/Icons";
+import { SectionHeader } from "./SectionHeader";
 
 /**
  * Reseñas de Google. Sin GOOGLE_PLACES_API_KEY configurada, el bloque queda
- * claramente marcado como demo (nunca se inventan testimonios reales) y no
- * se renderiza en producción salvo que el admin lo active a sabiendas.
+ * claramente marcado como vista previa (nunca se inventa un testimonio
+ * atribuido a un cliente real) y no se renderiza salvo que el admin lo
+ * active a sabiendas.
  *
- * Pedido del usuario: "que aparezcan las reseñas flotando y que aparezca un
- * botón de reseñar". El botón usa `config.google.review_url` -- el link
- * real de "pedir reseña" del perfil de Google Business del local, que el
- * admin carga en /admin/configuracion (nunca inventado). El "flotando" se
- * resuelve con tarjetas vacías de referencia (la forma del bloque, no
- * contenido inventado) usando la animación `float-y` -- hasta que haya
- * API key real, no hay texto de reseña que mostrar ahí dentro.
+ * Pedido del usuario: tarjetas que se desplacen horizontalmente con
+ * animación automática + botón "Dejá tu reseña". El texto de las tarjetas
+ * de ejemplo describe el bloque, no simula una opinión real -- cada una
+ * lleva una etiqueta "VISTA PREVIA" bien visible y ninguna tiene firma de
+ * cliente. El botón usa `config.google.review_url`, el link real que el
+ * admin carga en /admin/configuracion (nunca inventado).
  */
+const EJEMPLOS_LAYOUT = [
+  { estrellas: 5, texto: "Así se va a ver una reseña real de Google en esta tarjeta." },
+  { estrellas: 5, texto: "Esta sección todavía no tiene reseñas conectadas -- es solo el diseño." },
+  { estrellas: 4, texto: "Cuando se configure la integración, acá van a aparecer opiniones reales de clientes." },
+  { estrellas: 5, texto: "Ninguna de estas tarjetas es una reseña real todavía." },
+];
+
+function TarjetaVistaPrevia({ estrellas, texto, oculta }: { estrellas: number; texto: string; oculta?: boolean }) {
+  return (
+    <div
+      aria-hidden={oculta}
+      className="relative flex h-40 w-72 shrink-0 flex-col justify-between gap-3 rounded-2xl border border-dashed border-base-border bg-base-surface/50 p-5"
+    >
+      <span className="absolute right-3 top-3 rounded-full bg-base-black/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-base-muted">
+        Vista previa
+      </span>
+      <div className="flex gap-0.5 text-brand-orange">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <IconStar key={i} className={`h-4 w-4 ${i < estrellas ? "text-brand-orange" : "text-base-border"}`} />
+        ))}
+      </div>
+      <p className="line-clamp-3 text-sm text-base-muted">{texto}</p>
+    </div>
+  );
+}
+
 export function GoogleReviews({ config }: { config: Configuracion }) {
   const activo = config.google?.reviews_enabled;
   const tieneApiKey = !!process.env.GOOGLE_PLACES_API_KEY;
@@ -22,43 +49,38 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
   if (!activo) return null;
 
   if (!tieneApiKey) {
+    const tarjetas = [...EJEMPLOS_LAYOUT, ...EJEMPLOS_LAYOUT];
     return (
-      <section className="mx-auto max-w-7xl px-4 py-10 md:px-6">
-        <div className="relative overflow-hidden rounded-3xl border border-dashed border-base-border bg-base-surface/40 p-8">
-          {/* tarjetas flotando de referencia visual: vacías a propósito, sin
-              nombres ni citas inventadas -- adelantan la forma del bloque,
-              no un testimonio falso. Antes solo se veían desde `sm:` --
-              en mobile (donde se prueba el sitio en esta vuelta) el bloque
-              quedaba igual que antes, sin ningún cambio visible. */}
-          <div aria-hidden className="pointer-events-none absolute inset-0">
-            <div className="absolute left-[4%] top-4 h-14 w-28 animate-float-y rounded-2xl border border-base-border bg-base-surface/80 opacity-70 sm:left-[6%] sm:top-5 sm:h-16 sm:w-36" />
-            <div className="absolute right-[4%] top-9 h-14 w-28 animate-float-y rounded-2xl border border-base-border bg-base-surface/80 opacity-70 [animation-delay:1.3s] sm:right-[8%] sm:top-10 sm:h-16 sm:w-36" />
-            <div className="absolute left-[32%] bottom-3 hidden h-16 w-36 animate-float-y rounded-2xl border border-base-border bg-base-surface/80 opacity-70 [animation-delay:0.7s] sm:block" />
-          </div>
+      <section className="mx-auto max-w-7xl py-10">
+        <div className="px-4 md:px-6">
+          <SectionHeader titulo="Lo que dicen nuestros clientes" />
+          <p className="-mt-3 mb-1 max-w-md text-sm text-base-muted">
+            Todavía no hay reseñas reales conectadas (falta configurar la integración con Google). Las
+            tarjetas de abajo son solo un ejemplo del diseño, no opiniones reales.
+          </p>
+        </div>
 
-          <div className="relative flex flex-col items-center gap-2 text-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-base-surface text-base-muted">
-              <IconStar className="h-5 w-5" />
-            </span>
-            <p className="text-sm font-medium text-base-white">Reseñas de Google — próximamente</p>
-            <p className="max-w-md text-xs text-base-muted">
-              Este bloque va a mostrar reseñas reales del local en cuanto se conecte la integración
-              con Google (configurá <code>GOOGLE_PLACES_API_KEY</code> y <code>GOOGLE_PLACE_ID</code>).
-              No se muestran testimonios de ejemplo.
-            </p>
-            {reviewUrl && (
-              <a
-                href={reviewUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-brand-orange px-4 py-2 text-sm font-semibold text-white transition-transform duration-200 hover:scale-105"
-              >
-                <IconStar className="h-4 w-4" />
-                Dejar una reseña
-              </a>
-            )}
+        <div className="fade-edge-x group/reviews -mx-4 overflow-hidden px-4 py-4 md:-mx-6 md:px-6">
+          <div className="flex w-max animate-marquee-slow gap-4 group-hover/reviews:[animation-play-state:paused] group-focus-within/reviews:[animation-play-state:paused] motion-reduce:animate-none">
+            {tarjetas.map((r, i) => (
+              <TarjetaVistaPrevia key={i} {...r} oculta={i >= EJEMPLOS_LAYOUT.length} />
+            ))}
           </div>
         </div>
+
+        {reviewUrl && (
+          <div className="px-4 md:px-6">
+            <a
+              href={reviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold text-white transition-transform duration-200 hover:scale-105"
+            >
+              <IconStar className="h-4 w-4" />
+              Dejá tu reseña
+            </a>
+          </div>
+        )}
       </section>
     );
   }

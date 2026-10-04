@@ -119,6 +119,7 @@ const config: Config = {
         "fade-scale-in": "fade-scale-in 0.4s cubic-bezier(0.4,0,0.2,1) both",
         "glow-breathe": "glow-breathe 3.5s ease-in-out infinite",
         marquee: "marquee 28s linear infinite",
+        "marquee-slow": "marquee 50s linear infinite",
         "float-y": "float-y 4s ease-in-out infinite",
       },
     },
