@@ -218,7 +218,7 @@ export function MecanicaForm({
       <button
         type="submit"
         disabled={enviando}
-        className="rounded-xl bg-brand-orange py-4 text-base font-bold text-white transition-colors hover:bg-brand-orange-dark disabled:opacity-60"
+        className="rounded-xl border border-brand-orange/70 bg-base-black py-4 text-base font-bold text-base-white shadow-glow-sm transition-all duration-200 hover:border-brand-orange hover:bg-base-dark hover:shadow-glow active:scale-95 active:shadow-none disabled:pointer-events-none disabled:opacity-60"
       >
         {enviando ? "Enviando pedido…" : "Pedir turno"}
       </button>

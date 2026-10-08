@@ -142,7 +142,7 @@ export function BuscadorMoto({ motos }: { motos: Moto[] }) {
             type="submit"
             disabled={!marca}
             className={cn(
-              "flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-4 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-orange-dark hover:shadow-glow-sm active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
+              "flex items-center justify-center gap-2 rounded-xl border border-brand-orange/70 bg-base-black px-5 py-4 text-base font-semibold text-base-white shadow-glow-sm transition-all duration-200 hover:border-brand-orange hover:bg-base-dark hover:shadow-glow active:scale-95 active:shadow-none disabled:cursor-not-allowed disabled:opacity-40"
             )}
           >
             Ver productos compatibles

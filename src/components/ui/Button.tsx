@@ -5,22 +5,30 @@ import { cn } from "@/lib/utils";
 type Variant = "primary" | "secondary" | "ghost" | "outline";
 type Size = "sm" | "md" | "lg";
 
+// Pedido del usuario: sacar el naranja sólido ("feo") del botón principal.
+// Ahora es oscuro (misma familia bg-base-* que el resto del sitio) con el
+// naranja como detalle -- borde + resplandor -- en vez de protagonista.
+// `outline` (abajo) ya cubre el caso "borde naranja", así que `primary`
+// queda claramente distinto: fondo sólido oscuro, más jerarquía visual.
 const variantClasses: Record<Variant, string> = {
   primary:
-    "bg-brand-orange text-white hover:bg-brand-orange-dark shadow-card hover:shadow-card-hover",
+    "border border-brand-orange/70 bg-base-black text-base-white shadow-glow-sm hover:border-brand-orange hover:bg-base-dark hover:shadow-glow active:border-brand-orange active:shadow-none",
   secondary: "bg-base-surface text-base-white hover:bg-base-border border border-base-border",
   ghost: "bg-transparent text-base-white hover:bg-base-surface",
   outline: "bg-transparent border border-brand-orange text-brand-orange hover:bg-brand-orange/10",
 };
 
+// Un poco más grandes en los 3 tamaños (pedido del usuario).
 const sizeClasses: Record<Size, string> = {
-  sm: "text-sm px-3 py-1.5 rounded-lg",
-  md: "text-sm px-4 py-2.5 rounded-xl",
-  lg: "text-base px-6 py-3.5 rounded-xl",
+  sm: "text-sm px-4 py-2 rounded-lg",
+  md: "text-base px-5 py-3 rounded-xl",
+  lg: "text-lg px-7 py-4 rounded-xl",
 };
 
+// `active:scale-95` (antes 0.98, casi imperceptible) para que el "efecto de
+// apretado" se note de verdad al tocar/clickear.
 const base =
-  "inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 ease-smooth disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98]";
+  "inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 ease-smooth disabled:opacity-50 disabled:pointer-events-none active:scale-95";
 
 interface ButtonOwnProps {
   variant?: Variant;

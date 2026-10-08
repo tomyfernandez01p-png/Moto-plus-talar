@@ -74,7 +74,7 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
               href={reviewUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold text-white transition-transform duration-200 hover:scale-105"
+              className="inline-flex items-center gap-1.5 rounded-full border border-brand-orange/70 bg-base-black px-6 py-3 text-sm font-semibold text-base-white shadow-glow-sm transition-all duration-200 hover:scale-105 hover:border-brand-orange hover:bg-base-dark hover:shadow-glow active:scale-95 active:shadow-none"
             >
               <IconStar className="h-4 w-4" />
               Dejá tu reseña

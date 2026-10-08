@@ -129,7 +129,7 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
                   {banner.boton_texto && banner.boton_url && (
                     <Link
                       href={banner.boton_url}
-                      className="group mt-1 inline-flex items-center gap-1.5 rounded-full bg-brand-orange px-5 py-3 text-sm font-bold text-white shadow-glow-sm transition-transform duration-200 hover:scale-105 sm:px-6 sm:py-3.5 sm:text-base"
+                      className="group mt-1 inline-flex items-center gap-1.5 rounded-full border border-brand-orange/70 bg-base-black px-6 py-3.5 text-sm font-bold text-base-white shadow-glow-sm transition-all duration-200 hover:scale-105 hover:border-brand-orange hover:bg-base-dark hover:shadow-glow active:scale-95 active:shadow-none sm:px-7 sm:py-4 sm:text-base"
                     >
                       {banner.boton_texto}
                       <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">

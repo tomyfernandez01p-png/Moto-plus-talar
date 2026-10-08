@@ -59,7 +59,7 @@ export function CookieConsent({ texto }: { texto: string | null }) {
           </button>
           <button
             onClick={() => guardar("aceptado")}
-            className="rounded-lg bg-brand-orange px-4 py-1.5 text-xs font-semibold text-white"
+            className="rounded-lg border border-brand-orange/70 bg-base-black px-4 py-1.5 text-xs font-semibold text-base-white transition-all duration-200 hover:border-brand-orange hover:bg-base-dark active:scale-95"
           >
             Aceptar
           </button>
