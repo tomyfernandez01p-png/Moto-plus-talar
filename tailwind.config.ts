@@ -120,6 +120,12 @@ const config: Config = {
         "glow-breathe": "glow-breathe 3.5s ease-in-out infinite",
         marquee: "marquee 28s linear infinite",
         "marquee-slow": "marquee 50s linear infinite",
+        // Dedicada a la tira de marcas (bastantes ítems chicos uno al lado
+        // del otro): a 50s todavía pasaban rápido por la cantidad de
+        // marcas. 85s dedicados (sin afectar la velocidad de las reseñas,
+        // que comparten `marquee-slow`) -- pedido explícito del usuario:
+        // "muy rápido, que vayan pasando más lento".
+        "marquee-brands": "marquee 85s linear infinite",
         "float-y": "float-y 4s ease-in-out infinite",
       },
     },

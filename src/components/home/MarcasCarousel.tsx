@@ -50,11 +50,14 @@ function TarjetaMarca({ marca, oculta }: { marca: Marca; oculta?: boolean }) {
  * pasando" -- ya se traían TODAS las marcas activas (sin límite, ver
  * page.tsx), solo faltaba el movimiento. Tira infinita con la lista
  * duplicada una vez (truco estándar de marquee: al llegar a -50% se ve
- * idéntico al arranque, el corte no se nota). Usa `animate-marquee-slow`
- * (50s, la misma velocidad que las reseñas) en vez de la original de 28s
- * -- pedido explícito del usuario: "bajale la velocidad que sea legible".
- * Se pausa al pasar el mouse o tocar (no se pierde una marca por apuro) y
- * respeta "reducir movimiento" del sistema operativo.
+ * idéntico al arranque, el corte no se nota). Usa `animate-marquee-brands`
+ * (85s, dedicada -- ver tailwind.config.ts) en vez de la original de 28s:
+ * con ~24 marcas en pantalla, a 50s todavía pasaban rápido, así que se
+ * bajó más (pedido explícito del usuario, dos veces: "muy rápido, que
+ * vayan pasando más lento"). Es automática (CSS puro, no depende de que
+ * nadie interactúe) y se pausa solo al pasar el mouse o tocar -- no se
+ * pierde una marca por apuro -- y respeta "reducir movimiento" del
+ * sistema operativo.
  */
 export function MarcasCarousel({ marcas }: { marcas: Marca[] }) {
   if (marcas.length === 0) return null;
@@ -64,7 +67,7 @@ export function MarcasCarousel({ marcas }: { marcas: Marca[] }) {
     <section className="mx-auto max-w-7xl px-4 py-10 md:px-6">
       <SectionHeader titulo="Todas nuestras marcas" verTodoHref="/marcas" />
       <div className="fade-edge-x group -mx-4 overflow-hidden px-4 md:-mx-6 md:px-6">
-        <div className="flex w-max animate-marquee-slow gap-4 py-1 group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused] motion-reduce:animate-none">
+        <div className="flex w-max animate-marquee-brands gap-4 py-1 group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused] motion-reduce:animate-none">
           {marcasDuplicadas.map((m, i) => (
             <TarjetaMarca key={`${m.slug}-${i}`} marca={m} oculta={i >= marcas.length} />
           ))}
