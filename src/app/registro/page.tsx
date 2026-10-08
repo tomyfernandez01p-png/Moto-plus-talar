@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { ButtonLink } from "@/components/ui/Button";
 
 export default function RegistroPage() {
   const router = useRouter();
@@ -45,6 +46,20 @@ export default function RegistroPage() {
         <h1 className="mb-2 text-xl font-bold text-base-white">Confirmá tu email</h1>
         <p className="text-sm text-base-muted">
           Te enviamos un link de confirmación a {email}. Una vez confirmado ya podés ingresar.
+        </p>
+        {/* Pedido del usuario: un botón que lleve directo a Gmail desde
+            acá, para no tener que buscar el mail por su cuenta. */}
+        <ButtonLink
+          href="https://mail.google.com/mail/u/0/#inbox"
+          target="_blank"
+          rel="noopener noreferrer"
+          size="lg"
+          className="mx-auto mt-6"
+        >
+          Abrir Gmail
+        </ButtonLink>
+        <p className="mt-4 text-xs text-base-muted">
+          ¿Usás otro correo? Buscá el mail de Moto Plus Talar en la bandeja de entrada de {email} (revisá también spam).
         </p>
       </div>
     );

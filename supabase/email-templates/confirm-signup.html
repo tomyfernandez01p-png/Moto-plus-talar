@@ -1,0 +1,47 @@
+<!--
+  Template para Authentication > Email Templates > "Confirm signup" en el
+  dashboard de Supabase (https://supabase.com/dashboard/project/cvaucmbaqksgspwyyajg/auth/templates).
+
+  Este archivo es solo DE REFERENCIA: Supabase no lee este archivo del repo
+  automáticamente (no hay supabase/config.toml con [auth.email.template]
+  configurado para apuntar acá). Para aplicarlo hay que copiar el contenido
+  de abajo y pegarlo a mano en esa pantalla del dashboard.
+
+  El link usa el endpoint propio /auth/confirm (src/app/auth/confirm/route.ts,
+  agregado en este mismo cambio) en vez del {{ .ConfirmationURL }} por
+  defecto, para que --tal como pidió el usuario-- después de confirmar el
+  mail la persona vuelva al sitio (a /cuenta) ya con la sesión iniciada, en
+  vez de quedar en una pantalla de Supabase.
+
+  IMPORTANTE: {{ .SiteURL }} es la "Site URL" configurada en Authentication >
+  URL Configuration del proyecto de Supabase -- no se arma dinámicamente
+  por entorno. Si hoy apunta a producción (motoplustalar.com.ar) y se prueba
+  el registro en un preview de Vercel, el link del mail va a mandar al
+  usuario a producción, no al preview. Para probar este flujo completo en
+  un preview hay que cambiar esa Site URL temporalmente (o agregar el
+  dominio del preview en "Redirect URLs").
+-->
+
+Asunto: Confirmá tu cuenta en Moto Plus Talar
+
+<h2 style="font-family:sans-serif;color:#17120c;">Confirmá tu cuenta</h2>
+<p style="font-family:sans-serif;color:#333;font-size:15px;">
+  ¡Gracias por registrarte en Moto Plus Talar! Para activar tu cuenta,
+  tocá el siguiente botón:
+</p>
+<p style="text-align:center;margin:28px 0;">
+  <a
+    href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/cuenta"
+    style="display:inline-block;padding:14px 28px;background-color:#FF6A00;color:#ffffff;
+           font-weight:bold;text-decoration:none;border-radius:10px;font-family:sans-serif;font-size:15px;"
+  >
+    Confirmar mi cuenta
+  </a>
+</p>
+<p style="font-family:sans-serif;color:#888;font-size:12px;">
+  Si el botón no funciona, copiá y pegá este link en tu navegador:<br />
+  {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/cuenta
+</p>
+<p style="font-family:sans-serif;color:#888;font-size:12px;">
+  Si no creaste esta cuenta, podés ignorar este mensaje.
+</p>

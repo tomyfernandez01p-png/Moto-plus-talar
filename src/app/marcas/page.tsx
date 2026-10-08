@@ -26,31 +26,34 @@ export default async function MarcasPage() {
       <h1 className="mb-1 text-2xl font-bold text-base-white">Marcas</h1>
       <p className="mb-2 text-sm text-base-muted">Las marcas con las que trabajamos.</p>
       {marcas && marcas.length > 0 ? (
-        <div className="grid grid-cols-2 gap-3 pt-4 sm:grid-cols-3 md:grid-cols-5">
+        // Pedido del usuario: solo logo + nombre, sin tarjeta/fondo
+        // alrededor (antes tenía una tarjeta clara bg-neutral-100), igual
+        // que la tira de marcas de la Home.
+        <div className="grid grid-cols-3 gap-y-6 pt-4 sm:grid-cols-4 md:grid-cols-6">
           {marcas.map((m) => (
             <Link
               key={m.slug}
               href={`/marca/${m.slug}`}
-              className="group relative flex h-24 items-center justify-center rounded-2xl border border-transparent bg-neutral-100 p-4 shadow-card transition-all duration-200 ease-smooth hover:-translate-y-0.5 hover:border-brand-orange hover:shadow-card-hover"
+              className="group flex h-24 flex-col items-center justify-center gap-2 transition-transform duration-200 ease-smooth hover:-translate-y-0.5"
             >
               {m.logo_url ? (
-                <Image
-                  src={m.logo_url}
-                  alt={m.nombre}
-                  fill
-                  unoptimized={isDataUrl(m.logo_url)}
-                  className="object-contain p-2 transition-transform duration-200 ease-smooth group-hover:scale-110"
-                />
-              ) : (
-                <div className="flex flex-col items-center justify-center gap-1.5 transition-transform duration-200 ease-smooth group-hover:scale-105">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-orange/15 text-base font-extrabold text-brand-orange">
-                    {m.nombre.slice(0, 2).toUpperCase()}
-                  </span>
-                  <span className="max-w-[100px] truncate text-center text-xs font-semibold text-neutral-700">
-                    {m.nombre}
-                  </span>
+                <div className="relative h-12 w-full transition-transform duration-200 ease-smooth group-hover:scale-110">
+                  <Image
+                    src={m.logo_url}
+                    alt=""
+                    fill
+                    unoptimized={isDataUrl(m.logo_url)}
+                    className="object-contain"
+                  />
                 </div>
+              ) : (
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-orange/15 text-base font-extrabold text-brand-orange transition-transform duration-200 ease-smooth group-hover:scale-110">
+                  {m.nombre.slice(0, 2).toUpperCase()}
+                </span>
               )}
+              <span className="max-w-[120px] truncate text-center text-xs font-semibold text-base-muted transition-colors duration-200 group-hover:text-base-white">
+                {m.nombre}
+              </span>
             </Link>
           ))}
         </div>
