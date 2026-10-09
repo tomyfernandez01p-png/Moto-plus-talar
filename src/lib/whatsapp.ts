@@ -16,6 +16,12 @@ export function mensajeCompatibilidad(producto: Pick<Producto, "nombre" | "codig
   return `Hola Moto Plus Talar, quiero saber si el producto "${producto.nombre}" (Código: ${producto.codigo}) sirve para mi moto.`;
 }
 
+/** Consulta por compatibilidad cuando todavía no hay productos cargados para esa moto. */
+export function mensajeCompatibilidadMoto(moto: { marca: string; modelo?: string; anio?: string | number }) {
+  const detalle = [moto.marca, moto.modelo, moto.anio].filter(Boolean).join(" ");
+  return `Hola Moto Plus Talar, tengo una ${detalle} y quiero saber qué repuestos tienen compatibles.`;
+}
+
 export function mensajeGenerico() {
   return "Hola Moto Plus Talar, quiero hacer una consulta.";
 }

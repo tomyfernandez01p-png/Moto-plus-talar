@@ -35,6 +35,16 @@ html {
 
 body {
   background-color: rgb(var(--color-base-black));
+  /* Fondo con profundidad (sin zonas planas enormes): dos resplandores
+     naranja muy sutiles + una retícula diagonal casi invisible. Se repite
+     cada 1400px en vertical para que las páginas largas no queden vacías
+     más abajo. Todo con alpha bajo: el contraste del texto no cambia. */
+  background-image:
+    radial-gradient(ellipse 60% 420px at 0% 0%, rgba(255, 106, 0, 0.07), transparent 70%),
+    radial-gradient(ellipse 55% 380px at 100% 55%, rgba(255, 106, 0, 0.05), transparent 70%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 22px);
+  background-size: 100% 1400px, 100% 1400px, auto;
+  background-repeat: repeat-y, repeat-y, repeat;
   color: rgb(var(--color-base-white));
   overflow-x: hidden;
   transition: background-color 0.2s ease, color 0.2s ease;

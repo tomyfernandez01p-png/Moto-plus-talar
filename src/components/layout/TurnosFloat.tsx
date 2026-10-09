@@ -6,7 +6,9 @@ import { usePathname } from "next/navigation";
 import { IconWrench, IconClose } from "@/components/ui/Icons";
 
 const UMBRAL_SCROLL_PX = 480;
-const RUTAS_OCULTAS = ["/mecanica", "/login", "/registro"];
+// Además de las pantallas de una sola tarea: en carrito, checkout y ficha de
+// producto el aviso flotante competía con el precio y el botón de comprar.
+const RUTAS_OCULTAS = ["/mecanica", "/login", "/registro", "/carrito", "/checkout"];
 
 /**
  * Botón flotante que aparece al bajar en la página (pedido del usuario:
@@ -40,6 +42,7 @@ export function TurnosFloat() {
 
   if (pathname?.startsWith("/admin")) return null;
   if (RUTAS_OCULTAS.some((r) => pathname === r)) return null;
+  if (pathname?.startsWith("/producto/")) return null;
 
   const mostrar = visible && !cerrado;
 

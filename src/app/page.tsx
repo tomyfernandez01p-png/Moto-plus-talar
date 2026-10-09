@@ -14,6 +14,7 @@ import { GoogleReviews } from "@/components/home/GoogleReviews";
 import { StoreLocation } from "@/components/home/StoreLocation";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { formatPrecio } from "@/lib/format";
+import { esFotoReal } from "@/lib/utils";
 
 export const revalidate = 60;
 
@@ -113,6 +114,10 @@ export default async function HomePage() {
       .filter((p) => p.precio_anterior && p.precio_anterior > p.precio_vigente)
       .map((p) => Math.round((1 - p.precio_vigente / p.precio_anterior!) * 100));
     const descuentoMaximo = descuentosReales.length > 0 ? Math.max(...descuentosReales) : null;
+    // Foto real de un producto en oferta (si alguno ya tiene foto subida).
+    const fotoOferta = (ofertas ?? []).find(
+      (p) => p.precio_anterior && p.precio_anterior > p.precio_vigente && esFotoReal(p.imagen_principal_url)
+    )?.imagen_principal_url;
     const envioGratisDesde = config.metodos_envio?.envio_gratis_desde;
 
     const respaldo: BannerCarouselItem[] = [];
@@ -122,6 +127,7 @@ export default async function HomePage() {
         titulo: "Ofertas de la semana",
         descripcion: `Hasta ${descuentoMaximo}% OFF en productos seleccionados.`,
         imagen_url: null,
+        imagen_producto_url: fotoOferta ?? null,
         icono: "oferta",
         boton_texto: "Ver ofertas",
         boton_url: "/productos?oferta=1",

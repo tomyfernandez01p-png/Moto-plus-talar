@@ -1,12 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "mpt_cookie_consent";
 
 export function CookieConsent({ texto }: { texto: string | null }) {
   const [visible, setVisible] = useState(false);
   const [config, setConfig] = useState(false);
+  const pathname = usePathname();
+  const conBarraInferior = !(
+    pathname?.startsWith("/admin") ||
+    pathname === "/login" ||
+    pathname === "/registro"
+  );
 
   useEffect(() => {
     try {
@@ -29,7 +37,16 @@ export function CookieConsent({ texto }: { texto: string | null }) {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-base-border bg-base-dark/98 p-4 backdrop-blur">
+    <div
+      className={cn(
+        "fixed inset-x-0 z-50 border-t border-base-border bg-base-dark/98 p-4 backdrop-blur",
+        // En mobile se apoya ARRIBA de la barra inferior (4rem + zona
+        // segura) en vez de taparla: la navegación tiene que seguir
+        // accesible mientras el aviso está visible. Donde no hay barra
+        // (login, registro, admin) queda pegado abajo.
+        conBarraInferior ? "bottom-[calc(4rem+env(safe-area-inset-bottom))] md:bottom-0" : "bottom-0"
+      )}
+    >
       <div className="mx-auto flex max-w-5xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-base-muted">
           {texto ?? "Usamos cookies para mejorar tu experiencia."}

@@ -37,23 +37,27 @@ export default async function MarcasPage() {
               className="group flex h-24 flex-col items-center justify-center gap-2 transition-transform duration-200 ease-smooth hover:-translate-y-0.5"
             >
               {m.logo_url ? (
-                <div className="relative h-12 w-full transition-transform duration-200 ease-smooth group-hover:scale-110">
-                  <Image
-                    src={m.logo_url}
-                    alt=""
-                    fill
-                    unoptimized={isDataUrl(m.logo_url)}
-                    className="object-contain"
-                  />
-                </div>
+                <>
+                  <div className="relative h-12 w-full transition-transform duration-200 ease-smooth group-hover:scale-110">
+                    <Image
+                      src={m.logo_url}
+                      alt=""
+                      fill
+                      unoptimized={isDataUrl(m.logo_url)}
+                      className="object-contain"
+                    />
+                  </div>
+                  <span className="max-w-[120px] truncate text-center text-xs font-semibold text-base-muted transition-colors duration-200 group-hover:text-base-white">
+                    {m.nombre}
+                  </span>
+                </>
               ) : (
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-orange/15 text-base font-extrabold text-brand-orange transition-transform duration-200 ease-smooth group-hover:scale-110">
-                  {m.nombre.slice(0, 2).toUpperCase()}
+                // Sin logo oficial cargado: nombre de la marca como wordmark
+                // limpio, sin iniciales inventadas.
+                <span className="max-w-[130px] truncate text-center text-sm font-extrabold uppercase tracking-wider text-base-white/80 transition-colors duration-200 group-hover:text-brand-orange">
+                  {m.nombre}
                 </span>
               )}
-              <span className="max-w-[120px] truncate text-center text-xs font-semibold text-base-muted transition-colors duration-200 group-hover:text-base-white">
-                {m.nombre}
-              </span>
             </Link>
           ))}
         </div>

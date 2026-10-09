@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
@@ -13,6 +13,15 @@ import { CartProvider } from "@/lib/cart/cart-context";
 import { FavoritosProvider } from "@/lib/favoritos/FavoritosProvider";
 import { getConfiguracion } from "@/lib/config.server";
 import { jsonLdScript } from "@/lib/json-ld";
+
+// `viewportFit: "cover"` es lo que hace que env(safe-area-inset-bottom) valga
+// algo real en Android/iOS con gestos o notch: sin esto la barra inferior
+// calculaba 0px de margen seguro y quedaba pegada a la barra del sistema.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getConfiguracion();

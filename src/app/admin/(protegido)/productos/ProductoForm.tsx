@@ -3,12 +3,17 @@
 import { useState } from "react";
 import Image from "next/image";
 import { guardarProductoAction } from "./actions";
+import { CompatibilidadEditor } from "./CompatibilidadEditor";
 import type { Database } from "@/types/database";
 
 type Producto = Database["public"]["Tables"]["productos"]["Row"];
 type Categoria = Pick<Database["public"]["Tables"]["categorias"]["Row"], "id" | "nombre">;
 type Marca = Pick<Database["public"]["Tables"]["marcas"]["Row"], "id" | "nombre">;
 type Compatibilidad = Database["public"]["Tables"]["producto_compatibilidad"]["Row"];
+type MotoCatalogo = Pick<
+  Database["public"]["Tables"]["motos"]["Row"],
+  "marca" | "modelo" | "anio_desde" | "anio_hasta" | "cilindrada"
+>;
 
 const inputClass =
   "w-full rounded-lg border border-base-border bg-base-dark px-3 py-2.5 text-sm text-base-white placeholder:text-base-muted focus:border-brand-orange focus:outline-none";
@@ -19,11 +24,13 @@ export function ProductoForm({
   categorias,
   marcas,
   compatibilidad,
+  motos,
 }: {
   producto?: Producto;
   categorias: Categoria[];
   marcas: Marca[];
   compatibilidad?: Compatibilidad[];
+  motos?: MotoCatalogo[];
 }) {
   const [error, setError] = useState<string | null>(null);
   const [guardando, setGuardando] = useState(false);
@@ -32,9 +39,13 @@ export function ProductoForm({
     .map((c) => `${c.label}: ${c.value}`)
     .join("\n");
 
-  const compatTexto = (compatibilidad ?? [])
-    .map((c) => [c.marca_moto, c.modelo_moto, c.anio_desde, c.anio_hasta, c.cilindrada].join(";"))
-    .join("\n");
+  const compatInicial = (compatibilidad ?? []).map((c) => ({
+    marca: c.marca_moto ?? "",
+    modelo: c.modelo_moto ?? "",
+    desde: c.anio_desde?.toString() ?? "",
+    hasta: c.anio_hasta?.toString() ?? "",
+    cc: c.cilindrada?.toString() ?? "",
+  }));
 
   async function onSubmit(formData: FormData) {
     setError(null);
@@ -163,10 +174,8 @@ export function ProductoForm({
           <textarea name="caracteristicas" rows={4} defaultValue={caracteristicasTexto} className={inputClass} placeholder={"Marca: Motul\nContenido: 1L"} />
         </div>
         <div>
-          <label className={labelClass}>
-            Compatibilidad (una por línea: <code>Marca;Modelo;AñoDesde;AñoHasta;Cilindrada</code>)
-          </label>
-          <textarea name="compatibilidad" rows={4} defaultValue={compatTexto} className={inputClass} placeholder={"Honda;Wave;2010;2023;110\nYamaha;YBR;2015;2024;125"} />
+          <label className={labelClass}>Compatibilidad con motos</label>
+          <CompatibilidadEditor motos={motos ?? []} inicial={compatInicial} />
         </div>
         <div>
           <label className={labelClass}>Tags (separados por coma)</label>

@@ -21,26 +21,28 @@ function TarjetaMarca({ marca, oculta }: { marca: Marca; oculta?: boolean }) {
       className="group flex h-20 w-28 shrink-0 flex-col items-center justify-center gap-1.5 transition-transform duration-200 ease-smooth hover:-translate-y-0.5"
     >
       {marca.logo_url ? (
-        <div className="relative h-10 w-full transition-transform duration-200 ease-smooth group-hover:scale-110">
-          <Image
-            src={marca.logo_url}
-            alt=""
-            fill
-            unoptimized={isDataUrl(marca.logo_url)}
-            className="object-contain"
-          />
-        </div>
+        <>
+          <div className="relative h-10 w-full transition-transform duration-200 ease-smooth group-hover:scale-110">
+            <Image
+              src={marca.logo_url}
+              alt=""
+              fill
+              unoptimized={isDataUrl(marca.logo_url)}
+              className="object-contain"
+            />
+          </div>
+          <span className="max-w-[108px] truncate text-[11px] font-semibold text-base-muted transition-colors duration-200 group-hover:text-base-white">
+            {marca.nombre}
+          </span>
+        </>
       ) : (
-        // Sin logo todavía (ninguna marca tiene `logo_url` cargado hoy):
-        // un monograma con la inicial real de la marca en vez de un
-        // nombre chiquito perdido en una caja vacía.
-        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-orange/15 text-sm font-extrabold text-brand-orange transition-transform duration-200 ease-smooth group-hover:scale-110">
-          {marca.nombre.slice(0, 2).toUpperCase()}
+        // Sin logo oficial cargado todavía: solo el nombre de la marca como
+        // wordmark limpio (sin iniciales inventadas ni círculos). Apenas se
+        // sube el logo desde /admin/marcas, esta rama deja de usarse.
+        <span className="max-w-[112px] truncate text-center text-sm font-extrabold uppercase tracking-wider text-base-white/80 transition-colors duration-200 group-hover:text-brand-orange">
+          {marca.nombre}
         </span>
       )}
-      <span className="max-w-[108px] truncate text-[11px] font-semibold text-base-muted transition-colors duration-200 group-hover:text-base-white">
-        {marca.nombre}
-      </span>
     </Link>
   );
 }

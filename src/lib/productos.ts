@@ -17,6 +17,48 @@ export interface FiltrosProductos {
 
 const PAGE_SIZE = 24;
 
+const normalizar = (t: string | null | undefined) =>
+  (t ?? "").toLowerCase().replace(/\s+/g, " ").trim();
+
+/**
+ * IDs de productos con compatibilidad REAL cargada para la moto elegida.
+ * Coincide por `moto_id` (catálogo `motos`) o, si la fila se cargó solo con
+ * texto, por marca + modelo normalizados (sin distinguir mayúsculas ni
+ * espacios dobles). Una fila sin año desde/hasta se interpreta como "el
+ * admin no acotó el rango" (vale para cualquier año); si SÍ tiene rango, el
+ * año elegido debe caer dentro. Nunca se asume compatibilidad que no esté
+ * cargada.
+ */
+async function productosCompatiblesConMoto(marca: string, modelo?: string, anio?: number): Promise<string[]> {
+  const supabase = createClient();
+  const marcaN = normalizar(marca);
+  const modeloN = normalizar(modelo);
+
+  const { data: motos } = await supabase.from("motos").select("id, marca, modelo");
+  const motoIds = (motos ?? [])
+    .filter((m) => normalizar(m.marca) === marcaN && (!modeloN || normalizar(m.modelo) === modeloN))
+    .map((m) => m.id);
+
+  const { data: filas } = await supabase
+    .from("producto_compatibilidad")
+    .select("producto_id, moto_id, marca_moto, modelo_moto, anio_desde, anio_hasta");
+
+  const ids = (filas ?? [])
+    .filter((f) => {
+      const porMoto = f.moto_id != null && motoIds.includes(f.moto_id);
+      const porTexto =
+        normalizar(f.marca_moto) === marcaN && (!modeloN || normalizar(f.modelo_moto) === modeloN);
+      if (!porMoto && !porTexto) return false;
+      if (anio) {
+        if (f.anio_desde != null && anio < f.anio_desde) return false;
+        if (f.anio_hasta != null && anio > f.anio_hasta) return false;
+      }
+      return true;
+    })
+    .map((f) => f.producto_id);
+  return Array.from(new Set(ids));
+}
+
 export async function buscarProductos(filtros: FiltrosProductos) {
   const supabase = createClient();
   const pagina = Math.max(1, filtros.pagina ?? 1);
@@ -28,18 +70,11 @@ export async function buscarProductos(filtros: FiltrosProductos) {
   // producto_id compatibles y después filtramos vista_productos por ese set.
   let idsCompatibles: string[] | null = null;
   if (filtros.marcaMoto) {
-    let compatQuery = supabase
-      .from("producto_compatibilidad")
-      .select("producto_id")
-      .ilike("marca_moto", filtros.marcaMoto);
-    if (filtros.modeloMoto) compatQuery = compatQuery.ilike("modelo_moto", filtros.modeloMoto);
-    if (filtros.anioMoto) {
-      compatQuery = compatQuery
-        .lte("anio_desde", filtros.anioMoto)
-        .gte("anio_hasta", filtros.anioMoto);
-    }
-    const { data } = await compatQuery;
-    idsCompatibles = Array.from(new Set((data ?? []).map((d) => d.producto_id)));
+    idsCompatibles = await productosCompatiblesConMoto(
+      filtros.marcaMoto,
+      filtros.modeloMoto,
+      filtros.anioMoto
+    );
     if (idsCompatibles.length === 0) {
       return { productos: [], total: 0, pagina, porPagina };
     }

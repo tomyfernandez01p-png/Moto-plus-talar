@@ -5,12 +5,13 @@ import { eliminarProductoAction } from "../actions";
 
 export default async function EditarProductoPage({ params }: { params: { id: string } }) {
   const supabase = createClient();
-  const [{ data: producto }, { data: categorias }, { data: marcas }, { data: compatibilidad }] =
+  const [{ data: producto }, { data: categorias }, { data: marcas }, { data: compatibilidad }, { data: motos }] =
     await Promise.all([
       supabase.from("productos").select("*").eq("id", params.id).maybeSingle(),
       supabase.from("categorias").select("id, nombre").order("nombre"),
       supabase.from("marcas").select("id, nombre").order("nombre"),
       supabase.from("producto_compatibilidad").select("*").eq("producto_id", params.id),
+      supabase.from("motos").select("marca, modelo, anio_desde, anio_hasta, cilindrada").eq("activo", true).order("marca").order("modelo"),
     ]);
 
   if (!producto) notFound();
@@ -33,6 +34,7 @@ export default async function EditarProductoPage({ params }: { params: { id: str
         categorias={categorias ?? []}
         marcas={marcas ?? []}
         compatibilidad={compatibilidad ?? []}
+        motos={motos ?? []}
       />
     </div>
   );

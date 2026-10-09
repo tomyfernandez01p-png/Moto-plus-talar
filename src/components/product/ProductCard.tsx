@@ -8,7 +8,8 @@ import { Price } from "@/components/ui/Price";
 import { FavoritoButton } from "@/components/product/FavoritoButton";
 import { IconCart } from "@/components/ui/Icons";
 import { useCart } from "@/lib/cart/cart-context";
-import { cn, isDataUrl } from "@/lib/utils";
+import { cn, isDataUrl, esFotoReal } from "@/lib/utils";
+import { FotoFaltante } from "@/components/product/FotoFaltante";
 import type { Database } from "@/types/database";
 
 type VistaProducto = Database["public"]["Views"]["vista_productos"]["Row"];
@@ -20,20 +21,26 @@ export function ProductCard({ producto }: { producto: VistaProducto }) {
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-base-border bg-base-surface transition-all duration-300 ease-smooth hover:-translate-y-1 hover:border-brand-orange/50 hover:shadow-card-hover">
-      <Link href={`/producto/${producto.slug}`} className="relative block aspect-square bg-base-dark">
-        {producto.imagen_principal_url ? (
+      <Link
+        href={`/producto/${producto.slug}`}
+        className={cn(
+          "relative block aspect-square",
+          esFotoReal(producto.imagen_principal_url) ? "bg-white" : "bg-base-dark"
+        )}
+      >
+        {esFotoReal(producto.imagen_principal_url) ? (
+          // object-contain + padding: la foto se ve COMPLETA y centrada
+          // (object-cover recortaba los bordes del producto).
           <Image
             src={producto.imagen_principal_url}
             alt={producto.nombre}
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
             unoptimized={isDataUrl(producto.imagen_principal_url)}
-            className="object-cover transition-transform duration-500 ease-smooth group-hover:scale-110"
+            className="object-contain p-3 transition-transform duration-500 ease-smooth group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-base-muted">
-            Sin imagen
-          </div>
+          <FotoFaltante compacto />
         )}
         {/* overlay sutil para que los badges/corazón siempre se lean, incluso sobre fotos claras */}
         <div

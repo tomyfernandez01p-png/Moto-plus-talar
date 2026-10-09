@@ -130,14 +130,36 @@ export async function guardarProductoAction(formData: FormData) {
     productoId = data.id;
   }
 
+  // La galería de la ficha lee `producto_imagenes`, no `productos`: si solo se
+  // actualizara `imagen_principal_url`, la ficha seguiría mostrando el SVG
+  // genérico viejo. Al subir una foto real se vincula a ESTE producto (queda
+  // primera en la galería) y se retira únicamente el placeholder embebido de
+  // este mismo producto -- nunca fotos de otros productos ni fotos reales.
+  if (imagenPrincipalUrl && productoId) {
+    await supabase.from("producto_imagenes").delete().eq("producto_id", productoId).like("url", "data:image/svg%");
+    await supabase
+      .from("producto_imagenes")
+      .insert({ producto_id: productoId, url: imagenPrincipalUrl, alt_text: datos.nombre, orden: 0 });
+  }
+
   // compatibilidad: reemplaza todo el set (simple y predecible para el admin)
   const compatTexto = String(formData.get("compatibilidad") || "");
   await supabase.from("producto_compatibilidad").delete().eq("producto_id", productoId!);
   const filasCompat = parseCompatibilidad(compatTexto);
   if (filasCompat.length > 0) {
-    await supabase
-      .from("producto_compatibilidad")
-      .insert(filasCompat.map((f) => ({ ...f, producto_id: productoId! })));
+    // Si la moto existe en el catálogo `motos`, se vincula por moto_id (la
+    // coincidencia exacta por marca+modelo evita depender del texto libre).
+    const { data: catalogo } = await supabase.from("motos").select("id, marca, modelo");
+    const norm = (t: string | null) => (t ?? "").toLowerCase().replace(/\s+/g, " ").trim();
+    await supabase.from("producto_compatibilidad").insert(
+      filasCompat.map((f) => ({
+        ...f,
+        moto_id:
+          (catalogo ?? []).find((m) => norm(m.marca) === norm(f.marca_moto) && norm(m.modelo) === norm(f.modelo_moto))
+            ?.id ?? null,
+        producto_id: productoId!,
+      }))
+    );
   }
 
   revalidatePath("/admin/productos");

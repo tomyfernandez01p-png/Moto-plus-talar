@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { esFotoReal } from "@/lib/utils";
 import { ButtonLink } from "@/components/ui/Button";
 import { IconTag, IconArrowRight } from "@/components/ui/Icons";
 import type { Database } from "@/types/database";
@@ -17,6 +19,11 @@ export function OfferBanner({ productos }: { productos: VistaProducto[] }) {
 
   if (descuentos.length === 0) return null;
   const maximo = Math.max(...descuentos);
+  // Solo una foto REAL de un producto en oferta; sin ninguna, el banner queda
+  // limpio (sin imagen) en vez de mostrar un placeholder que simule una foto.
+  const foto = productos.find(
+    (p) => p.precio_anterior && p.precio_anterior > p.precio_vigente && esFotoReal(p.imagen_principal_url)
+  );
 
   return (
     <section className="mx-auto max-w-7xl px-4 pt-10 md:px-6">
@@ -26,17 +33,28 @@ export function OfferBanner({ productos }: { productos: VistaProducto[] }) {
           className="pointer-events-none absolute -left-10 -top-16 h-56 w-56 animate-glow-breathe rounded-full bg-brand-orange/25 blur-3xl"
         />
         <div className="relative flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 items-center gap-3">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-orange text-white shadow-glow-sm">
               <IconTag className="h-6 w-6" />
             </span>
-            <div>
+            <div className="min-w-0">
               <h2 className="text-2xl font-extrabold leading-none text-base-white md:text-3xl">
                 HASTA {maximo}% OFF
               </h2>
               <p className="mt-1 text-sm text-base-muted">Productos seleccionados, por tiempo limitado.</p>
             </div>
           </div>
+          {foto && esFotoReal(foto.imagen_principal_url) && (
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-white md:aspect-square md:w-40 md:shrink-0">
+              <Image
+                src={foto.imagen_principal_url}
+                alt={foto.nombre}
+                fill
+                sizes="(max-width: 768px) 100vw, 160px"
+                className="object-contain p-3"
+              />
+            </div>
+          )}
           <ButtonLink href="/productos?oferta=1" size="lg" className="w-full md:w-auto">
             Ver ofertas
             <IconArrowRight className="h-4 w-4" />

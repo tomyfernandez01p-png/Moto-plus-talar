@@ -20,6 +20,12 @@ export interface BannerCarouselItem {
    * una imagen de stock.
    */
   imagen_url: string | null;
+  /**
+   * Foto REAL de un producto (subida desde el admin) para ilustrar un slide
+   * de respaldo sin foto de campaña. Si no hay ninguna foto real todavía,
+   * queda null y el slide usa solo el ícono -- nunca una imagen inventada.
+   */
+  imagen_producto_url?: string | null;
   icono?: keyof typeof ICONOS;
   boton_texto: string | null;
   boton_url: string | null;
@@ -106,13 +112,25 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
                   className="bg-grain absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,106,0,0.28),transparent_60%)]"
                 >
                   <div className="absolute inset-0 bg-[linear-gradient(135deg,#17120c_0%,#151517_55%,#0a0a0b_100%)]" />
-                  {Icono && (
-                    <span
-                      aria-hidden
-                      className="absolute right-[6%] top-1/2 flex h-28 w-28 -translate-y-1/2 items-center justify-center rounded-full border border-brand-orange/25 bg-brand-orange/10 text-brand-orange/70 sm:h-36 sm:w-36"
-                    >
-                      <Icono className="h-12 w-12 sm:h-16 sm:w-16" />
-                    </span>
+                  {banner.imagen_producto_url ? (
+                    <div className="absolute right-5 top-6 h-32 w-32 overflow-hidden rounded-2xl bg-white shadow-card sm:right-[6%] sm:top-1/2 sm:h-56 sm:w-56 sm:-translate-y-1/2">
+                      <Image
+                        src={banner.imagen_producto_url}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 128px, 224px"
+                        className="object-contain p-3"
+                      />
+                    </div>
+                  ) : (
+                    Icono && (
+                      <span
+                        aria-hidden
+                        className="absolute right-[6%] top-1/2 flex h-28 w-28 -translate-y-1/2 items-center justify-center rounded-full border border-brand-orange/25 bg-brand-orange/10 text-brand-orange/70 sm:h-36 sm:w-36"
+                      >
+                        <Icono className="h-12 w-12 sm:h-16 sm:w-16" />
+                      </span>
+                    )
                   )}
                 </div>
               )}
