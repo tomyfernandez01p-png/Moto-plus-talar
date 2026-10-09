@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { isDataUrl } from "@/lib/utils";
+import { cn, isDataUrl, logoChipClass } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Marcas" };
 
@@ -38,7 +38,7 @@ export default async function MarcasPage() {
             >
               {m.logo_url ? (
                 <>
-                  <div className="relative h-12 w-full transition-transform duration-200 ease-smooth group-hover:scale-110">
+                  <div className={cn("relative h-12 w-full transition-transform duration-200 ease-smooth group-hover:scale-110", logoChipClass(m.logo_url))}>
                     <Image
                       src={m.logo_url}
                       alt=""

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { isDataUrl } from "@/lib/utils";
+import { cn, isDataUrl, logoChipClass } from "@/lib/utils";
 import { SectionHeader } from "./SectionHeader";
 
 interface Marca {
@@ -22,7 +22,7 @@ function TarjetaMarca({ marca, oculta }: { marca: Marca; oculta?: boolean }) {
     >
       {marca.logo_url ? (
         <>
-          <div className="relative h-10 w-full transition-transform duration-200 ease-smooth group-hover:scale-110">
+          <div className={cn("relative h-10 w-full transition-transform duration-200 ease-smooth group-hover:scale-110", logoChipClass(marca.logo_url))}>
             <Image
               src={marca.logo_url}
               alt=""

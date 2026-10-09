@@ -1,0 +1,706 @@
+{
+ "productos": [
+  {
+   "slug": "arandela-anodizada-bolsa-de-8-negro",
+   "archivo": "p/arandela-anodizada-bolsa-de-8-negro.jpg"
+  },
+  {
+   "slug": "arandela-anodizada-bolsa-de-8-azul",
+   "archivo": "p/arandela-anodizada-bolsa-de-8-azul.jpg"
+  },
+  {
+   "slug": "arandela-anodizada-bolsa-de-8-dorado",
+   "archivo": "p/arandela-anodizada-bolsa-de-8-dorado.jpg"
+  },
+  {
+   "slug": "arandela-anodizada-bolsa-de-8-plateado",
+   "archivo": "p/arandela-anodizada-bolsa-de-8-plateado.jpg"
+  },
+  {
+   "slug": "arandela-anodizada-bolsa-de-8-rosa",
+   "archivo": "p/arandela-anodizada-bolsa-de-8-rosa.jpg"
+  },
+  {
+   "slug": "arandela-anodizada-bolsa-de-8-verde",
+   "archivo": "p/arandela-anodizada-bolsa-de-8-verde.jpg"
+  },
+  {
+   "slug": "arandela-anodizada-bolsa-de-8-violeta",
+   "archivo": "p/arandela-anodizada-bolsa-de-8-violeta.jpg"
+  },
+  {
+   "slug": "barbijo-largo",
+   "archivo": "p/barbijo-largo.jpg"
+  },
+  {
+   "slug": "barbijo-corto",
+   "archivo": "p/barbijo-corto.jpg"
+  },
+  {
+   "slug": "balaclava",
+   "archivo": "p/balaclava.jpg"
+  },
+  {
+   "slug": "cargador-manilla-premium",
+   "archivo": "p/cargador-manilla-premium.jpg"
+  },
+  {
+   "slug": "cinta-amarre-zuncho-crique-y-gancho-retractil-automatico-protec-usa-800kg",
+   "archivo": "p/cinta-amarre-zuncho-crique-y-gancho-retractil-automatico-protec-usa-800kg.jpg"
+  },
+  {
+   "slug": "cinta-aisladora-hella-negra-18mm-x-9m",
+   "archivo": "p/cinta-aisladora-hella-negra-18mm-x-9m.jpg"
+  },
+  {
+   "slug": "corta-cadenas-de-moto-420-428-520",
+   "archivo": "p/corta-cadenas-de-moto-420-428-520.jpg"
+  },
+  {
+   "slug": "cinta-amarre-zuncho-crique-y-gancho-retractil-protec-usa-680kg",
+   "archivo": "p/cinta-amarre-zuncho-crique-y-gancho-retractil-protec-usa-680kg.jpg"
+  },
+  {
+   "slug": "cubremanos-flotante-wirtz-shock-mx-atv-rojo",
+   "archivo": "p/cubremanos-flotante-wirtz-shock-mx-atv-rojo.jpg"
+  },
+  {
+   "slug": "faro-trasero-universal-para-tornado-skua-etc",
+   "archivo": "p/faro-trasero-universal-para-tornado-skua-etc.jpg"
+  },
+  {
+   "slug": "faroles-led-db5-7-03-aluminio-fundido-a-presion-anillo-blanco-amarillo-ojo-de-demonio-rojo",
+   "archivo": "p/faroles-led-db5-7-03-aluminio-fundido-a-presion-anillo-blanco-amarillo-ojo-de-demonio-rojo.jpg"
+  },
+  {
+   "slug": "funda-cubre-moto-sny",
+   "archivo": "p/funda-cubre-moto-sny.jpg"
+  },
+  {
+   "slug": "intercomunicador-st-a1",
+   "archivo": "p/intercomunicador-st-a1.jpg"
+  },
+  {
+   "slug": "intercomunicador-st-a2",
+   "archivo": "p/intercomunicador-st-a2.jpg"
+  },
+  {
+   "slug": "intercomunicador-st-a4",
+   "archivo": "p/intercomunicador-st-a4.jpg"
+  },
+  {
+   "slug": "kit-30-unidades-cubre-tornillo-color-naranja",
+   "archivo": "p/kit-30-unidades-cubre-tornillo-color-naranja.jpg"
+  },
+  {
+   "slug": "kit-30-unidades-cubre-tornillo-color-negro",
+   "archivo": "p/kit-30-unidades-cubre-tornillo-color-negro.jpg"
+  },
+  {
+   "slug": "kit-30-unidades-cubre-tornillo-color-azul",
+   "archivo": "p/kit-30-unidades-cubre-tornillo-color-azul.jpg"
+  },
+  {
+   "slug": "kit-30-unidades-cubre-tornillo-color-plateado",
+   "archivo": "p/kit-30-unidades-cubre-tornillo-color-plateado.jpg"
+  },
+  {
+   "slug": "kit-30-unidades-cubre-tornillo-color-purpura",
+   "archivo": "p/kit-30-unidades-cubre-tornillo-color-purpura.jpg"
+  },
+  {
+   "slug": "kit-30-unidades-cubre-tornillo-color-rojo",
+   "archivo": "p/kit-30-unidades-cubre-tornillo-color-rojo.jpg"
+  },
+  {
+   "slug": "kit-30-unidades-cubre-tornillo-color-verde",
+   "archivo": "p/kit-30-unidades-cubre-tornillo-color-verde.jpg"
+  },
+  {
+   "slug": "led-posicion-largo-siliconado-amarillo",
+   "archivo": "p/led-posicion-largo-siliconado-amarillo.jpg"
+  },
+  {
+   "slug": "led-posicion-largo-siliconado-azul",
+   "archivo": "p/led-posicion-largo-siliconado-azul.jpg"
+  },
+  {
+   "slug": "led-posicion-largo-siliconado-rgb-con-control",
+   "archivo": "p/led-posicion-largo-siliconado-rgb-con-control.jpg"
+  },
+  {
+   "slug": "led-posicion-largo-siliconado-violeta",
+   "archivo": "p/led-posicion-largo-siliconado-violeta.jpg"
+  },
+  {
+   "slug": "led-posicion-largo-siliconado-verde",
+   "archivo": "p/led-posicion-largo-siliconado-verde.jpg"
+  },
+  {
+   "slug": "mangas-base",
+   "archivo": "p/mangas-base.jpg"
+  },
+  {
+   "slug": "mangas-para-110-y-scooter",
+   "archivo": "p/mangas-para-110-y-scooter.jpg"
+  },
+  {
+   "slug": "mangas-premium-con-polar",
+   "archivo": "p/mangas-premium-con-polar.jpg"
+  },
+  {
+   "slug": "pasamontana-algodon-lycra",
+   "archivo": "p/pasamontana-algodon-lycra.jpg"
+  },
+  {
+   "slug": "portapatente-grande-patente-mercosur-nueva-estructura-rigida-completa-incluye-tornillos-de",
+   "archivo": "p/portapatente-grande-patente-mercosur-nueva-estructura-rigida-completa-incluye-tornillos-de.jpg"
+  },
+  {
+   "slug": "red-pulpito-40x40-cm-x-4mm-color-negro",
+   "archivo": "p/red-pulpito-40x40-cm-x-4mm-color-negro.jpg"
+  },
+  {
+   "slug": "tarugos-jt-01a-100x6mm",
+   "archivo": "p/tarugos-jt-01a-100x6mm.jpg"
+  },
+  {
+   "slug": "tecla-on-off",
+   "archivo": "p/tecla-on-off.jpg"
+  },
+  {
+   "slug": "traba-disco-con-alarma-colores-surtidos",
+   "archivo": "p/traba-disco-con-alarma-colores-surtidos.jpg"
+  },
+  {
+   "slug": "traba-manubrio-freno-con-alarma",
+   "archivo": "p/traba-manubrio-freno-con-alarma.jpg"
+  },
+  {
+   "slug": "chaleco-reflectivo",
+   "archivo": "p/chaleco-reflectivo.jpg"
+  },
+  {
+   "slug": "cubremanos-flotante-wirtz-shock-mx-atv-blanco",
+   "archivo": "p/cubremanos-flotante-wirtz-shock-mx-atv-blanco.jpg"
+  },
+  {
+   "slug": "cubremanos-flotante-wirtz-shock-mx-atv-negro",
+   "archivo": "p/cubremanos-flotante-wirtz-shock-mx-atv-negro.jpg"
+  },
+  {
+   "slug": "soporte-de-celular-para-bicicletas-y-moto-al-espejo-grande",
+   "archivo": "p/soporte-de-celular-para-bicicletas-y-moto-al-espejo-grande.jpg"
+  },
+  {
+   "slug": "soporte-de-celular-para-bicicletas-y-moto-al-manubrio-grande",
+   "archivo": "p/soporte-de-celular-para-bicicletas-y-moto-al-manubrio-grande.jpg"
+  },
+  {
+   "slug": "aceite-motul-3000-20w50-mineral-1l-ace-mot-3000-20w50",
+   "archivo": "p/aceite-motul-3000-20w50-mineral-1l-ace-mot-3000-20w50.jpg"
+  },
+  {
+   "slug": "motul-5000-20w50-semi-sintetico",
+   "archivo": "p/motul-5000-20w50-semi-sintetico.jpg"
+  },
+  {
+   "slug": "motul-5100-tech-ester-4t-15w50-1l",
+   "archivo": "p/motul-5100-tech-ester-4t-15w50-1l.jpg"
+  },
+  {
+   "slug": "motul-7100-10w40-100-synthese-1l",
+   "archivo": "p/motul-7100-10w40-100-synthese-1l.jpg"
+  },
+  {
+   "slug": "motul-chain-lube-road-c4-400ml-lubrica-cadena",
+   "archivo": "p/motul-chain-lube-road-c4-400ml-lubrica-cadena.jpg"
+  },
+  {
+   "slug": "motul-refrigerante-moto-cool-expert-12x1-ex-inugel",
+   "archivo": "p/motul-refrigerante-moto-cool-expert-12x1-ex-inugel.jpg"
+  },
+  {
+   "slug": "motul-air-filter-spray-400ml",
+   "archivo": "p/motul-air-filter-spray-400ml.jpg"
+  },
+  {
+   "slug": "motul-chain-clean-400ml",
+   "archivo": "p/motul-chain-clean-400ml.jpg"
+  },
+  {
+   "slug": "castrol-10w40-part-syn-16x1",
+   "archivo": "p/castrol-10w40-part-syn-16x1.jpg"
+  },
+  {
+   "slug": "castrol-15w50-power-one-semi-sint",
+   "archivo": "p/castrol-15w50-power-one-semi-sint.jpg"
+  },
+  {
+   "slug": "castrol-20w50-actevo-mineral",
+   "archivo": "p/castrol-20w50-actevo-mineral.jpg"
+  },
+  {
+   "slug": "castrol-20w50-part-syn",
+   "archivo": "p/castrol-20w50-part-syn.jpg"
+  },
+  {
+   "slug": "castrol-2t-go-x100cc",
+   "archivo": "p/castrol-2t-go-x100cc.jpg"
+  },
+  {
+   "slug": "castrol-2t-go-x1l",
+   "archivo": "p/castrol-2t-go-x1l.jpg"
+  },
+  {
+   "slug": "castrol-power-1-4t-100-sintetico-10w50",
+   "archivo": "p/castrol-power-1-4t-100-sintetico-10w50.jpg"
+  },
+  {
+   "slug": "lubricante-de-cadena-chain-spray-o-r-castrol",
+   "archivo": "p/lubricante-de-cadena-chain-spray-o-r-castrol.jpg"
+  },
+  {
+   "slug": "aerosol-lubricante-para-cadenas-jarama-440-cc",
+   "archivo": "p/aerosol-lubricante-para-cadenas-jarama-440-cc.jpg"
+  },
+  {
+   "slug": "ama-4t-metal-5-20w50-mineral-api-sg-x1lt",
+   "archivo": "p/ama-4t-metal-5-20w50-mineral-api-sg-x1lt.jpg"
+  },
+  {
+   "slug": "ama-ampac-chain-lube-off-road-aerosol-388-cc",
+   "archivo": "p/ama-ampac-chain-lube-off-road-aerosol-388-cc.jpg"
+  },
+  {
+   "slug": "aceite-pro-honda-ex-hgo-mineral-10w30",
+   "archivo": "p/aceite-pro-honda-ex-hgo-mineral-10w30.jpg"
+  },
+  {
+   "slug": "ama-chain-cleaner-aerosol-x-388cc",
+   "archivo": "p/ama-chain-cleaner-aerosol-x-388cc.jpg"
+  },
+  {
+   "slug": "ama-fork-tuner-medium-x-500-cc",
+   "archivo": "p/ama-fork-tuner-medium-x-500-cc.jpg"
+  },
+  {
+   "slug": "castrol-20w50-essential-mineral",
+   "archivo": "p/castrol-20w50-essential-mineral.jpg"
+  },
+  {
+   "slug": "aceite-pro-honda-ex-hgo-semi-sintetico-10w30",
+   "archivo": "p/aceite-pro-honda-ex-hgo-semi-sintetico-10w30.jpg"
+  },
+  {
+   "slug": "aerosol-afloja-tuercas-jarama-440cc",
+   "archivo": "p/aerosol-afloja-tuercas-jarama-440cc.jpg"
+  },
+  {
+   "slug": "liquido-refrigerante-hellux-concentrado-x-1-litro-anticongelante-antocorrosivo-organico-ro",
+   "archivo": "p/liquido-refrigerante-hellux-concentrado-x-1-litro-anticongelante-antocorrosivo-organico-ro.jpg"
+  },
+  {
+   "slug": "aceite-mineral-motos-gulf-x-1-litro-pride-4t-20w-50-doy-pack",
+   "archivo": "p/aceite-mineral-motos-gulf-x-1-litro-pride-4t-20w-50-doy-pack.jpg"
+  },
+  {
+   "slug": "aceite-mineral-motos-valvoline-20w50",
+   "archivo": "p/aceite-mineral-motos-valvoline-20w50.jpg"
+  },
+  {
+   "slug": "fork-synthet-plus-grado-15-semisintetico-barral-horquilla",
+   "archivo": "p/fork-synthet-plus-grado-15-semisintetico-barral-horquilla.jpg"
+  },
+  {
+   "slug": "limpia-contactos-hellux-en-aerosol-440-cm3",
+   "archivo": "p/limpia-contactos-hellux-en-aerosol-440-cm3.jpg"
+  },
+  {
+   "slug": "aerosol-lubricante-para-cadenas-valvoline-500ml",
+   "archivo": "p/aerosol-lubricante-para-cadenas-valvoline-500ml.jpg"
+  },
+  {
+   "slug": "ama-fork-tuner-light-x-500-cc",
+   "archivo": "p/ama-fork-tuner-light-x-500-cc.jpg"
+  },
+  {
+   "slug": "aceite-bajaj-original-sintetico-10w50-1l",
+   "archivo": "p/aceite-bajaj-original-sintetico-10w50-1l.jpg"
+  },
+  {
+   "slug": "aceite-bajaj-original-mineral-20w50-1-2l",
+   "archivo": "p/aceite-bajaj-original-mineral-20w50-1-2l.jpg"
+  },
+  {
+   "slug": "filtro-aceite-bajaj-rouser-135-original",
+   "archivo": "p/filtro-aceite-bajaj-rouser-135-original.jpg"
+  },
+  {
+   "slug": "filtro-aceite-bajaj-rouser-ns-150-y-ns-160-original",
+   "archivo": "p/filtro-aceite-bajaj-rouser-ns-150-y-ns-160-original.jpg"
+  },
+  {
+   "slug": "filtro-de-aire-bajaj-rouser-n250-y-p150-original",
+   "archivo": "p/filtro-de-aire-bajaj-rouser-n250-y-p150-original.jpg"
+  },
+  {
+   "slug": "filtro-de-aire-bajaj-rouser-ns-200-carburador-original",
+   "archivo": "p/filtro-de-aire-bajaj-rouser-ns-200-carburador-original.jpg"
+  },
+  {
+   "slug": "filtro-de-aire-moto-bosch-bajaj-xcd125-xdc135",
+   "archivo": "p/filtro-de-aire-moto-bosch-bajaj-xcd125-xdc135.jpg"
+  },
+  {
+   "slug": "filtro-de-nafta-bajaj-rouser-rs-200-ns-200-fi-dominar-400-400ug-250-original",
+   "archivo": "p/filtro-de-nafta-bajaj-rouser-rs-200-ns-200-fi-dominar-400-400ug-250-original.jpg"
+  },
+  {
+   "slug": "filtro-aceite-bajaj-rouser-ns-200-original",
+   "archivo": "p/filtro-aceite-bajaj-rouser-ns-200-original.jpg"
+  },
+  {
+   "slug": "filtro-de-aire-moto-bosch-bajaj-pulsar-200-220",
+   "archivo": "p/filtro-de-aire-moto-bosch-bajaj-pulsar-200-220.jpg"
+  },
+  {
+   "slug": "filtro-de-nafta-bajaj-rouser-ns-200-original",
+   "archivo": "p/filtro-de-nafta-bajaj-rouser-ns-200-original.jpg"
+  },
+  {
+   "slug": "filtro-de-aire-bajaj-rouser-ns-160-rs-200-dominar-400-400ug-ns-200-fi-original",
+   "archivo": "p/filtro-de-aire-bajaj-rouser-ns-160-rs-200-dominar-400-400ug-ns-200-fi-original.jpg"
+  },
+  {
+   "slug": "filtro-malla-tapon-descarga-de-aceite-bajaj-rouser-135-ns-200-dominar-400-400ug-original",
+   "archivo": "p/filtro-malla-tapon-descarga-de-aceite-bajaj-rouser-135-ns-200-dominar-400-400ug-original.jpg"
+  },
+  {
+   "slug": "bomba-de-aceite-bajaj-rouser-ns-as-rs-200-original",
+   "archivo": "p/bomba-de-aceite-bajaj-rouser-ns-as-rs-200-original.jpg"
+  },
+  {
+   "slug": "acople-de-filtro-de-aire-bajaj-rouser-ns-as-200-original",
+   "archivo": "p/acople-de-filtro-de-aire-bajaj-rouser-ns-as-200-original.jpg"
+  },
+  {
+   "slug": "buje-union-de-escape-curva-silenciador-bajaj-dominar-400-ug-original",
+   "archivo": "p/buje-union-de-escape-curva-silenciador-bajaj-dominar-400-ug-original.jpg"
+  },
+  {
+   "slug": "buje-union-de-escape-curva-silenciador-bajaj-dominar-400-l-v-original",
+   "archivo": "p/buje-union-de-escape-curva-silenciador-bajaj-dominar-400-l-v-original.jpg"
+  },
+  {
+   "slug": "buje-union-de-escape-curva-silenciador-bajaj-rouser-ns-as-rs-200-original",
+   "archivo": "p/buje-union-de-escape-curva-silenciador-bajaj-rouser-ns-as-rs-200-original.jpg"
+  },
+  {
+   "slug": "bujia-bajaj-rouser-135-ns-125-150-160-boxer-150-original",
+   "archivo": "p/bujia-bajaj-rouser-135-ns-125-150-160-boxer-150-original.jpg"
+  },
+  {
+   "slug": "bujia-bajaj-rouser-central-ns-200-dominar-400-400ug-original",
+   "archivo": "p/bujia-bajaj-rouser-central-ns-200-dominar-400-400ug-original.jpg"
+  },
+  {
+   "slug": "bulbo-de-temperatura-bajaj-rouser-ns-200-as-200-rs-200-dominar-250-400-400-ug-original",
+   "archivo": "p/bulbo-de-temperatura-bajaj-rouser-ns-200-as-200-rs-200-dominar-250-400-400-ug-original.jpg"
+  },
+  {
+   "slug": "bulbo-sensor-de-embrague-bajaj-rouser-135-ns-200-as-200-original",
+   "archivo": "p/bulbo-sensor-de-embrague-bajaj-rouser-135-ns-200-as-200-original.jpg"
+  },
+  {
+   "slug": "bulbo-presion-de-aceite-bajaj-rouser-ns-150-160-original",
+   "archivo": "p/bulbo-presion-de-aceite-bajaj-rouser-ns-150-160-original.jpg"
+  },
+  {
+   "slug": "bulbo-presion-de-aceite-bajaj-rouser-220-ns-200-rs-200-dominar-250-400-400-ug-original",
+   "archivo": "p/bulbo-presion-de-aceite-bajaj-rouser-220-ns-200-rs-200-dominar-250-400-400-ug-original.jpg"
+  },
+  {
+   "slug": "bulbo-sensor-de-muleta-bajaj-rouser-ns-200-2-cables-original",
+   "archivo": "p/bulbo-sensor-de-muleta-bajaj-rouser-ns-200-2-cables-original.jpg"
+  },
+  {
+   "slug": "bulbo-sensor-de-temperatura-bajaj-rouser-135-original",
+   "archivo": "p/bulbo-sensor-de-temperatura-bajaj-rouser-135-original.jpg"
+  },
+  {
+   "slug": "bulbo-sensor-de-stop-bajaj-rouser-original",
+   "archivo": "p/bulbo-sensor-de-stop-bajaj-rouser-original.jpg"
+  },
+  {
+   "slug": "cable-de-acelerador-bajaj-dominar-250-400-400ug-original",
+   "archivo": "p/cable-de-acelerador-bajaj-dominar-250-400-400ug-original.jpg"
+  },
+  {
+   "slug": "bulbo-sensor-de-temperatura-bajaj-rouser-ns-125-160-original",
+   "archivo": "p/bulbo-sensor-de-temperatura-bajaj-rouser-ns-125-160-original.jpg"
+  },
+  {
+   "slug": "cable-de-acelerador-bajaj-rouser-ns-200-a-carburador-original",
+   "archivo": "p/cable-de-acelerador-bajaj-rouser-ns-200-a-carburador-original.jpg"
+  },
+  {
+   "slug": "cable-de-acelerador-bajaj-rouser-p-150-original",
+   "archivo": "p/cable-de-acelerador-bajaj-rouser-p-150-original.jpg"
+  },
+  {
+   "slug": "cable-de-velocimetro-con-reenvio-bajaj-rouser-ns-200-as-200-rs-200-original",
+   "archivo": "p/cable-de-velocimetro-con-reenvio-bajaj-rouser-ns-200-as-200-rs-200-original.jpg"
+  },
+  {
+   "slug": "cadena-distribucion-bajaj-rouser-135-boxer-150-original",
+   "archivo": "p/cadena-distribucion-bajaj-rouser-135-boxer-150-original.jpg"
+  },
+  {
+   "slug": "goma-de-maza-manchones-bajaj-rouser-135-180-220-ns-125-150-160-boxer-150-v15-original",
+   "archivo": "p/goma-de-maza-manchones-bajaj-rouser-135-180-220-ns-125-150-160-boxer-150-v15-original.jpg"
+  },
+  {
+   "slug": "cadena-distribucion-bajaj-rouser-ns-200-fi-original",
+   "archivo": "p/cadena-distribucion-bajaj-rouser-ns-200-fi-original.jpg"
+  },
+  {
+   "slug": "cadena-distribucion-bajaj-rouser-ns-125-original",
+   "archivo": "p/cadena-distribucion-bajaj-rouser-ns-125-original.jpg"
+  },
+  {
+   "slug": "goma-de-maza-manchones-bajaj-rouser-ns-as-rs-200-avenger-original",
+   "archivo": "p/goma-de-maza-manchones-bajaj-rouser-ns-as-rs-200-avenger-original.jpg"
+  },
+  {
+   "slug": "guia-tensor-cadena-distribucion-bajaj-rouser-ns-200-rs-as-original",
+   "archivo": "p/guia-tensor-cadena-distribucion-bajaj-rouser-ns-200-rs-as-original.jpg"
+  },
+  {
+   "slug": "guardapolvo-de-barral-suspension-bajaj-rouser-180-220-ns-as-rs-200-x1u-original",
+   "archivo": "p/guardapolvo-de-barral-suspension-bajaj-rouser-180-220-ns-as-rs-200-x1u-original.jpg"
+  },
+  {
+   "slug": "junta-tapa-de-encendido-bajaj-dominar-400-original",
+   "archivo": "p/junta-tapa-de-encendido-bajaj-dominar-400-original.jpg"
+  },
+  {
+   "slug": "junta-de-escape-bajaj-rouser-ns-200-dominar-400-cobre-original",
+   "archivo": "p/junta-de-escape-bajaj-rouser-ns-200-dominar-400-cobre-original.jpg"
+  },
+  {
+   "slug": "junta-oring-tapa-de-valvulas-bajaj-rouser-ns-150-160-original",
+   "archivo": "p/junta-oring-tapa-de-valvulas-bajaj-rouser-ns-150-160-original.jpg"
+  },
+  {
+   "slug": "junta-oring-tapa-valvulas-bajaj-dominar-400-l-v-original",
+   "archivo": "p/junta-oring-tapa-valvulas-bajaj-dominar-400-l-v-original.jpg"
+  },
+  {
+   "slug": "junta-oring-tapa-valvulas-bajaj-rouser-135-boxer-ns-125-original",
+   "archivo": "p/junta-oring-tapa-valvulas-bajaj-rouser-135-boxer-ns-125-original.jpg"
+  },
+  {
+   "slug": "junta-oring-tapa-valvulas-bajaj-dominar-400-ug-dominar-250-original",
+   "archivo": "p/junta-oring-tapa-valvulas-bajaj-dominar-400-ug-dominar-250-original.jpg"
+  },
+  {
+   "slug": "kit-cerraduras-tambor-tapa-y-cacha-bajaj-rouser-ns-200-as-200-original",
+   "archivo": "p/kit-cerraduras-tambor-tapa-y-cacha-bajaj-rouser-ns-200-as-200-original.jpg"
+  },
+  {
+   "slug": "kit-crapodinas-original-bajaj-rouser-ns-150-160-200-dominar-400-400ug-original",
+   "archivo": "p/kit-crapodinas-original-bajaj-rouser-ns-150-160-200-dominar-400-400ug-original.jpg"
+  },
+  {
+   "slug": "junta-oring-tapa-valvulas-bajaj-rouser-ns-200-original",
+   "archivo": "p/junta-oring-tapa-valvulas-bajaj-rouser-ns-200-original.jpg"
+  },
+  {
+   "slug": "kit-de-reparacion-bendix-bajaj-rouser-135-original",
+   "archivo": "p/kit-de-reparacion-bendix-bajaj-rouser-135-original.jpg"
+  },
+  {
+   "slug": "tapon-carga-de-aceite-bajaj-rouser-ns-200-dominar-400-400ug-original",
+   "archivo": "p/tapon-carga-de-aceite-bajaj-rouser-ns-200-dominar-400-400ug-original.jpg"
+  },
+  {
+   "slug": "kit-reparacion-bomba-de-agua-bajaj-rouser-ns-200-original",
+   "archivo": "p/kit-reparacion-bomba-de-agua-bajaj-rouser-ns-200-original.jpg"
+  },
+  {
+   "slug": "termostato-bajaj-dominar-400-250-ug-duke-390-original",
+   "archivo": "p/termostato-bajaj-dominar-400-250-ug-duke-390-original.jpg"
+  },
+  {
+   "slug": "tensor-automatico-de-cadena-distribucion-bajaj-rouser-ns-200-rs-as-original",
+   "archivo": "p/tensor-automatico-de-cadena-distribucion-bajaj-rouser-ns-200-rs-as-original.jpg"
+  },
+  {
+   "slug": "tensor-automatico-de-cadena-distribucion-bajaj-rouser-ns-125-150-160-original",
+   "archivo": "p/tensor-automatico-de-cadena-distribucion-bajaj-rouser-ns-125-150-160-original.jpg"
+  },
+  {
+   "slug": "tobera-de-admision-bajaj-rouser-ns-200-fi-rs-200-original",
+   "archivo": "p/tobera-de-admision-bajaj-rouser-ns-200-fi-rs-200-original.jpg"
+  },
+  {
+   "slug": "bobina-de-alta-doble-bajaj-rouser-ns-200-derecha-original",
+   "archivo": "p/bobina-de-alta-doble-bajaj-rouser-ns-200-derecha-original.jpg"
+  },
+  {
+   "slug": "tornillo-con-buje-palanca-de-cambios-bajaj-rouser-ns-200",
+   "archivo": "p/tornillo-con-buje-palanca-de-cambios-bajaj-rouser-ns-200.jpg"
+  },
+  {
+   "slug": "cable-de-embrague-bajaj-rouser-ns-as-200-original",
+   "archivo": "p/cable-de-embrague-bajaj-rouser-ns-as-200-original.jpg"
+  },
+  {
+   "slug": "bujia-bajaj-rouser-lateral-ns-200-dominar-400-400ug-rouser-220-avenger-original",
+   "archivo": "p/bujia-bajaj-rouser-lateral-ns-200-dominar-400-400ug-rouser-220-avenger-original.jpg"
+  },
+  {
+   "slug": "cadena-distribucion-bajaj-rouser-ns-200-rs-as-original",
+   "archivo": "p/cadena-distribucion-bajaj-rouser-ns-200-rs-as-original.jpg"
+  },
+  {
+   "slug": "capuchon-de-bujia-bajaj-rouser-ns-as-rs-200-dominar-250-400-y-ug-izquierdo",
+   "archivo": "p/capuchon-de-bujia-bajaj-rouser-ns-as-rs-200-dominar-250-400-y-ug-izquierdo.jpg"
+  },
+  {
+   "slug": "junta-de-embrague-bajaj-rouser-ns-200-original",
+   "archivo": "p/junta-de-embrague-bajaj-rouser-ns-200-original.jpg"
+  },
+  {
+   "slug": "cadena-de-distribucion-bajaj-dominar-250-400-ug-original",
+   "archivo": "p/cadena-de-distribucion-bajaj-dominar-250-400-ug-original.jpg"
+  },
+  {
+   "slug": "junta-tapa-de-encendido-bajaj-rouser-ns-200-original",
+   "archivo": "p/junta-tapa-de-encendido-bajaj-rouser-ns-200-original.jpg"
+  },
+  {
+   "slug": "junta-tapa-de-encendido-bajaj-dominar-250-original",
+   "archivo": "p/junta-tapa-de-encendido-bajaj-dominar-250-original.jpg"
+  },
+  {
+   "slug": "junta-de-tensor-automatico-bajaj-rouser-ns-125-135-150-160-dominar-400-l-v-original",
+   "archivo": "p/junta-de-tensor-automatico-bajaj-rouser-ns-125-135-150-160-dominar-400-l-v-original.jpg"
+  },
+  {
+   "slug": "porta-ruleman-de-empuje-embrague-bajaj-rouser-ns-200-original",
+   "archivo": "p/porta-ruleman-de-empuje-embrague-bajaj-rouser-ns-200-original.jpg"
+  },
+  {
+   "slug": "reten-de-valvulas-bajaj-rouser-135-180-220-ns-200-original",
+   "archivo": "p/reten-de-valvulas-bajaj-rouser-135-180-220-ns-200-original.jpg"
+  },
+  {
+   "slug": "relay-de-luces-bajaj-rouser-135-ns-200-original",
+   "archivo": "p/relay-de-luces-bajaj-rouser-135-ns-200-original.jpg"
+  },
+  {
+   "slug": "termostato-bajaj-rouser-ns-as-rs-200-original",
+   "archivo": "p/termostato-bajaj-rouser-ns-as-rs-200-original.jpg"
+  },
+  {
+   "slug": "tapon-descarga-de-aceite-carter-bajaj-rouser-135-ns200-original",
+   "archivo": "p/tapon-descarga-de-aceite-carter-bajaj-rouser-135-ns200-original.jpg"
+  },
+  {
+   "slug": "tapon-carga-de-aceite-bajaj-rouser-135-ns-125-150-160-v15-boxer-150-original",
+   "archivo": "p/tapon-carga-de-aceite-bajaj-rouser-135-ns-125-150-160-v15-boxer-150-original.jpg"
+  },
+  {
+   "slug": "tuerca-centro-de-embrague-bajaj-rouser-135-180-220-ns-200-izquierda-original",
+   "archivo": "p/tuerca-centro-de-embrague-bajaj-rouser-135-180-220-ns-200-izquierda-original.jpg"
+  },
+  {
+   "slug": "cubremanos-wirtz-shock-metal-edicion-honda-tornado",
+   "archivo": "p/cubremanos-wirtz-shock-metal-edicion-honda-tornado.jpg"
+  },
+  {
+   "slug": "giro-direccionales-p-01s-amarillo-amarillo-jgo-secuenciales-stallion",
+   "archivo": "p/giro-direccionales-p-01s-amarillo-amarillo-jgo-secuenciales-stallion.jpg"
+  },
+  {
+   "slug": "giro-direccionales-p-36s-amarillo-rojo-jgo",
+   "archivo": "p/giro-direccionales-p-36s-amarillo-rojo-jgo.jpg"
+  },
+  {
+   "slug": "led-comun-posicion-blanco",
+   "archivo": "p/led-comun-posicion-blanco.jpg"
+  },
+  {
+   "slug": "led-posicion-corto-siliconado-azul",
+   "archivo": "p/led-posicion-corto-siliconado-azul.jpg"
+  },
+  {
+   "slug": "filtro-aceite-mahle-ktm-exc-250-f-350-f-oem-77338005100",
+   "archivo": "p/filtro-aceite-mahle-ktm-exc-250-f-350-f-oem-77338005100.jpg"
+  }
+ ],
+ "marcas": [
+  {
+   "slug": "bajaj",
+   "archivo": "m/bajaj--oscuro.png"
+  },
+  {
+   "slug": "castrol",
+   "archivo": "m/castrol.png"
+  },
+  {
+   "slug": "gulf",
+   "archivo": "m/gulf.png"
+  },
+  {
+   "slug": "hella",
+   "archivo": "m/hella--oscuro.png"
+  },
+  {
+   "slug": "hellux",
+   "archivo": "m/hellux.png"
+  },
+  {
+   "slug": "jarama",
+   "archivo": "m/jarama.png"
+  },
+  {
+   "slug": "kemparts",
+   "archivo": "m/kemparts.png"
+  },
+  {
+   "slug": "locx",
+   "archivo": "m/locx.png"
+  },
+  {
+   "slug": "mahle",
+   "archivo": "m/mahle--oscuro.png"
+  },
+  {
+   "slug": "motul",
+   "archivo": "m/motul.png"
+  },
+  {
+   "slug": "mya",
+   "archivo": "m/mya--oscuro.png"
+  },
+  {
+   "slug": "ngk",
+   "archivo": "m/ngk--oscuro.png"
+  },
+  {
+   "slug": "philips",
+   "archivo": "m/philips--oscuro.png"
+  },
+  {
+   "slug": "sny",
+   "archivo": "m/sny--oscuro.png"
+  },
+  {
+   "slug": "stallion",
+   "archivo": "m/stallion--claro.png"
+  }
+ ]
+}

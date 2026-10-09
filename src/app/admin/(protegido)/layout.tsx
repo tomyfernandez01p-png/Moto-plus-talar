@@ -8,6 +8,7 @@ const nav = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/productos", label: "Productos" },
   { href: "/admin/productos/importar", label: "Importar CSV/Excel" },
+  { href: "/admin/productos/importar-catalogo", label: "Importar fotos y logos" },
   { href: "/admin/categorias", label: "Categorías" },
   { href: "/admin/marcas", label: "Marcas" },
   { href: "/admin/pedidos", label: "Pedidos" },

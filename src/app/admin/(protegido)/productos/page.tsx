@@ -34,6 +34,9 @@ export default async function AdminProductosPage({
           <ButtonLink href="/admin/productos/importar" variant="secondary" size="sm">
             Importar CSV
           </ButtonLink>
+          <ButtonLink href="/admin/productos/importar-catalogo" variant="secondary" size="sm">
+            Importar fotos y logos
+          </ButtonLink>
           <ButtonLink href="/admin/productos/nuevo" size="sm">
             + Nuevo producto
           </ButtonLink>

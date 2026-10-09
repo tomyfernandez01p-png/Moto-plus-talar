@@ -24,3 +24,25 @@ export function isDataUrl(src: string | null | undefined): boolean {
 export function esFotoReal(src: string | null | undefined): src is string {
   return typeof src === "string" && src.length > 0 && !src.startsWith("data:image/svg");
 }
+
+/**
+ * Los logos recortados del catálogo (fondo transparente, colores originales)
+ * se guardan con un sufijo en el nombre del archivo según con qué fondo se
+ * leen bien: `--oscuro` = logo de trazo oscuro (necesita fondo claro) y
+ * `--claro` = logo de trazo claro (necesita fondo oscuro). Los demás se ven
+ * bien directo sobre el fondo del sitio. No altera el logo: solo decide el
+ * fondo de apoyo.
+ */
+export function logoFondo(url: string | null | undefined): "claro" | "oscuro" | null {
+  if (!url) return null;
+  if (url.includes("--oscuro.")) return "claro";
+  if (url.includes("--claro.")) return "oscuro";
+  return null;
+}
+
+export function logoChipClass(url: string | null | undefined): string {
+  const f = logoFondo(url);
+  if (f === "claro") return "rounded-md bg-neutral-100 [&_img]:p-1.5";
+  if (f === "oscuro") return "rounded-md bg-neutral-800 [&_img]:p-1.5";
+  return "";
+}
