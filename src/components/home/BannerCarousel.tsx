@@ -47,6 +47,10 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
   const [pausado, setPausado] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const total = banners.length;
+  // Sin ninguna foto de campaña, los slides son de respaldo (gradiente +
+  // ícono): en el celular un 4:5 deja una pantalla entera casi vacía, así que
+  // se usa un cuadrado compacto. Con fotos reales se mantiene el 4:5.
+  const hayFotoCampana = banners.some((b) => Boolean(b.imagen_url));
 
   const siguiente = useCallback(() => setIndice((i) => (i + 1) % total), [total]);
   const anterior = useCallback(() => setIndice((i) => (i - 1 + total) % total), [total]);
@@ -92,7 +96,7 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
             <div
               key={banner.id}
               aria-hidden={i !== indice}
-              className="relative aspect-[4/5] max-h-[80vh] w-full shrink-0 sm:aspect-[21/9]"
+              className={`relative max-h-[80vh] w-full shrink-0 sm:aspect-[21/9] ${hayFotoCampana ? "aspect-[4/5]" : "aspect-square"}`}
             >
               {banner.imagen_url ? (
                 <Image
@@ -126,9 +130,9 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
                     Icono && (
                       <span
                         aria-hidden
-                        className="absolute right-[6%] top-1/2 flex h-28 w-28 -translate-y-1/2 items-center justify-center rounded-full border border-brand-orange/25 bg-brand-orange/10 text-brand-orange/70 sm:h-36 sm:w-36"
+                        className="absolute right-5 top-6 flex h-20 w-20 items-center justify-center rounded-full border border-brand-orange/25 bg-brand-orange/10 text-brand-orange/70 sm:right-[6%] sm:top-1/2 sm:h-36 sm:w-36 sm:-translate-y-1/2"
                       >
-                        <Icono className="h-12 w-12 sm:h-16 sm:w-16" />
+                        <Icono className="h-9 w-9 sm:h-16 sm:w-16" />
                       </span>
                     )
                   )}
