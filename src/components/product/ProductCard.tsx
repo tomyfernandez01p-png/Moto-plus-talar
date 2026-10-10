@@ -35,7 +35,7 @@ export function ProductCard({ producto }: { producto: VistaProducto }) {
             src={producto.imagen_principal_url}
             alt={producto.nombre}
             fill
-            sizes="(max-width: 768px) 50vw, 25vw"
+            sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
             unoptimized={isDataUrl(producto.imagen_principal_url)}
             className="object-contain p-3 transition-transform duration-500 ease-smooth group-hover:scale-105"
           />

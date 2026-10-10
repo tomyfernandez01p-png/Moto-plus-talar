@@ -78,7 +78,7 @@ export default async function ProductoPage({ params }: Props) {
       </nav>
 
       <div className="grid gap-8 md:grid-cols-2">
-        <div className="relative">
+        <div className="relative md:sticky md:top-32 md:self-start">
           <ProductGallery imagenes={imagenes} nombre={producto.nombre} />
           <FavoritoButton productoId={producto.id} className="absolute right-3 top-3 z-10" />
         </div>
@@ -95,7 +95,7 @@ export default async function ProductoPage({ params }: Props) {
           <h1 className="text-2xl font-bold text-base-white md:text-3xl">{producto.nombre}</h1>
           <p className="text-xs text-base-muted">Código: {producto.codigo}</p>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {producto.en_oferta && <Badge tono="orange">Oferta</Badge>}
             {producto.es_nuevo && <Badge tono="neutral">Nuevo</Badge>}
             {producto.estado_stock === "ultimas_unidades" && (

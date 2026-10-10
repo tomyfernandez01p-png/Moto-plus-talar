@@ -72,7 +72,7 @@ export function MobileMenu({
   ];
 
   const menu = (
-    <div className="fixed inset-0 z-50 md:hidden">
+    <div className="fixed inset-0 z-50 lg:hidden">
       <button
         className="absolute inset-0 bg-black/70 backdrop-blur-sm animate-fade-in"
         aria-label="Cerrar menú"
@@ -225,7 +225,7 @@ export function MobileMenu({
       <button
         onClick={() => setAbierto(true)}
         aria-label="Abrir menú"
-        className="focus-ring flex h-11 w-11 items-center justify-center rounded-lg text-base-white md:hidden"
+        className="focus-ring flex h-11 w-11 items-center justify-center rounded-lg text-base-white lg:hidden"
       >
         <IconMenu className="h-6 w-6" />
       </button>

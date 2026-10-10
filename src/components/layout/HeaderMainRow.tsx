@@ -63,14 +63,14 @@ export function HeaderMainRow({
             className="object-cover"
           />
         </div>
-        <span className="hidden text-lg font-extrabold tracking-tight text-base-white sm:block">
+        <span className="hidden whitespace-nowrap text-lg font-extrabold tracking-tight text-base-white sm:block">
           {config.nombre_negocio}
         </span>
       </Link>
 
-      <SearchBar className="mx-2 hidden flex-1 md:block" />
+      <SearchBar className="mx-2 hidden min-w-0 flex-1 md:block" />
 
-      <nav className="ml-auto hidden items-center gap-6 text-sm font-medium text-base-white md:flex">
+      <nav className="ml-auto hidden items-center gap-4 text-sm font-medium text-base-white lg:flex xl:gap-6">
         <Link href="/" className="transition-colors hover:text-brand-orange">
           Inicio
         </Link>
@@ -122,7 +122,7 @@ export function HeaderMainRow({
         </Link>
       </nav>
 
-      <div className="ml-auto flex items-center gap-1 md:ml-0">
+      <div className="ml-auto flex shrink-0 items-center gap-1 lg:ml-0">
         {config.cuentas_clientes_activas && <AccountButton />}
         <CartButton />
       </div>

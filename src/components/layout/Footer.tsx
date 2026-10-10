@@ -25,7 +25,7 @@ export async function Footer() {
       <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-orange/40 to-transparent" />
 
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-12 sm:grid-cols-3 md:grid-cols-5 md:px-6">
-        <div className="col-span-2 flex flex-col gap-3 md:col-span-1">
+        <div className="col-span-2 flex flex-col gap-3 sm:col-span-3 md:col-span-1">
           <div className="flex items-center gap-2">
             <div className="relative h-10 w-10 overflow-hidden rounded-full ring-1 ring-base-border">
               <Image
