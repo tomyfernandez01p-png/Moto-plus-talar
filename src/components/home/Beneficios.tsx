@@ -64,20 +64,19 @@ const items: ItemBeneficio[] = [
 /**
  * Banner informativo (no son botones): franja sin bordes ni tarjetas, con los
  * datos del negocio pasando en una tira continua (la lista va duplicada y la
- * animación recorre exactamente la mitad, así el corte no se nota). Se pausa
- * al pasar el mouse y respeta "reducir movimiento" (queda quieta y centrada).
+ * animación recorre exactamente la mitad, así el corte no se nota). No es interactiva (no se pausa ni reacciona al mouse/toque) y respeta "reducir movimiento" (queda quieta y centrada).
  */
 export function Beneficios() {
   const lista = [...items, ...items, ...items, ...items];
   return (
     <section aria-label="Información de la tienda" className="relative z-10 py-5">
-      <div className="fade-edge-x group overflow-hidden">
-        <ul className="flex w-max animate-marquee items-center group-hover:[animation-play-state:paused] motion-reduce:mx-auto motion-reduce:animate-none">
+      <div className="fade-edge-x pointer-events-none select-none overflow-hidden">
+        <ul className="flex w-max animate-marquee items-center motion-reduce:mx-auto motion-reduce:animate-none">
           {lista.map((item, i) => (
             <li
               key={`${item.texto}-${i}`}
               aria-hidden={i >= items.length}
-              className="mr-12 flex shrink-0 items-center gap-3 md:mr-16"
+              className="mr-20 flex shrink-0 items-center gap-3 md:mr-28"
             >
               <span aria-hidden className="flex h-9 w-9 shrink-0 items-center justify-center text-brand-orange">
                 <svg {...svgProps} className="h-6 w-6">
