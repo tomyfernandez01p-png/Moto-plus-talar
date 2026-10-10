@@ -31,9 +31,6 @@ export default async function AdminProductosPage({
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold text-base-white">Productos</h1>
         <div className="flex gap-2">
-          <ButtonLink href="/admin/productos/importar" variant="secondary" size="sm">
-            Importar CSV
-          </ButtonLink>
           <ButtonLink href="/admin/productos/importar-catalogo" variant="secondary" size="sm">
             Importar fotos y logos
           </ButtonLink>
