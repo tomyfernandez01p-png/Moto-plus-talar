@@ -6,7 +6,6 @@ export const metadata = { title: "Tienda" };
 const bloques = [
   { href: "/admin/productos", titulo: "Productos", texto: "Precios, stock, fotos, ofertas y compatibilidades." },
   { href: "/admin/categorias", titulo: "Categorías", texto: "Ordená y editá las categorías del catálogo." },
-  { href: "/admin/marcas", titulo: "Marcas", texto: "Logos y datos de las marcas que vendés." },
   { href: "/admin/banners", titulo: "Banners", texto: "Publicidad y promociones del inicio." },
   {
     href: "/admin/productos/importar-catalogo",

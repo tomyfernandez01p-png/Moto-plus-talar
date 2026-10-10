@@ -19,7 +19,6 @@ export const TIENDA_TABS = [
     match: (p: string) => p.startsWith("/admin/productos") && !p.startsWith("/admin/productos/importar-catalogo"),
   },
   { href: "/admin/categorias", label: "Categorías", match: (p: string) => p.startsWith("/admin/categorias") },
-  { href: "/admin/marcas", label: "Marcas", match: (p: string) => p.startsWith("/admin/marcas") },
   { href: "/admin/banners", label: "Banners", match: (p: string) => p.startsWith("/admin/banners") },
   {
     href: "/admin/productos/importar-catalogo",
