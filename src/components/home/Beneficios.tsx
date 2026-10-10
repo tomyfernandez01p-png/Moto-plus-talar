@@ -69,7 +69,7 @@ const items: ItemBeneficio[] = [
 export function Beneficios() {
   const lista = [...items, ...items, ...items, ...items];
   return (
-    <section aria-label="Información de la tienda" className="relative z-10 py-5">
+    <section aria-label="Información de la tienda" className="relative z-10 py-10 md:py-14">
       <div className="fade-edge-x pointer-events-none select-none overflow-hidden">
         <ul className="flex w-max animate-marquee-slow items-center motion-reduce:mx-auto motion-reduce:animate-none">
           {lista.map((item, i) => (
