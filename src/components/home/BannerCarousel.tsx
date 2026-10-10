@@ -114,7 +114,7 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
                 // stock genérica.
                 <div
                   aria-hidden
-                  className="bg-grain absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,106,0,0.28),transparent_60%)]"
+                  className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,106,0,0.28),transparent_60%)]"
                 >
                   <div className="absolute inset-0 bg-[linear-gradient(135deg,#17120c_0%,#151517_55%,#0a0a0b_100%)]" />
                   <div className="absolute inset-0 flex items-start justify-end p-5 sm:items-center sm:pr-[6%]">

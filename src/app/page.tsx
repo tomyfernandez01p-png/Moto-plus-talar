@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { getConfiguracion } from "@/lib/config.server";
 import { BannerCarousel, type BannerCarouselItem } from "@/components/home/BannerCarousel";
-import { Beneficios } from "@/components/home/Beneficios";
 import { TurnosCTA } from "@/components/home/TurnosCTA";
 import { CategoriasGrid } from "@/components/home/CategoriasGrid";
 import { CATEGORIAS_SERVICIO } from "@/lib/categorias-servicio";
@@ -185,7 +184,7 @@ export default async function HomePage() {
     <>
       <BannerCarousel banners={banners} />
 
-      {secciones.beneficios !== false && <Beneficios />}
+      {/* Franja de 5 tarjetas (mecánica/envíos/retiro/pago/atención) retirada a pedido del usuario */}
 
       <TurnosCTA />
 

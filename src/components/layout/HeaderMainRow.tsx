@@ -105,20 +105,11 @@ export function HeaderMainRow({
         <Link href="/productos" className="transition-colors hover:text-brand-orange">
           Tienda
         </Link>
-        <Link href="/marcas" className="transition-colors hover:text-brand-orange">
-          Marcas
-        </Link>
-        <Link href="/mi-moto" className="transition-colors hover:text-brand-orange">
-          ¿Qué moto tenés?
-        </Link>
         <Link href="/mecanica" className="transition-colors hover:text-brand-orange">
           Mecánica
         </Link>
         <Link href="/nosotros" className="transition-colors hover:text-brand-orange">
           Nosotros
-        </Link>
-        <Link href="/contacto" className="transition-colors hover:text-brand-orange">
-          Contacto
         </Link>
       </nav>
 
