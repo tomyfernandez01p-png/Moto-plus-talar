@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
   }
 
   const supabase = createAdminClient();
-  const { data: pedido } = await supabase.from("pedidos").select("id, estado").eq("id", pedidoId).maybeSingle();
+  const { data: pedido } = await supabase.from("pedidos").select("id, estado, total").eq("id", pedidoId).maybeSingle();
   if (!pedido) {
     console.error("mercadopago:webhook pedido no encontrado", pedidoId);
     return NextResponse.json({ ok: true, ignorado: "pedido_no_encontrado" });
@@ -119,7 +119,19 @@ export async function POST(request: NextRequest) {
   const estadosPreAprobacion: EstadoPedido[] = ["nuevo", "pago_pendiente"];
   let nuevoEstadoPedido: EstadoPedido | null = null;
 
-  if (estadoPago === "aprobado" && estadosPreAprobacion.includes(pedido.estado)) {
+  // Además de que Mercado Pago confirme "approved", el monto cobrado tiene que
+  // cubrir el total del pedido: si pagaron menos, no se aprueba automáticamente
+  // (queda registrado en `pagos` para revisión manual del staff).
+  const montoCubreTotal = Number(pago.transaction_amount ?? 0) + 0.01 >= Number(pedido.total ?? 0);
+  if (estadoPago === "aprobado" && !montoCubreTotal) {
+    console.error("mercadopago:webhook monto menor al total del pedido", {
+      pedidoId: pedido.id,
+      cobrado: pago.transaction_amount,
+      total: pedido.total,
+    });
+  }
+
+  if (estadoPago === "aprobado" && montoCubreTotal && estadosPreAprobacion.includes(pedido.estado)) {
     nuevoEstadoPedido = "pago_aprobado";
   } else if (
     (estadoPago === "reembolsado") &&

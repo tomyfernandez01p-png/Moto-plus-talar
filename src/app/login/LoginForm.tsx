@@ -1,5 +1,6 @@
 "use client";
 
+import { rutaSegura } from "@/lib/ruta-segura";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -31,7 +32,7 @@ export function LoginForm() {
       setError("Email o contraseña incorrectos.");
       return;
     }
-    router.push(searchParams.get("next") || "/cuenta");
+    router.push(rutaSegura(searchParams.get("next"), "/cuenta"));
     router.refresh();
   }
 

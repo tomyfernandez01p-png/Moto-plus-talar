@@ -1,5 +1,6 @@
 "use client";
 
+import { rutaSegura } from "@/lib/ruta-segura";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -46,7 +47,7 @@ export function AdminLoginForm() {
       return;
     }
 
-    router.push(searchParams.get("next") || "/admin");
+    router.push(rutaSegura(searchParams.get("next"), "/admin"));
     router.refresh();
   }
 
