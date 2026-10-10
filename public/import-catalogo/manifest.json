@@ -701,6 +701,10 @@
   {
    "slug": "stallion",
    "archivo": "m/stallion--claro.png"
+  },
+  {
+   "slug": "ama",
+   "archivo": "m/ama.png"
   }
  ]
 }

@@ -8,6 +8,7 @@ import { ProductCarousel } from "@/components/home/ProductCarousel";
 import { OfferBanner } from "@/components/home/OfferBanner";
 import { WhatsAppBanner } from "@/components/home/WhatsAppBanner";
 import { Beneficios } from "@/components/home/Beneficios";
+import { MARCAS_RELEVANTES, ordenarMarcasRelevantes } from "@/lib/marcas-relevantes";
 import { MarcasCarousel } from "@/components/home/MarcasCarousel";
 import { BuscadorMoto } from "@/components/home/BuscadorMoto";
 import { GoogleReviews } from "@/components/home/GoogleReviews";
@@ -69,7 +70,7 @@ export default async function HomePage() {
           .limit(12)
       : Promise.resolve({ data: [] }),
     secciones.marcas
-      ? supabase.from("marcas").select("nombre, slug, logo_url").eq("activo", true).order("orden")
+      ? supabase.from("marcas").select("nombre, slug, logo_url").eq("activo", true).in("slug", [...MARCAS_RELEVANTES])
       : Promise.resolve({ data: [] }),
     secciones.buscador_moto
       ? supabase.from("motos").select("*").eq("activo", true)
@@ -207,7 +208,7 @@ export default async function HomePage() {
 
       {secciones.marcas && (marcas ?? []).length > 0 && (
         <ScrollReveal className="bg-base-dark/60">
-          <MarcasCarousel marcas={marcas ?? []} />
+          <MarcasCarousel marcas={ordenarMarcasRelevantes(marcas ?? [])} />
         </ScrollReveal>
       )}
 
