@@ -62,24 +62,33 @@ const items: ItemBeneficio[] = [
 ];
 
 /**
- * Banner informativo (no son botones): una sola franja con los datos del
- * negocio, sin tarjetas, sin enlaces y sin efectos al pasar el mouse.
+ * Banner informativo (no son botones): franja sin bordes ni tarjetas, con los
+ * datos del negocio pasando en una tira continua (la lista va duplicada y la
+ * animación recorre exactamente la mitad, así el corte no se nota). Se pausa
+ * al pasar el mouse y respeta "reducir movimiento" (queda quieta y centrada).
  */
 export function Beneficios() {
+  const lista = [...items, ...items];
   return (
-    <section aria-label="Información de la tienda" className="relative z-10 mx-auto max-w-7xl px-4 py-6 md:px-6">
-      <ul className="grid grid-cols-2 gap-x-4 gap-y-5 rounded-2xl border border-base-border bg-base-dark/70 px-5 py-5 sm:grid-cols-3 md:flex md:items-center md:justify-between md:gap-4 md:py-4">
-        {items.map((item) => (
-          <li key={item.texto} className="flex items-center gap-3">
-            <span aria-hidden className="flex h-9 w-9 shrink-0 items-center justify-center text-brand-orange">
-              <svg {...svgProps} className="h-6 w-6">
-                {item.icono}
-              </svg>
-            </span>
-            <span className="text-xs font-semibold leading-snug text-base-white sm:text-sm">{item.texto}</span>
-          </li>
-        ))}
-      </ul>
+    <section aria-label="Información de la tienda" className="relative z-10 py-5">
+      <div className="fade-edge-x group overflow-hidden">
+        <ul className="flex w-max animate-marquee items-center group-hover:[animation-play-state:paused] motion-reduce:mx-auto motion-reduce:animate-none">
+          {lista.map((item, i) => (
+            <li
+              key={`${item.texto}-${i}`}
+              aria-hidden={i >= items.length}
+              className="mr-12 flex shrink-0 items-center gap-3 md:mr-16"
+            >
+              <span aria-hidden className="flex h-9 w-9 shrink-0 items-center justify-center text-brand-orange">
+                <svg {...svgProps} className="h-6 w-6">
+                  {item.icono}
+                </svg>
+              </span>
+              <span className="whitespace-nowrap text-sm font-semibold text-base-white">{item.texto}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }
