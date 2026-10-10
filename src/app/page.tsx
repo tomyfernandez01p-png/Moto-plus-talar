@@ -7,6 +7,7 @@ import { CATEGORIAS_SERVICIO } from "@/lib/categorias-servicio";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
 import { OfferBanner } from "@/components/home/OfferBanner";
 import { WhatsAppBanner } from "@/components/home/WhatsAppBanner";
+import { Beneficios } from "@/components/home/Beneficios";
 import { MarcasCarousel } from "@/components/home/MarcasCarousel";
 import { BuscadorMoto } from "@/components/home/BuscadorMoto";
 import { GoogleReviews } from "@/components/home/GoogleReviews";
@@ -184,7 +185,7 @@ export default async function HomePage() {
     <>
       <BannerCarousel banners={banners} />
 
-      {/* Franja de 5 tarjetas (mecánica/envíos/retiro/pago/atención) retirada a pedido del usuario */}
+      {secciones.beneficios !== false && <Beneficios />}
 
       <TurnosCTA />
 
