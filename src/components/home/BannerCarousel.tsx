@@ -75,10 +75,11 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
   }
 
   return (
+    <div className="mx-auto w-full sm:max-w-7xl sm:px-4 sm:pt-4 md:px-6">
     <section
       aria-label="Ofertas y publicidad"
       aria-roledescription="carrusel"
-      className="group/carousel relative mx-auto overflow-hidden bg-base-black sm:mx-4 sm:mt-4 sm:max-w-7xl sm:rounded-3xl sm:border sm:border-base-border md:mx-6"
+      className="group/carousel relative overflow-hidden bg-base-black sm:rounded-3xl sm:border sm:border-base-border"
       onMouseEnter={() => setPausado(true)}
       onMouseLeave={() => setPausado(false)}
       onFocus={() => setPausado(true)}
@@ -116,8 +117,9 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
                   className="bg-grain absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,106,0,0.28),transparent_60%)]"
                 >
                   <div className="absolute inset-0 bg-[linear-gradient(135deg,#17120c_0%,#151517_55%,#0a0a0b_100%)]" />
+                  <div className="absolute inset-0 flex items-start justify-end p-5 sm:items-center sm:pr-[6%]">
                   {banner.imagen_producto_url ? (
-                    <div className="absolute right-5 top-6 h-32 w-32 overflow-hidden rounded-2xl bg-white shadow-card sm:right-[6%] sm:top-1/2 sm:h-56 sm:w-56 sm:-translate-y-1/2">
+                    <div className="relative h-32 w-32 overflow-hidden rounded-2xl bg-white shadow-card sm:h-56 sm:w-56">
                       <Image
                         src={banner.imagen_producto_url}
                         alt=""
@@ -130,12 +132,13 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
                     Icono && (
                       <span
                         aria-hidden
-                        className="absolute right-5 top-6 flex h-20 w-20 items-center justify-center rounded-full border border-brand-orange/25 bg-brand-orange/10 text-brand-orange/70 sm:right-[6%] sm:top-1/2 sm:h-36 sm:w-36 sm:-translate-y-1/2"
+                        className="flex h-20 w-20 items-center justify-center rounded-full border border-brand-orange/25 bg-brand-orange/10 text-brand-orange/70 sm:h-36 sm:w-36"
                       >
                         <Icono className="h-9 w-9 sm:h-16 sm:w-16" />
                       </span>
                     )
                   )}
+                  </div>
                 </div>
               )}
               {(banner.titulo || banner.descripcion || (banner.boton_texto && banner.boton_url)) && (
@@ -202,5 +205,6 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
         </>
       )}
     </section>
+    </div>
   );
 }
