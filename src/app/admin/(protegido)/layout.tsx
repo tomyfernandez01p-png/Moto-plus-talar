@@ -3,20 +3,17 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { cerrarSesionAction } from "@/app/cuenta/actions";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { TiendaTabs } from "./TiendaTabs";
 
 const nav = [
   { href: "/admin", label: "Dashboard" },
-  { href: "/admin/productos", label: "Productos" },
-  { href: "/admin/productos/importar-catalogo", label: "Importar fotos y logos" },
-  { href: "/admin/categorias", label: "Categorías" },
-  { href: "/admin/marcas", label: "Marcas" },
+  // "Tienda" agrupa productos, categorías, marcas, banners, fotos/logos y
+  // configuración (esta última solo la ve el administrador, ver TiendaTabs).
+  { href: "/admin/tienda", label: "Tienda" },
   { href: "/admin/pedidos", label: "Pedidos" },
   { href: "/admin/mecanica", label: "Turnos de mecánica" },
   { href: "/admin/clientes", label: "Clientes" },
-  { href: "/admin/banners", label: "Banners" },
-  // Solo administrador: incluye claves públicas de integraciones, textos
-  // legales y datos de contacto del negocio.
-  { href: "/admin/configuracion", label: "Configuración", soloAdmin: true },
+  // Solo administrador: auditoría.
   { href: "/admin/historial", label: "Historial / auditoría", soloAdmin: true },
 ];
 
@@ -103,7 +100,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             </Link>
           </div>
         </details>
-        <main className="p-4 md:p-8">{children}</main>
+        <main className="p-4 md:p-8">
+          <TiendaTabs esAdmin={perfil.rol === "administrador"} />
+          {children}
+        </main>
       </div>
     </div>
   );
