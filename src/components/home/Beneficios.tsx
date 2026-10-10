@@ -68,7 +68,7 @@ const items: ItemBeneficio[] = [
  * al pasar el mouse y respeta "reducir movimiento" (queda quieta y centrada).
  */
 export function Beneficios() {
-  const lista = [...items, ...items];
+  const lista = [...items, ...items, ...items, ...items];
   return (
     <section aria-label="Información de la tienda" className="relative z-10 py-5">
       <div className="fade-edge-x group overflow-hidden">
