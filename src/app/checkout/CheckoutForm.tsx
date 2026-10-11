@@ -107,7 +107,7 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
     }
 
     setEnviando(false);
-    router.push(`/pedido/${resultado.pedidoId}`);
+    router.push(`/pedido/${resultado.pedidoId}?nuevo=1`);
   }
 
   if (items.length === 0) {

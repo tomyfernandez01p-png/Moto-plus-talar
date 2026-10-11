@@ -3,7 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { formatFecha } from "@/lib/format";
 import { Badge } from "@/components/ui/Badge";
-import { waLinkParaTelefono } from "@/lib/whatsapp";
+import { waLinkParaTelefono, mensajeTurnoParaCliente } from "@/lib/whatsapp";
 import { ESTADOS_SOLICITUD_MECANICA, ESTADO_SOLICITUD_LABEL, ESTADO_SOLICITUD_TONO } from "../estado-utils";
 import { actualizarEstadoSolicitudMecanicaAction, guardarNotaSolicitudMecanicaAction } from "../actions";
 
@@ -68,6 +68,24 @@ export default async function AdminMecanicaDetallePage({ params }: { params: { i
             className="mt-2 inline-block text-sm text-brand-orange hover:underline"
           >
             Escribir por WhatsApp
+          </a>
+          <a
+            href={waLinkParaTelefono(
+              solicitud.telefono,
+              mensajeTurnoParaCliente({
+                numero: solicitud.numero,
+                nombre: solicitud.nombre,
+                estadoLabel: ESTADO_SOLICITUD_LABEL[solicitud.estado],
+                motoMarca: solicitud.moto_marca,
+                motoModelo: solicitud.moto_modelo,
+                servicios: (servicios ?? []).map((s) => s.nombre),
+              })
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-brand-orange/70 px-4 py-2.5 text-sm font-semibold text-base-white hover:bg-brand-orange/10 sm:w-auto"
+          >
+            Compartir turno por WhatsApp
           </a>
         </section>
 

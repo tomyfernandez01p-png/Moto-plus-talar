@@ -87,3 +87,91 @@ export function waLinkParaTelefono(telefono: string, mensaje: string) {
       : soloDigitos;
   return `https://wa.me/${digitos}?text=${encodeURIComponent(mensaje)}`;
 }
+
+const fmtARS = (n: number) =>
+  new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(n);
+
+interface ItemMensaje {
+  cantidad: number;
+  nombre_producto: string;
+  subtotal: number;
+}
+
+/**
+ * Mensaje que el CLIENTE le manda al negocio al terminar su pedido: ya trae
+ * todos sus datos y el detalle, así no tiene que escribirlos a mano.
+ */
+export function mensajePedidoNuevo(p: {
+  numero: number;
+  id: string;
+  nombre: string;
+  apellido: string;
+  telefono: string;
+  email: string;
+  tipoEntrega: string;
+  direccion?: string | null;
+  metodoPago?: string | null;
+  items: ItemMensaje[];
+  subtotal: number;
+  costoEnvio: number;
+  total: number;
+}) {
+  const sitio = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const lineas = [
+    `Hola Moto Plus Talar, soy ${p.nombre} ${p.apellido} y hice el pedido #${p.numero} por la web.`,
+    "",
+    ...p.items.map((i) => `• ${i.cantidad}x ${i.nombre_producto} — ${fmtARS(i.subtotal)}`),
+    "",
+    `Subtotal: ${fmtARS(p.subtotal)}`,
+  ];
+  if (p.costoEnvio > 0) lineas.push(`Envío: ${fmtARS(p.costoEnvio)}`);
+  lineas.push(`Total: ${fmtARS(p.total)}`, "");
+  lineas.push(p.tipoEntrega === "envio" ? `Entrega: envío a ${p.direccion || "domicilio"}` : "Entrega: retiro en el local");
+  if (p.metodoPago) lineas.push(`Pago: ${p.metodoPago}`);
+  lineas.push(`Tel: ${p.telefono}`, `Email: ${p.email}`);
+  if (sitio) lineas.push(`Detalle: ${sitio}/pedido/${p.id}`);
+  lineas.push("", "Quiero coordinar el pago y la entrega.");
+  return lineas.join("\n");
+}
+
+/** Mensaje que el STAFF le comparte al cliente con el resumen/presupuesto de su pedido. */
+export function mensajePedidoParaCliente(p: {
+  numero: number;
+  id: string;
+  nombre: string;
+  tipoEntrega: string;
+  items: ItemMensaje[];
+  subtotal: number;
+  costoEnvio: number;
+  total: number;
+}) {
+  const sitio = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const lineas = [
+    `Hola ${p.nombre}, te paso el resumen de tu pedido #${p.numero} de Moto Plus Talar:`,
+    "",
+    ...p.items.map((i) => `• ${i.cantidad}x ${i.nombre_producto} — ${fmtARS(i.subtotal)}`),
+    "",
+    `Subtotal: ${fmtARS(p.subtotal)}`,
+  ];
+  if (p.costoEnvio > 0) lineas.push(`Envío: ${fmtARS(p.costoEnvio)}`);
+  lineas.push(`Total: ${fmtARS(p.total)}`);
+  lineas.push(p.tipoEntrega === "envio" ? "Entrega: envío a domicilio" : "Entrega: retiro en el local");
+  if (sitio) lineas.push("", `Podés verlo acá: ${sitio}/pedido/${p.id}`);
+  return lineas.join("\n");
+}
+
+/** Mensaje que el STAFF le comparte al cliente con el estado de su turno de mecánica. */
+export function mensajeTurnoParaCliente(t: {
+  numero: number;
+  nombre: string;
+  estadoLabel: string;
+  motoMarca?: string | null;
+  motoModelo?: string | null;
+  servicios: string[];
+}) {
+  const lineas = [`Hola ${t.nombre}, te escribimos por tu turno de mecánica #${t.numero} en Moto Plus Talar.`];
+  if (t.motoMarca || t.motoModelo) lineas.push(`Moto: ${[t.motoMarca, t.motoModelo].filter(Boolean).join(" ")}`);
+  if (t.servicios.length > 0) lineas.push(`Servicios: ${t.servicios.join(", ")}`);
+  lineas.push(`Estado: ${t.estadoLabel}`);
+  return lineas.join("\n");
+}

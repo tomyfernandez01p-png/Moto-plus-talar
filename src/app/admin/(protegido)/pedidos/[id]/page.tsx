@@ -3,7 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { formatPrecio, formatFecha } from "@/lib/format";
 import { Badge } from "@/components/ui/Badge";
-import { waLinkParaTelefono } from "@/lib/whatsapp";
+import { waLinkParaTelefono, mensajePedidoParaCliente } from "@/lib/whatsapp";
 import { ESTADOS_PEDIDO, ESTADO_LABEL, ESTADO_TONO } from "../estado-utils";
 import { actualizarEstadoPedidoAction, guardarNotaPedidoAction } from "../actions";
 
@@ -73,6 +73,30 @@ export default async function AdminPedidoDetallePage({ params }: { params: { id:
             className="mt-2 inline-block text-sm text-brand-orange hover:underline"
           >
             Escribir por WhatsApp
+          </a>
+          <a
+            href={waLinkParaTelefono(
+              pedido.telefono,
+              mensajePedidoParaCliente({
+                numero: pedido.numero,
+                id: pedido.id,
+                nombre: pedido.nombre,
+                tipoEntrega: pedido.tipo_entrega,
+                items: (items ?? []).map((i) => ({
+                  cantidad: i.cantidad,
+                  nombre_producto: i.nombre_producto,
+                  subtotal: Number(i.subtotal),
+                })),
+                subtotal: Number(pedido.subtotal),
+                costoEnvio: Number(pedido.costo_envio),
+                total: Number(pedido.total),
+              })
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-brand-orange/70 px-4 py-2.5 text-sm font-semibold text-base-white hover:bg-brand-orange/10 sm:w-auto"
+          >
+            Compartir resumen por WhatsApp
           </a>
         </section>
 

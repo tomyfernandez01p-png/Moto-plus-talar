@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { whatsappLink } from "@/lib/config";
+import { mensajePedidoNuevo } from "@/lib/whatsapp";
+import { AbrirWhatsAppAuto } from "../AbrirWhatsAppAuto";
 import { getConfiguracion } from "@/lib/config.server";
 import { formatPrecio } from "@/lib/format";
 import { ButtonLink } from "@/components/ui/Button";
@@ -14,7 +16,13 @@ import { ButtonLink } from "@/components/ui/Button";
  * usuario_id, que no puede distinguir "invitado dueño del pedido" de
  * "cualquier invitado" porque ambos tienen usuario_id = null.
  */
-export default async function PedidoConfirmadoPage({ params }: { params: { id: string } }) {
+export default async function PedidoConfirmadoPage({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { nuevo?: string };
+}) {
   const uuidValido = /^[0-9a-f-]{36}$/i.test(params.id);
   if (!uuidValido) notFound();
 
@@ -25,10 +33,31 @@ export default async function PedidoConfirmadoPage({ params }: { params: { id: s
   const { data: items } = await supabase.from("pedido_items").select("*").eq("pedido_id", pedido.id);
   const config = await getConfiguracion();
 
-  const mensaje = `Hola Moto Plus Talar, hice el pedido #${pedido.numero} y quiero coordinar el pago/entrega.`;
+  const dir = pedido.direccion_envio as { direccion?: string; ciudad?: string; provincia?: string } | null;
+  const mensaje = mensajePedidoNuevo({
+    numero: pedido.numero,
+    id: pedido.id,
+    nombre: pedido.nombre,
+    apellido: pedido.apellido,
+    telefono: pedido.telefono,
+    email: pedido.email,
+    tipoEntrega: pedido.tipo_entrega,
+    direccion: dir ? [dir.direccion, dir.ciudad, dir.provincia].filter(Boolean).join(", ") : null,
+    metodoPago: pedido.metodo_pago,
+    items: (items ?? []).map((i) => ({
+      cantidad: i.cantidad,
+      nombre_producto: i.nombre_producto,
+      subtotal: Number(i.subtotal),
+    })),
+    subtotal: Number(pedido.subtotal),
+    costoEnvio: Number(pedido.costo_envio),
+    total: Number(pedido.total),
+  });
+  const linkWhatsapp = whatsappLink(config, mensaje);
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 md:px-6">
+      {searchParams.nuevo === "1" && <AbrirWhatsAppAuto href={linkWhatsapp} clave={`wa-pedido-${pedido.id}`} />}
       <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
         <h1 className="text-2xl font-bold text-base-white">¡Pedido recibido!</h1>
         <p className="mt-1 text-sm text-base-muted">
@@ -67,8 +96,8 @@ export default async function PedidoConfirmadoPage({ params }: { params: { id: s
       </div>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-        <ButtonLink href={whatsappLink(config, mensaje)} target="_blank" className="flex-1" size="lg">
-          Coordinar por WhatsApp
+        <ButtonLink href={linkWhatsapp} target="_blank" className="flex-1" size="lg">
+          Enviar mi pedido por WhatsApp
         </ButtonLink>
         <ButtonLink href="/productos" variant="secondary" className="flex-1" size="lg">
           Seguir comprando
