@@ -19,7 +19,12 @@ export default function CarritoPage() {
         </span>
         <h1 className="mb-2 text-2xl font-bold text-base-white">Tu carrito está vacío</h1>
         <p className="mb-6 text-sm text-base-muted">Agregá productos para empezar tu compra.</p>
-        <ButtonLink href="/productos">Ir a la tienda</ButtonLink>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <ButtonLink href="/productos">Ir a la tienda</ButtonLink>
+          <ButtonLink href="/mis-pedidos" variant="secondary">
+            Ver mis pedidos
+          </ButtonLink>
+        </div>
       </div>
     );
   }

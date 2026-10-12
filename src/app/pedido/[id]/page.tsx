@@ -3,7 +3,6 @@ import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { whatsappLink } from "@/lib/config";
 import { mensajePedidoNuevo } from "@/lib/whatsapp";
-import { AbrirWhatsAppAuto } from "../AbrirWhatsAppAuto";
 import { getConfiguracion } from "@/lib/config.server";
 import { formatPrecio } from "@/lib/format";
 import { ButtonLink } from "@/components/ui/Button";
@@ -18,10 +17,8 @@ import { ButtonLink } from "@/components/ui/Button";
  */
 export default async function PedidoConfirmadoPage({
   params,
-  searchParams,
 }: {
   params: { id: string };
-  searchParams: { nuevo?: string };
 }) {
   const uuidValido = /^[0-9a-f-]{36}$/i.test(params.id);
   if (!uuidValido) notFound();
@@ -57,11 +54,11 @@ export default async function PedidoConfirmadoPage({
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 md:px-6">
-      {searchParams.nuevo === "1" && <AbrirWhatsAppAuto href={linkWhatsapp} clave={`wa-pedido-${pedido.id}`} />}
       <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
         <h1 className="text-2xl font-bold text-base-white">¡Pedido recibido!</h1>
         <p className="mt-1 text-sm text-base-muted">
-          Pedido #{pedido.numero} · Te vamos a contactar para coordinar el pago y la entrega.
+          Pedido #{pedido.numero} · Ya quedó registrado y le llegó al negocio. Te vamos a contactar
+          para coordinar el pago y la entrega.
         </p>
       </div>
 
@@ -96,8 +93,8 @@ export default async function PedidoConfirmadoPage({
       </div>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-        <ButtonLink href={linkWhatsapp} target="_blank" className="flex-1" size="lg">
-          Enviar mi pedido por WhatsApp
+        <ButtonLink href="/mis-pedidos" className="flex-1" size="lg">
+          Ver mis pedidos
         </ButtonLink>
         <ButtonLink href="/productos" variant="secondary" className="flex-1" size="lg">
           Seguir comprando
@@ -105,10 +102,15 @@ export default async function PedidoConfirmadoPage({
       </div>
 
       <p className="mt-6 text-center text-xs text-base-muted">
-        Guardá esta página o el link para volver a ver tu pedido:{" "}
-        <Link href={`/pedido/${pedido.id}`} className="underline">
-          motoplustalar.com.ar/pedido/{pedido.id}
+        ¿Tenés una consulta sobre este pedido?{" "}
+        <a href={linkWhatsapp} target="_blank" rel="noopener noreferrer" className="underline">
+          Escribinos por WhatsApp
+        </a>
+        . Para volver a verlo, entrá a{" "}
+        <Link href="/mis-pedidos" className="underline">
+          Mis pedidos
         </Link>
+        .
       </p>
     </div>
   );

@@ -6,6 +6,7 @@ import { useCart } from "@/lib/cart/cart-context";
 import { formatPrecio } from "@/lib/format";
 import type { Configuracion } from "@/lib/config";
 import type { MetodoPago, TipoEntrega } from "@/types/database";
+import { guardarPedidoLocal } from "@/lib/pedidos-locales";
 import { crearPedidoAction } from "./actions";
 
 const METODOS_PAGO_LABEL: Record<MetodoPago, string> = {
@@ -83,6 +84,7 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
       return;
     }
 
+    guardarPedidoLocal(resultado.pedidoId);
     vaciar();
 
     if (metodoPago === "mercadopago") {
@@ -107,7 +109,7 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
     }
 
     setEnviando(false);
-    router.push(`/pedido/${resultado.pedidoId}?nuevo=1`);
+    router.push(`/pedido/${resultado.pedidoId}`);
   }
 
   if (items.length === 0) {
@@ -231,14 +233,15 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
             <p className="text-xs text-base-muted">Vas a pagar en el sitio seguro de Mercado Pago.</p>
           ) : (
             <p className="text-xs text-base-muted">
-              Te confirmamos los datos para coordinar el pago por WhatsApp o email una vez generado
-              el pedido.
+              Tu pedido le llega directo al negocio al confirmarlo. Después te contactamos para
+              coordinar el pago.
             </p>
           )}
         </section>
       ) : (
         <div className="rounded-2xl border border-dashed border-base-border p-4 text-xs text-base-muted">
-          El pago se coordina por WhatsApp o email una vez generado el pedido.
+          Tu pedido le llega directo al negocio al confirmarlo. Después te contactamos para
+          coordinar el pago.
         </div>
       )}
 

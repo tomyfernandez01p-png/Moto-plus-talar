@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { whatsappLink, type Configuracion } from "@/lib/config";
 import { mensajeSolicitudMecanica } from "@/lib/whatsapp";
@@ -29,18 +29,6 @@ export function MecanicaForm({
   const [resultado, setResultado] = useState<{ numero: number; mensajeWhatsapp: string } | null>(
     null
   );
-
-  // Apenas queda guardada la solicitud se abre WhatsApp con el resumen ya
-  // armado: el cliente solo toca "Enviar" en WhatsApp. (WhatsApp no permite
-  // enviar el mensaje solo; el botón de abajo queda por si el navegador
-  // bloquea la apertura automática.)
-  useEffect(() => {
-    if (!resultado) return;
-    const t = setTimeout(() => {
-      window.location.href = whatsappLink(config, resultado.mensajeWhatsapp);
-    }, 1500);
-    return () => clearTimeout(t);
-  }, [resultado, config]);
 
   function toggleServicio(id: string) {
     setServiciosSeleccionados((prev) =>
@@ -116,18 +104,20 @@ export function MecanicaForm({
       <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
         <h2 className="text-xl font-bold text-base-white">¡Pedido de turno recibido!</h2>
         <p className="mt-1 text-sm text-base-muted">
-          Solicitud #{resultado.numero} · La vamos a revisar y te confirmamos el turno a la brevedad.
+          Solicitud #{resultado.numero} · Ya quedó registrada y le llegó al taller. La vamos a
+          revisar y te confirmamos el turno a la brevedad.
         </p>
         <p className="mt-3 text-sm text-base-muted">
-          Te estamos abriendo WhatsApp con tu resumen ya escrito: solo tocá &quot;Enviar&quot;. Si no se abre, usá el botón:
+          No hace falta que mandes nada por WhatsApp. Si querés consultar algo, podés escribirnos:
         </p>
         <ButtonLink
           href={whatsappLink(config, resultado.mensajeWhatsapp)}
           target="_blank"
+          variant="secondary"
           className="mt-4"
           size="lg"
         >
-          Enviar resumen por WhatsApp
+          Consultar por WhatsApp
         </ButtonLink>
       </div>
     );

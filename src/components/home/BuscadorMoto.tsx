@@ -1,10 +1,18 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/database";
 import { IconChevronDown, IconArrowRight } from "@/components/ui/Icons";
 import { cn } from "@/lib/utils";
+import {
+  borrarMiMoto,
+  guardarMiMoto,
+  leerMiMoto,
+  nombreMoto,
+  urlRepuestosMoto,
+  type MiMoto,
+} from "@/lib/mi-moto";
 
 type Moto = Database["public"]["Tables"]["motos"]["Row"];
 
@@ -23,6 +31,23 @@ export function BuscadorMoto({ motos }: { motos: Moto[] }) {
   const [marca, setMarca] = useState("");
   const [modelo, setModelo] = useState("");
   const [anio, setAnio] = useState("");
+  const [miMoto, setMiMoto] = useState<MiMoto | null>(null);
+
+  useEffect(() => {
+    setMiMoto(leerMiMoto());
+  }, []);
+
+  function agregarMiMoto() {
+    if (!marca) return;
+    const moto = { marca, modelo, anio };
+    guardarMiMoto(moto);
+    setMiMoto(moto);
+  }
+
+  function quitarMiMoto() {
+    borrarMiMoto();
+    setMiMoto(null);
+  }
 
   const marcas = useMemo(() => Array.from(new Set(motos.map((m) => m.marca))).sort(), [motos]);
   const modelos = useMemo(
@@ -76,6 +101,32 @@ export function BuscadorMoto({ motos }: { motos: Moto[] }) {
             Seleccioná tu moto para encontrar productos compatibles.
           </p>
         </div>
+
+        {miMoto && (
+          <div className="relative mb-4 flex flex-col gap-3 rounded-2xl border border-brand-orange/40 bg-base-black/50 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs text-base-muted">Mi moto</p>
+              <p className="font-semibold text-base-white">{nombreMoto(miMoto)}</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => router.push(urlRepuestosMoto(miMoto))}
+                className="flex items-center gap-2 rounded-xl border border-brand-orange/70 bg-base-black px-4 py-2.5 text-sm font-semibold text-base-white shadow-glow-sm transition-all duration-200 hover:border-brand-orange hover:shadow-glow active:scale-95"
+              >
+                Ver repuestos para mi moto
+                <IconArrowRight className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={quitarMiMoto}
+                className="rounded-xl px-3 py-2.5 text-sm text-base-muted transition-colors hover:text-base-white"
+              >
+                Quitar
+              </button>
+            </div>
+          </div>
+        )}
 
         <form
           onSubmit={buscar}
@@ -149,6 +200,20 @@ export function BuscadorMoto({ motos }: { motos: Moto[] }) {
             <IconArrowRight className="h-4 w-4" />
           </button>
         </form>
+
+        <div className="relative mt-3 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
+          <button
+            type="button"
+            onClick={agregarMiMoto}
+            disabled={!marca}
+            className="rounded-xl border border-base-border px-4 py-2.5 text-sm font-semibold text-base-white transition-colors hover:border-brand-orange/70 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {miMoto ? "Cambiar mi moto por esta" : "Agregar mi moto"}
+          </button>
+          <p className="text-xs text-base-muted">
+            Elegí tu moto y guardala: la próxima vez vas a ver sus repuestos con un solo toque.
+          </p>
+        </div>
       </div>
     </section>
   );

@@ -156,7 +156,7 @@ export async function Footer() {
               <Link href="/cuenta" className="transition-colors hover:text-base-white">Mi cuenta</Link>
             </li>
             <li>
-              <Link href="/cuenta/pedidos" className="transition-colors hover:text-base-white">Mis pedidos</Link>
+              <Link href="/mis-pedidos" className="transition-colors hover:text-base-white">Mis pedidos</Link>
             </li>
             <li>
               <Link href="/favoritos" className="transition-colors hover:text-base-white">Favoritos</Link>

@@ -65,6 +65,7 @@ export function MobileMenu({
     { href: "/categorias", label: "Categorías" },
     { href: "/productos?oferta=1", label: "Ofertas" },
     { href: "/mecanica", label: "Turno de mecánica" },
+    { href: "/mis-pedidos", label: "Mis pedidos" },
     { href: "/preguntas-frecuentes", label: "Ayuda" },
   ];
 

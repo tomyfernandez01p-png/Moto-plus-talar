@@ -42,6 +42,13 @@ export function CartDrawer() {
                 <IconCart className="h-6 w-6" />
               </span>
               <p className="text-sm text-base-muted">Tu carrito está vacío.</p>
+              <Link
+                href="/mis-pedidos"
+                onClick={() => setAbierto(false)}
+                className="mt-4 text-sm font-semibold text-brand-orange hover:underline"
+              >
+                Ver mis pedidos
+              </Link>
             </div>
           ) : (
             <ul className="flex flex-col gap-4">
