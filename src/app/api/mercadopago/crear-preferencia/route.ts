@@ -55,6 +55,10 @@ export async function POST(request: NextRequest) {
   }
 
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
+  // En un preview, el cliente tiene que volver al preview (no al sitio de producción).
+  // El aviso de pago (webhook) sigue yendo a siteUrl, que es donde están las claves reales.
+  const volverUrl =
+    process.env.VERCEL_ENV === "preview" ? request.nextUrl.origin.replace(/\/$/, "") : siteUrl;
 
   const preferenceItems = items.map((item) => ({
     id: item.producto_id ?? item.id,
@@ -91,9 +95,9 @@ export async function POST(request: NextRequest) {
         external_reference: pedido.id,
         notification_url: `${siteUrl}/api/mercadopago/webhook`,
         back_urls: {
-          success: `${siteUrl}/pedido/${pedido.id}`,
-          pending: `${siteUrl}/pedido/${pedido.id}`,
-          failure: `${siteUrl}/pedido/${pedido.id}`,
+          success: `${volverUrl}/pedido/${pedido.id}`,
+          pending: `${volverUrl}/pedido/${pedido.id}`,
+          failure: `${volverUrl}/pedido/${pedido.id}`,
         },
         auto_return: "approved",
       },
