@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { formatPrecio, formatFecha } from "@/lib/format";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
-import { ESTADOS_PEDIDO, ESTADO_LABEL, ESTADO_TONO } from "./estado-utils";
+import { ESTADOS_PEDIDO, ESTADOS_SIN_PAGO, ESTADO_LABEL, ESTADO_TONO } from "./estado-utils";
 import type { EstadoPedido } from "@/types/database";
 
 export default async function AdminPedidosPage({
@@ -22,6 +22,10 @@ export default async function AdminPedidosPage({
   const estadoFiltro = searchParams.estado as EstadoPedido | undefined;
   if (estadoFiltro && ESTADOS_PEDIDO.includes(estadoFiltro)) {
     query = query.eq("estado", estadoFiltro);
+  } else {
+    // Un pedido solo se considera recibido cuando el pago está confirmado:
+    // los que todavía no se pagaron quedan fuera de la lista (se ven con sus filtros).
+    query = query.not("estado", "in", `(${ESTADOS_SIN_PAGO.join(",")})`);
   }
 
   const { data: pedidos } = await query;
@@ -38,7 +42,7 @@ export default async function AdminPedidosPage({
             !estadoFiltro ? "bg-brand-orange text-white" : "border border-base-border text-base-muted"
           )}
         >
-          Todos
+          Recibidos (pagados)
         </Link>
         {ESTADOS_PEDIDO.map((estado) => (
           <Link
@@ -92,7 +96,7 @@ export default async function AdminPedidosPage({
             {(pedidos ?? []).length === 0 && (
               <tr>
                 <td colSpan={7} className="p-6 text-center text-base-muted">
-                  No hay pedidos{estadoFiltro ? ` con estado "${ESTADO_LABEL[estadoFiltro]}"` : ""}.
+                  No hay pedidos{estadoFiltro ? ` con estado "${ESTADO_LABEL[estadoFiltro]}"` : " con el pago confirmado"}.
                 </td>
               </tr>
             )}

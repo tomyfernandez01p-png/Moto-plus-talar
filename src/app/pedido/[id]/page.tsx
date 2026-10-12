@@ -6,6 +6,7 @@ import { mensajePedidoNuevo } from "@/lib/whatsapp";
 import { getConfiguracion } from "@/lib/config.server";
 import { formatPrecio } from "@/lib/format";
 import { ButtonLink } from "@/components/ui/Button";
+import { PagarAhora } from "../PagarAhora";
 
 export const dynamic = "force-dynamic";
 
@@ -53,32 +54,37 @@ export default async function PedidoConfirmadoPage({
     total: Number(pedido.total),
   });
   const linkWhatsapp = whatsappLink(config, mensaje);
+  const sinPagar = pedido.estado === "nuevo" || pedido.estado === "pago_pendiente";
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 md:px-6">
-      <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
-        <h1 className="text-2xl font-bold text-base-white">¡Pedido recibido!</h1>
-        <p className="mt-1 text-sm text-base-muted">
-          Pedido #{pedido.numero} · Ya quedó registrado y le llegó al negocio. Te vamos a contactar
-          para coordinar el pago y la entrega.
-        </p>
-      </div>
-
-      {pedido.metodo_pago === "mercadopago" && pedido.estado === "nuevo" && (
-        <div role="status" className="mt-4 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-base-white">
-          <p className="font-semibold">Todavía no se realizó el pago</p>
-          <p className="mt-1 text-base-muted">
-            No pudimos abrir Mercado Pago para este pedido. Tu pedido está registrado y te vamos a
-            contactar para coordinar el pago.
+      {sinPagar ? (
+        <div className="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-6 text-center">
+          <h1 className="text-2xl font-bold text-base-white">
+            {pedido.estado === "pago_pendiente" ? "Pago pendiente" : "Falta el pago"}
+          </h1>
+          <p className="mt-1 text-sm text-base-muted">
+            Pedido #{pedido.numero} · El pedido se confirma y le llega al negocio cuando el pago
+            queda acreditado.
           </p>
+          {pedido.estado === "pago_pendiente" && (
+            <p className="mt-2 text-sm text-base-muted">
+              Si ya pagaste, puede demorar unos minutos en acreditarse: recargá esta página.
+            </p>
+          )}
+          <PagarAhora pedidoId={pedido.id} />
         </div>
-      )}
-      {pedido.metodo_pago === "mercadopago" && pedido.estado === "pago_pendiente" && (
-        <div role="status" className="mt-4 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-base-white">
-          <p className="font-semibold">Pago pendiente</p>
-          <p className="mt-1 text-base-muted">
-            Todavía no figura como aprobado. Si ya pagaste, puede demorar unos minutos en
-            acreditarse; esta página se actualiza al recargarla.
+      ) : pedido.estado === "cancelado" ? (
+        <div className="rounded-2xl border border-red-500/40 bg-red-500/10 p-6 text-center">
+          <h1 className="text-2xl font-bold text-base-white">Pedido cancelado</h1>
+          <p className="mt-1 text-sm text-base-muted">Pedido #{pedido.numero} · Este pedido fue cancelado.</p>
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
+          <h1 className="text-2xl font-bold text-base-white">¡Pedido recibido!</h1>
+          <p className="mt-1 text-sm text-base-muted">
+            Pedido #{pedido.numero} · El pago está confirmado y el pedido le llegó al negocio. Te
+            vamos a contactar para coordinar la entrega.
           </p>
         </div>
       )}

@@ -9,7 +9,7 @@ import { leerPedidosLocales } from "@/lib/pedidos-locales";
 import { pedidosPorIdsAction, type PedidoResumen } from "./actions";
 
 const estadoLabel: Record<string, string> = {
-  nuevo: "Nuevo",
+  nuevo: "Sin pagar",
   pago_pendiente: "Pago pendiente",
   pago_aprobado: "Pago aprobado",
   confirmado: "Confirmado",

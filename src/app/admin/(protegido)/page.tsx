@@ -25,20 +25,25 @@ export default async function AdminDashboardPage() {
     supabase.from("vista_productos").select("*", { count: "exact", head: true }).eq("en_oferta", true),
     supabase.from("vista_productos").select("*", { count: "exact", head: true }).eq("es_nuevo", true),
     supabase.from("perfiles").select("*", { count: "exact", head: true }).eq("rol", "cliente"),
-    supabase.from("pedidos").select("*", { count: "exact", head: true }).eq("estado", "nuevo"),
-    supabase.from("pedidos").select("*").order("created_at", { ascending: false }).limit(8),
+    supabase.from("pedidos").select("*", { count: "exact", head: true }).eq("estado", "pago_aprobado"),
+    supabase
+      .from("pedidos")
+      .select("*")
+      .not("estado", "in", "(nuevo,pago_pendiente)")
+      .order("created_at", { ascending: false })
+      .limit(8),
     supabase
       .from("pedidos")
       .select("total, created_at")
       .gte("created_at", new Date(new Date().setDate(1)).toISOString())
-      .not("estado", "eq", "cancelado"),
+      .not("estado", "in", "(nuevo,pago_pendiente,cancelado)"),
   ]);
 
   const ventasDelMes = (ventasMes ?? []).reduce((acc, p) => acc + Number(p.total), 0);
 
   const tarjetas = [
     { label: "Ventas del mes", value: formatPrecio(ventasDelMes) },
-    { label: "Pedidos nuevos", value: pedidosNuevos ?? 0, href: "/admin/pedidos?estado=nuevo" },
+    { label: "Pedidos pagados nuevos", value: pedidosNuevos ?? 0, href: "/admin/pedidos?estado=pago_aprobado" },
     { label: "Productos activos", value: totalProductos ?? 0, href: "/admin/productos" },
     { label: "Últimas unidades", value: stockBajo ?? 0, href: "/admin/productos?stock=bajo" },
     { label: "Sin stock", value: sinStock ?? 0, href: "/admin/productos?stock=sin_stock" },

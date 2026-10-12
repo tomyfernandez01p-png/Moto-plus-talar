@@ -34,10 +34,12 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
     retiroActivo ? "retiro_local" : "envio"
   );
 
-  const metodosDisponibles = (["mercadopago", "transferencia", "efectivo"] as const).filter(
-    (m) => config.metodos_pago?.[m]
+  // Un pedido solo se considera recibido cuando el pago está confirmado, y eso
+  // solo se puede verificar solo con Mercado Pago: es el único medio de pago.
+  const pagoOnlineActivo = !!config.metodos_pago?.mercadopago;
+  const [metodoPago] = useState<MetodoPago | undefined>(
+    pagoOnlineActivo ? "mercadopago" : undefined
   );
-  const [metodoPago, setMetodoPago] = useState<MetodoPago | undefined>(metodosDisponibles[0]);
 
   // Esto es solo para mostrarle un total estimado al comprador antes de
   // confirmar: el costo de envío real lo vuelve a calcular `crear_pedido`
@@ -56,6 +58,10 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
 
     if (items.length === 0) {
       setError("Tu carrito está vacío.");
+      return;
+    }
+    if (!pagoOnlineActivo) {
+      setError("Las compras online no están disponibles en este momento.");
       return;
     }
 
@@ -207,41 +213,18 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
         </div>
       </section>
 
-      {metodosDisponibles.length > 0 ? (
-        <section className="flex flex-col gap-3 rounded-2xl border border-base-border bg-base-surface p-5">
+      {pagoOnlineActivo ? (
+        <section className="flex flex-col gap-2 rounded-2xl border border-base-border bg-base-surface p-5">
           <h2 className="text-sm font-bold uppercase tracking-wide text-brand-orange">Medio de pago</h2>
-          <div className="flex flex-col gap-2">
-            {metodosDisponibles.map((metodo) => (
-              <label
-                key={metodo}
-                className={`cursor-pointer rounded-xl border p-3 text-sm ${
-                  metodoPago === metodo ? "border-brand-orange bg-brand-orange/10" : "border-base-border"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="metodoPagoRadio"
-                  className="sr-only"
-                  checked={metodoPago === metodo}
-                  onChange={() => setMetodoPago(metodo)}
-                />
-                <span className="font-semibold text-base-white">{METODOS_PAGO_LABEL[metodo]}</span>
-              </label>
-            ))}
-          </div>
-          {metodoPago === "mercadopago" ? (
-            <p className="text-xs text-base-muted">Vas a pagar en el sitio seguro de Mercado Pago.</p>
-          ) : (
-            <p className="text-xs text-base-muted">
-              Tu pedido le llega directo al negocio al confirmarlo. Después te contactamos para
-              coordinar el pago.
-            </p>
-          )}
+          <p className="text-sm font-semibold text-base-white">{METODOS_PAGO_LABEL.mercadopago}</p>
+          <p className="text-xs text-base-muted">
+            Al confirmar te llevamos al sitio seguro de Mercado Pago. El pedido se confirma cuando
+            el pago queda acreditado.
+          </p>
         </section>
       ) : (
         <div className="rounded-2xl border border-dashed border-base-border p-4 text-xs text-base-muted">
-          Tu pedido le llega directo al negocio al confirmarlo. Después te contactamos para
-          coordinar el pago.
+          Las compras online no están disponibles en este momento.
         </div>
       )}
 
@@ -253,10 +236,10 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
 
       <button
         type="submit"
-        disabled={enviando}
+        disabled={enviando || !pagoOnlineActivo}
         className="rounded-xl bg-brand-orange py-4 text-base font-bold text-white transition-colors hover:bg-brand-orange-dark disabled:opacity-60"
       >
-        {enviando ? "Generando pedido…" : "Confirmar pedido"}
+        {enviando ? "Preparando el pago…" : "Ir a pagar"}
       </button>
     </form>
   );
