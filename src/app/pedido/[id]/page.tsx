@@ -62,6 +62,25 @@ export default async function PedidoConfirmadoPage({
         </p>
       </div>
 
+      {pedido.metodo_pago === "mercadopago" && pedido.estado === "nuevo" && (
+        <div role="status" className="mt-4 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-base-white">
+          <p className="font-semibold">Todavía no se realizó el pago</p>
+          <p className="mt-1 text-base-muted">
+            No pudimos abrir Mercado Pago para este pedido. Tu pedido está registrado y te vamos a
+            contactar para coordinar el pago.
+          </p>
+        </div>
+      )}
+      {pedido.metodo_pago === "mercadopago" && pedido.estado === "pago_pendiente" && (
+        <div role="status" className="mt-4 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-base-white">
+          <p className="font-semibold">Pago pendiente</p>
+          <p className="mt-1 text-base-muted">
+            Todavía no figura como aprobado. Si ya pagaste, puede demorar unos minutos en
+            acreditarse; esta página se actualiza al recargarla.
+          </p>
+        </div>
+      )}
+
       <div className="mt-6 rounded-2xl border border-base-border bg-base-surface p-6">
         <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-brand-orange">
           Detalle del pedido
