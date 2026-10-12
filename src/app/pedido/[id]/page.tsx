@@ -7,6 +7,8 @@ import { getConfiguracion } from "@/lib/config.server";
 import { formatPrecio } from "@/lib/format";
 import { ButtonLink } from "@/components/ui/Button";
 
+export const dynamic = "force-dynamic";
+
 /**
  * Confirmación de pedido. Se busca por el UUID exacto del pedido (128 bits
  * de entropía, no listable ni adivinable) con el cliente de service role,
