@@ -17,7 +17,7 @@ export default async function MecanicaPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-3xl px-4 pb-28 pt-8 md:px-6 md:pb-12">
       <h1 className="mb-2 text-2xl font-bold text-base-white">Turno de mecánica</h1>
       <p className="mb-6 text-sm text-base-muted">
         Contanos qué servicio necesita tu moto. Revisamos cada pedido a mano y te confirmamos el
