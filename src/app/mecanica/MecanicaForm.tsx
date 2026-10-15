@@ -145,7 +145,24 @@ export function MecanicaForm({
                   onChange={() => toggleServicio(servicio.id)}
                   className="mt-0.5 h-4 w-4 accent-brand-orange"
                 />
-                <span className="text-base-white">{servicio.nombre}</span>
+                <span className="flex flex-col gap-1.5">
+                  <span className="font-semibold text-base-white">{servicio.nombre}</span>
+                  {servicio.descripcion && (
+                    <ul className="flex flex-col gap-0.5 text-xs text-base-muted">
+                      {servicio.descripcion
+                        .split("\n")
+                        .filter(Boolean)
+                        .map((item) => (
+                          <li key={item} className="flex gap-1.5">
+                            <span aria-hidden className="text-brand-orange">
+                              ✓
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
+                </span>
               </label>
             );
           })}
