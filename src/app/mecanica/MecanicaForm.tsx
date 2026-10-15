@@ -12,6 +12,35 @@ interface ServicioMecanica {
   descripcion: string | null;
 }
 
+// Secciones y servicios del flyer del taller. Cada servicio es un registro de la
+// tabla `servicios_mecanica` (se administra desde la base); acá solo se agrupan.
+const SECCIONES: { titulo: string; items: string[] }[] = [
+  {
+    titulo: "Service Básico Express",
+    items: ["Cambio de aceite", "Cambio de filtro de aceite", "Mantenimiento de transmisión", "Revisión rápida de frenos", "Ajuste básico de tornillería"],
+  },
+  {
+    titulo: "Service Plus",
+    items: ["Cambio de aceite", "Cambio de filtro de aceite", "Tensado y lubricado de cadena"],
+  },
+  {
+    titulo: "Service Completo Premium",
+    items: ["Mantenimiento de transmisión", "Cambio de aceite y filtro", "Limpieza / reemplazo de filtro de aire", "Verificación de bujía(s)", "Mantenimiento de ambos frenos", "Ajuste de tornillería", "Lubricación de cables", "Regulación de válvulas"],
+  },
+  {
+    titulo: "Service Neumáticos",
+    items: ["Cambio de cubiertas", "Reparación de pinchaduras", "Control de presión", "Revisión de desgaste"],
+  },
+  {
+    titulo: "Service Eléctrico",
+    items: ["Diagnóstico", "Revisión de batería y sistema de carga", "Verificación de estator y regulador", "Cambio de lámparas", "Revisión de luces"],
+  },
+  {
+    titulo: "Suspensión y Transmisión",
+    items: ["Revisión y mantenimiento de suspensión", "Cambio de transmisión", "Ajustes y puesta a punto"],
+  },
+];
+
 const inputClass =
   "w-full rounded-xl border border-base-border bg-base-dark px-4 py-3 text-sm text-base-white placeholder:text-base-muted focus:border-brand-orange focus:outline-none focus:ring-1 focus:ring-brand-orange";
 
@@ -23,6 +52,13 @@ export function MecanicaForm({
   config: Configuracion;
 }) {
   const [serviciosSeleccionados, setServiciosSeleccionados] = useState<string[]>([]);
+  const [seccionAbierta, setSeccionAbierta] = useState<string | null>(null);
+  const secciones = SECCIONES.map((sec) => ({
+    titulo: sec.titulo,
+    items: sec.items
+      .map((nombre) => servicios.find((s) => s.nombre === nombre))
+      .filter((s): s is ServicioMecanica => !!s),
+  })).filter((sec) => sec.items.length > 0);
   const [disclaimerAceptado, setDisclaimerAceptado] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -129,44 +165,80 @@ export function MecanicaForm({
         <h2 className="text-sm font-bold uppercase tracking-wide text-brand-orange">
           ¿Qué necesita tu moto?
         </h2>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {servicios.map((servicio) => {
-            const marcado = serviciosSeleccionados.includes(servicio.id);
+        <div className="flex flex-col gap-3">
+          {secciones.map((seccion) => {
+            const abierta = seccionAbierta === seccion.titulo;
+            const cantidad = seccion.items.filter((i) => serviciosSeleccionados.includes(i.id)).length;
             return (
-              <label
-                key={servicio.id}
-                className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3 text-sm transition-colors ${
-                  marcado ? "border-brand-orange bg-brand-orange/10" : "border-base-border"
+              <div
+                key={seccion.titulo}
+                className={`overflow-hidden rounded-xl border transition-colors ${
+                  cantidad > 0 ? "border-brand-orange" : "border-base-border"
                 }`}
               >
-                <input
-                  type="checkbox"
-                  checked={marcado}
-                  onChange={() => toggleServicio(servicio.id)}
-                  className="mt-0.5 h-4 w-4 accent-brand-orange"
-                />
-                <span className="flex flex-col gap-1.5">
-                  <span className="font-semibold text-base-white">{servicio.nombre}</span>
-                  {servicio.descripcion && (
-                    <ul className="flex flex-col gap-0.5 text-xs text-base-muted">
-                      {servicio.descripcion
-                        .split("\n")
-                        .filter(Boolean)
-                        .map((item) => (
-                          <li key={item} className="flex gap-1.5">
-                            <span aria-hidden className="text-brand-orange">
-                              ✓
-                            </span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                    </ul>
-                  )}
-                </span>
-              </label>
+                <button
+                  type="button"
+                  aria-expanded={abierta}
+                  onClick={() => setSeccionAbierta(abierta ? null : seccion.titulo)}
+                  className="flex w-full items-center justify-between gap-3 bg-base-dark px-4 py-3.5 text-left"
+                >
+                  <span className="text-base font-bold text-base-white">{seccion.titulo}</span>
+                  <span className="flex items-center gap-3">
+                    {cantidad > 0 && (
+                      <span className="rounded-full bg-brand-orange px-2.5 py-0.5 text-xs font-bold text-white">
+                        {cantidad}
+                      </span>
+                    )}
+                    <span
+                      aria-hidden
+                      className={`text-brand-orange transition-transform ${abierta ? "rotate-180" : ""}`}
+                    >
+                      ▼
+                    </span>
+                  </span>
+                </button>
+                {abierta && (
+                  <ul className="flex flex-col gap-2 border-t border-base-border bg-base-surface p-3">
+                    {seccion.items.map((servicio) => {
+                      const marcado = serviciosSeleccionados.includes(servicio.id);
+                      return (
+                        <li
+                          key={servicio.id}
+                          className="flex items-center justify-between gap-3 rounded-lg border border-base-border bg-base-dark px-3 py-2.5"
+                        >
+                          <span className="text-sm text-base-white">{servicio.nombre}</span>
+                          <button
+                            type="button"
+                            aria-pressed={marcado}
+                            onClick={() => toggleServicio(servicio.id)}
+                            className={`shrink-0 rounded-lg px-4 py-2 text-sm font-bold transition-all active:scale-95 ${
+                              marcado
+                                ? "bg-emerald-500 text-white"
+                                : "bg-brand-orange text-white shadow-glow-sm hover:bg-brand-orange-dark"
+                            }`}
+                          >
+                            {marcado ? "✓ Agregado" : "+ Agregar"}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </div>
             );
           })}
         </div>
+        {serviciosSeleccionados.length > 0 && (
+          <p className="text-sm text-base-muted">
+            Elegiste{" "}
+            <span className="font-bold text-brand-orange">{serviciosSeleccionados.length}</span>{" "}
+            {serviciosSeleccionados.length === 1 ? "servicio" : "servicios"}:{" "}
+            {servicios
+              .filter((s) => serviciosSeleccionados.includes(s.id))
+              .map((s) => s.nombre)
+              .join(", ")}
+          </p>
+        )}
         <textarea
           name="descripcionProblema"
           rows={3}
@@ -237,7 +309,7 @@ export function MecanicaForm({
       <button
         type="submit"
         disabled={enviando}
-        className="rounded-xl border border-brand-orange/70 bg-base-black py-4 text-base font-bold text-base-white shadow-glow-sm transition-all duration-200 hover:border-brand-orange hover:bg-base-dark hover:shadow-glow active:scale-95 active:shadow-none disabled:pointer-events-none disabled:opacity-60"
+        className="rounded-xl bg-brand-orange py-4 text-base font-bold text-white shadow-glow-sm transition-all duration-200 hover:bg-brand-orange-dark hover:shadow-glow active:scale-95 active:shadow-none disabled:pointer-events-none disabled:opacity-60"
       >
         {enviando ? "Enviando pedido…" : "Pedir turno"}
       </button>

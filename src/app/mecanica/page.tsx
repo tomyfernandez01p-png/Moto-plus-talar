@@ -6,7 +6,7 @@ import { MecanicaForm } from "./MecanicaForm";
 export const metadata: Metadata = {
   title: "Turno de mecánica",
   description:
-    "Pedí turno para el service de tu moto: básico express, plus, completo premium, neumáticos, eléctrico, suspensión y transmisión.",
+    "Pedí un turno para mecánica de moto: service, frenos, eléctrico y más. La dueña revisa cada pedido antes de confirmarlo.",
 };
 
 export default async function MecanicaPage() {
@@ -18,12 +18,9 @@ export default async function MecanicaPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 md:px-6">
-      <h1 className="mb-2 text-2xl font-bold text-base-white">Servicio de mecánica</h1>
-      <p className="mb-1 text-sm font-semibold text-brand-orange">
-        Tu moto en buenas manos · Atención por turno
-      </p>
+      <h1 className="mb-2 text-2xl font-bold text-base-white">Turno de mecánica</h1>
       <p className="mb-6 text-sm text-base-muted">
-        Elegí el service que necesita tu moto. Revisamos cada pedido a mano y te confirmamos el
+        Contanos qué servicio necesita tu moto. Revisamos cada pedido a mano y te confirmamos el
         turno por WhatsApp o email — esto no agenda el turno automáticamente.
       </p>
 
