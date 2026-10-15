@@ -143,9 +143,11 @@ export async function Footer() {
             <li>
               <Link href="/cambios-y-devoluciones" className="transition-colors hover:text-base-white">Cambios y devoluciones</Link>
             </li>
-            <li>
-              <Link href="/envios" className="transition-colors hover:text-base-white">Envíos</Link>
-            </li>
+            {config.metodos_envio?.envio_activo && (
+              <li>
+                <Link href="/envios" className="transition-colors hover:text-base-white">Envíos</Link>
+              </li>
+            )}
           </ul>
         </div>
 
