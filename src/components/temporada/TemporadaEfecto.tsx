@@ -5,7 +5,7 @@ import type { Temporada } from "@/lib/temporadas";
  * Solo CSS, sin JavaScript. No tapa clics (pointer-events: none), está oculto
  * para lectores de pantalla y se apaga si el usuario pidió menos movimiento.
  */
-const POSICIONES = [6, 18, 30, 44, 58, 70, 82, 93];
+const POSICIONES = [8, 28, 50, 72, 92];
 
 export function TemporadaEfecto({ temporada }: { temporada: Temporada }) {
   return (
