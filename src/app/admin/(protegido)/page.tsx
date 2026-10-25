@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { formatFecha, formatPrecio } from "@/lib/format";
+import { UMBRAL_REPOSICION } from "@/lib/stock";
 
 export default async function AdminDashboardPage() {
   const supabase = createClient();
@@ -9,6 +10,8 @@ export default async function AdminDashboardPage() {
     { count: totalProductos },
     { count: stockBajo },
     { count: sinStock },
+    { count: paraReponer },
+    { data: listaReponer },
     { count: ofertasActivas },
     { count: productosNuevos },
     { count: totalClientes },
@@ -22,6 +25,18 @@ export default async function AdminDashboardPage() {
       .select("*", { count: "exact", head: true })
       .eq("estado_stock", "ultimas_unidades"),
     supabase.from("productos").select("*", { count: "exact", head: true }).eq("estado_stock", "sin_stock"),
+    supabase
+      .from("productos")
+      .select("*", { count: "exact", head: true })
+      .eq("activo", true)
+      .lte("stock", UMBRAL_REPOSICION),
+    supabase
+      .from("productos")
+      .select("id, nombre, codigo, stock")
+      .eq("activo", true)
+      .lte("stock", UMBRAL_REPOSICION)
+      .order("stock", { ascending: true })
+      .limit(10),
     supabase.from("vista_productos").select("*", { count: "exact", head: true }).eq("en_oferta", true),
     supabase.from("vista_productos").select("*", { count: "exact", head: true }).eq("es_nuevo", true),
     supabase.from("perfiles").select("*", { count: "exact", head: true }).eq("rol", "cliente"),
@@ -45,6 +60,7 @@ export default async function AdminDashboardPage() {
     { label: "Ventas del mes", value: formatPrecio(ventasDelMes) },
     { label: "Pedidos pagados nuevos", value: pedidosNuevos ?? 0, href: "/admin/pedidos?estado=pago_aprobado" },
     { label: "Productos activos", value: totalProductos ?? 0, href: "/admin/productos" },
+    { label: `Para reponer (${UMBRAL_REPOSICION} o menos)`, value: paraReponer ?? 0, href: "/admin/productos?stock=reponer" },
     { label: "Últimas unidades", value: stockBajo ?? 0, href: "/admin/productos?stock=bajo" },
     { label: "Sin stock", value: sinStock ?? 0, href: "/admin/productos?stock=sin_stock" },
     { label: "En oferta", value: ofertasActivas ?? 0 },
@@ -55,6 +71,29 @@ export default async function AdminDashboardPage() {
   return (
     <div>
       <h1 className="mb-6 text-2xl font-bold text-base-white">Dashboard</h1>
+
+      {(paraReponer ?? 0) > 0 && (
+        <div role="alert" className="mb-6 rounded-2xl border border-brand-orange/60 bg-brand-orange/10 p-4">
+          <p className="font-semibold text-base-white">
+            Hay {paraReponer} {paraReponer === 1 ? "producto" : "productos"} para reponer (stock de {UMBRAL_REPOSICION} o menos)
+          </p>
+          <ul className="mt-2 divide-y divide-base-border text-sm">
+            {(listaReponer ?? []).map((p) => (
+              <li key={p.id} className="flex items-center justify-between gap-3 py-1.5">
+                <Link href={`/admin/productos/${p.id}`} className="truncate text-base-white hover:text-brand-orange">
+                  {p.nombre}
+                </Link>
+                <span className="shrink-0 text-base-muted">
+                  {p.stock === 0 ? "Sin stock" : `Quedan ${p.stock}`}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <Link href="/admin/productos?stock=reponer" className="mt-3 inline-block text-sm font-semibold text-brand-orange hover:underline">
+            Ver todos los productos para reponer
+          </Link>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {tarjetas.map((t) =>

@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { ButtonLink } from "@/components/ui/Button";
 import { ProductosTable } from "./ProductosTable";
+import { UMBRAL_REPOSICION } from "@/lib/stock";
 
 export default async function AdminProductosPage({
   searchParams,
@@ -16,6 +17,9 @@ export default async function AdminProductosPage({
 
   if (searchParams.q) {
     query = query.or(`nombre.ilike.%${searchParams.q}%,codigo.ilike.%${searchParams.q}%,sku.ilike.%${searchParams.q}%`);
+  }
+  if (searchParams.stock === "reponer") {
+    query = query.eq("activo", true).lte("stock", UMBRAL_REPOSICION).order("stock", { ascending: true });
   }
   if (searchParams.stock === "bajo") query = query.eq("estado_stock", "ultimas_unidades");
   if (searchParams.stock === "sin_stock") query = query.eq("estado_stock", "sin_stock");
@@ -39,6 +43,12 @@ export default async function AdminProductosPage({
           </ButtonLink>
         </div>
       </div>
+
+      {searchParams.stock === "reponer" && (
+        <p className="mb-3 rounded-lg border border-brand-orange/50 bg-brand-orange/10 px-3 py-2 text-sm text-base-white">
+          Mostrando productos activos con stock de {UMBRAL_REPOSICION} o menos, de menor a mayor.
+        </p>
+      )}
 
       <form className="mb-4">
         <input
