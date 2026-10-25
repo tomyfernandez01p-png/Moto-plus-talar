@@ -17,14 +17,14 @@ export async function Header() {
     .order("orden");
 
   return (
-    // Solo la franja de navegación (logo/cuenta/carrito) queda fija al
-    // scrollear -- el buscador mobile de abajo va fuera del `sticky` a
-    // propósito para que se desplace con el resto del contenido en vez de
-    // quedar siempre tapando la pantalla.
-    <header className="relative z-30">
-      <div className="sticky top-0 z-30 border-b border-base-border bg-base-dark/95 backdrop-blur">
-        <AnnouncementBar config={config} />
+    // Todo el header (franja de navegación + buscador mobile) queda fijo al
+    // scrollear, con fondo opaco para que nada del contenido (banners, fotos)
+    // se vea cortado por detrás. El `sticky` va en el <header> mismo: dentro
+    // de un contenedor más chico no podía seguir al scroll.
+    <header className="sticky top-0 z-40 bg-base-dark shadow-card">
+      <AnnouncementBar config={config} />
 
+      <div className="border-b border-base-border">
         {/* fila superior: cuenta / favoritos / whatsapp — solo desktop */}
         <div className="hidden border-b border-base-border/60 bg-base-black md:block">
           <div className="mx-auto flex max-w-7xl items-center justify-end gap-6 px-6 py-1.5 text-xs text-base-muted">
@@ -53,7 +53,7 @@ export async function Header() {
         <HeaderMainRow config={config} categorias={categorias ?? []} />
       </div>
 
-      <div className="border-b border-base-border/60 bg-base-dark/95 px-4 pb-3 pt-3 md:hidden">
+      <div className="border-b border-base-border/60 bg-base-dark px-4 pb-2.5 pt-2 md:hidden">
         <SearchBar />
       </div>
     </header>

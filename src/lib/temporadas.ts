@@ -34,7 +34,7 @@ export const TEMPORADAS: Record<TemporadaId, Temporada> = {
     saludo: "Feliz Halloween",
     emojis: ["🎃", "🦇"],
     efecto: "flotar",
-    bannerFondo: "#3A1F5C",
+    bannerFondo: "#1B1B1E",
   },
   navidad: {
     id: "navidad",
@@ -42,7 +42,7 @@ export const TEMPORADAS: Record<TemporadaId, Temporada> = {
     saludo: "Feliz Navidad",
     emojis: ["❄️", "🎄"],
     efecto: "caer",
-    bannerFondo: "#8A1C2B",
+    bannerFondo: "#1B1B1E",
   },
   anio_nuevo: {
     id: "anio_nuevo",
@@ -50,7 +50,7 @@ export const TEMPORADAS: Record<TemporadaId, Temporada> = {
     saludo: "Feliz año nuevo",
     emojis: ["✨", "🎆"],
     efecto: "flotar",
-    bannerFondo: "#6B4E00",
+    bannerFondo: "#1B1B1E",
   },
   pascua: {
     id: "pascua",
@@ -58,7 +58,7 @@ export const TEMPORADAS: Record<TemporadaId, Temporada> = {
     saludo: "Felices Pascuas",
     emojis: ["🐣", "🥚"],
     efecto: "flotar",
-    bannerFondo: "#5B3A9B",
+    bannerFondo: "#1B1B1E",
   },
   dia_madre: {
     id: "dia_madre",
@@ -66,7 +66,7 @@ export const TEMPORADAS: Record<TemporadaId, Temporada> = {
     saludo: "Feliz Día de la Madre",
     emojis: ["🌷", "💐"],
     efecto: "flotar",
-    bannerFondo: "#9B2E62",
+    bannerFondo: "#1B1B1E",
   },
   dia_padre: {
     id: "dia_padre",
@@ -74,7 +74,7 @@ export const TEMPORADAS: Record<TemporadaId, Temporada> = {
     saludo: "Feliz Día del Padre",
     emojis: ["🏍️", "🛠️"],
     efecto: "flotar",
-    bannerFondo: "#1F4E8C",
+    bannerFondo: "#1B1B1E",
   },
 };
 
