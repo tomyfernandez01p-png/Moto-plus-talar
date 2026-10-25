@@ -31,7 +31,7 @@ export function Hero({
 
   return (
     <section className="bg-grain relative overflow-hidden bg-base-black">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,106,0,0.16),transparent_55%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgb(var(--color-brand)/0.16),transparent_55%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.5)_100%)]" />
 
       {/* elementos decorativos flotantes: puro CSS, no imágenes ni marcas */}

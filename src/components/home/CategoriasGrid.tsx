@@ -82,8 +82,8 @@ export function CategoriasGrid({
                 aria-hidden
                 className={`absolute inset-0 flex items-center justify-center pb-8 ${
                   i % 2 === 0
-                    ? "bg-[radial-gradient(circle_at_42%_36%,rgba(255,106,0,0.22),transparent_65%)]"
-                    : "bg-[radial-gradient(circle_at_58%_36%,rgba(255,106,0,0.22),transparent_65%)]"
+                    ? "bg-[radial-gradient(circle_at_42%_36%,rgb(var(--color-brand)/0.22),transparent_65%)]"
+                    : "bg-[radial-gradient(circle_at_58%_36%,rgb(var(--color-brand)/0.22),transparent_65%)]"
                 }`}
               >
                 <span className="flex h-20 w-20 items-center justify-center rounded-full border border-brand-orange/30 bg-brand-orange/15 text-brand-orange shadow-glow-sm transition-transform duration-500 ease-smooth group-hover:scale-110 sm:h-24 sm:w-24">

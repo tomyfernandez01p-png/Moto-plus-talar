@@ -1,5 +1,6 @@
 "use server";
 
+import { OPCIONES_TEMPORADA } from "@/lib/temporadas";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
@@ -137,6 +138,9 @@ export async function guardarConfiguracionAction(formData: FormData) {
         color: String(formData.get("anuncio_color") || "#FF6A00").trim(),
       },
       cuentas_clientes_activas: formData.get("cuentas_clientes_activas") === "on",
+      temporada: OPCIONES_TEMPORADA.some((o) => o.valor === formData.get("temporada"))
+        ? String(formData.get("temporada"))
+        : "auto",
       ...(logoUrl ? { logo_url: logoUrl } : {}),
       ...(faviconUrl ? { favicon_url: faviconUrl } : {}),
     })

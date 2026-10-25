@@ -1,3 +1,4 @@
+import { OPCIONES_TEMPORADA } from "@/lib/temporadas";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
@@ -332,6 +333,22 @@ export default async function AdminConfiguracionPage() {
               />
             </div>
           </div>
+        </section>
+
+        <section className={sectionClass}>
+          <h2 className={sectionTitleClass}>Temporada (decoración del sitio)</h2>
+          <p className="mb-3 text-sm text-base-muted">
+            Cambia el color de acento, agrega un saludo arriba y una decoración suave. No crea ofertas.
+            En automático, el sitio elige según la fecha (Halloween, Navidad, Año Nuevo, Pascua, Día de
+            la Madre y Día del Padre).
+          </p>
+          <select name="temporada" defaultValue={config.temporada ?? "auto"} className={inputClass}>
+            {OPCIONES_TEMPORADA.map((o) => (
+              <option key={o.valor} value={o.valor}>
+                {o.etiqueta}
+              </option>
+            ))}
+          </select>
         </section>
 
         <section className={sectionClass}>

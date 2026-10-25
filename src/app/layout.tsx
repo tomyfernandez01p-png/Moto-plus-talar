@@ -13,6 +13,9 @@ import { CartProvider } from "@/lib/cart/cart-context";
 import { FavoritosProvider } from "@/lib/favoritos/FavoritosProvider";
 import { getConfiguracion } from "@/lib/config.server";
 import { jsonLdScript } from "@/lib/json-ld";
+import { resolverTemporada } from "@/lib/temporadas";
+import { TemporadaBanner } from "@/components/temporada/TemporadaBanner";
+import { TemporadaEfecto } from "@/components/temporada/TemporadaEfecto";
 
 // `viewportFit: "cover"` es lo que hace que env(safe-area-inset-bottom) valga
 // algo real en Android/iOS con gestos o notch: sin esto la barra inferior
@@ -47,6 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const config = await getConfiguracion();
+  const temporada = resolverTemporada(config.temporada);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -66,7 +70,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   };
 
   return (
-    <html lang="es-AR">
+    <html lang="es-AR" data-temporada={temporada?.id ?? "ninguna"}>
       <body>
         {/* Aplica el tema guardado ANTES del primer paint, para que no se
             vea un flash del tema oscuro (default) si el usuario había
@@ -87,6 +91,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <CartProvider>
           <FavoritosProvider>
             <SiteChrome
+              temporadaBanner={temporada ? <TemporadaBanner temporada={temporada} /> : null}
+              temporadaEfecto={temporada ? <TemporadaEfecto temporada={temporada} /> : null}
               header={<Header />}
               footer={<Footer />}
               whatsappFloat={<WhatsAppFloat config={config} />}

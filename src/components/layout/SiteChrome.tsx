@@ -27,6 +27,8 @@ import { usePathname } from "next/navigation";
 const RUTAS_SIN_CHROME = ["/login", "/registro"];
 
 export function SiteChrome({
+  temporadaBanner,
+  temporadaEfecto,
   header,
   footer,
   whatsappFloat,
@@ -34,6 +36,8 @@ export function SiteChrome({
   bottomNav,
   children,
 }: {
+  temporadaBanner?: React.ReactNode;
+  temporadaEfecto?: React.ReactNode;
   header: React.ReactNode;
   footer: React.ReactNode;
   whatsappFloat: React.ReactNode;
@@ -60,7 +64,9 @@ export function SiteChrome({
 
   return (
     <>
+      {temporadaBanner}
       {header}
+      {temporadaEfecto}
       <main className="min-h-[60vh]">{children}</main>
       {footer}
       {whatsappFloat}

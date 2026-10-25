@@ -44,7 +44,7 @@ export function CategoryCarousel({ categorias }: { categorias: Categoria[] }) {
             ) : (
               <div
                 aria-hidden
-                className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_50%_32%,rgba(255,106,0,0.2),transparent_65%)]"
+                className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_50%_32%,rgb(var(--color-brand)/0.2),transparent_65%)]"
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-full border border-brand-orange/25 bg-brand-orange/10 text-brand-orange/90">
                   <CategoryIcon slug={cat.slug} className="h-6 w-6" />

@@ -69,6 +69,7 @@ const CONFIG_POR_DEFECTO: Configuracion = {
   },
   anuncio_barra: { activo: false, texto: "", color: "#FF6A00" },
   cuentas_clientes_activas: true,
+  temporada: "auto",
   updated_at: new Date().toISOString(),
 };
 

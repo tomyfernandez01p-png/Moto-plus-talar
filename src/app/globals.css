@@ -9,12 +9,22 @@
      rgb(var(--x) / <alpha-value>) desde Tailwind. Coinciden exactamente
      con los hex que el sitio ya usaba, para no cambiar nada visualmente
      hasta que alguien elija el tema claro. */
-  --color-base-black: 10 10 11; /* #0A0A0B */
-  --color-base-dark: 21 21 23; /* #151517 */
-  --color-base-surface: 29 29 32; /* #1D1D20 */
-  --color-base-border: 42 42 46; /* #2A2A2E */
-  --color-base-muted: 138 138 147; /* #8A8A93 */
+  --color-base-black: 47 47 51; /* #2F2F33  gris de fondo */
+  --color-base-dark: 56 56 61; /* #38383D */
+  --color-base-surface: 66 66 72; /* #424248 */
+  --color-base-border: 90 90 97; /* #5A5A61 */
+  --color-base-muted: 178 178 187; /* #B2B2BB */
   --color-base-white: 255 255 255; /* #FFFFFF */
+
+  /* Color de marca. Las temporadas (ver [data-temporada] más abajo) lo
+     cambian; todo el sitio lo lee desde acá. */
+  --color-brand: 255 106 0; /* #FF6A00 */
+  --color-brand-dark: 224 90 0; /* #E05A00 */
+  --color-brand-light: 255 138 51; /* #FF8A33 */
+  --color-tint: 255 106 0; /* tinte de los resplandores de fondo */
+
+  /* Manchas más oscuras sobre el gris (ruido fractal, solo en el tema oscuro). */
+  --mancha-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.009' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.7 0 0 0 -0.72'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
 }
 
 /* Tema claro: se activa agregando esta clase al <html> (ver ThemeToggle.tsx
@@ -27,6 +37,7 @@ html.theme-light {
   --color-base-border: 216 216 220;
   --color-base-muted: 107 107 118;
   --color-base-white: 10 10 11;
+  --mancha-img: none;
 }
 
 html {
@@ -40,10 +51,10 @@ body {
      cada 1400px en vertical para que las páginas largas no queden vacías
      más abajo. Todo con alpha bajo: el contraste del texto no cambia. */
   background-image:
-    radial-gradient(ellipse 60% 420px at 0% 0%, rgba(255, 106, 0, 0.07), transparent 70%),
-    radial-gradient(ellipse 55% 380px at 100% 55%, rgba(255, 106, 0, 0.05), transparent 70%),
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 22px);
-  background-size: 100% 1400px, 100% 1400px, auto;
+    radial-gradient(ellipse 60% 420px at 0% 0%, rgb(var(--color-tint) / 0.10), transparent 70%),
+    radial-gradient(ellipse 55% 380px at 100% 55%, rgb(var(--color-tint) / 0.07), transparent 70%),
+    var(--mancha-img);
+  background-size: 100% 1400px, 100% 1400px, 900px 900px;
   background-repeat: repeat-y, repeat-y, repeat;
   color: rgb(var(--color-base-white));
   overflow-x: hidden;
@@ -51,7 +62,7 @@ body {
 }
 
 ::selection {
-  background-color: #ff6a00;
+  background-color: rgb(var(--color-brand));
   color: white;
 }
 
@@ -166,6 +177,81 @@ body {
   outline: none;
 }
 .focus-ring:focus-visible {
-  outline: 2px solid #ff6a00;
+  outline: 2px solid rgb(var(--color-brand));
   outline-offset: 2px;
+}
+
+
+/* ====================================================================
+   Temporadas: solo cambian el color de acento y el tinte del fondo.
+   Se activan con data-temporada en <html> (ver layout.tsx y
+   src/lib/temporadas.ts). "ninguna" vuelve a los valores base (se usa
+   también en el panel de admin).
+   ==================================================================== */
+[data-temporada="ninguna"] {
+  --color-brand: 255 106 0;
+  --color-brand-dark: 224 90 0;
+  --color-brand-light: 255 138 51;
+  --color-tint: 255 106 0;
+}
+[data-temporada="halloween"] {
+  --color-tint: 140 70 220; /* resplandor violeta, el acento sigue naranja */
+}
+[data-temporada="navidad"] {
+  --color-brand: 255 90 95;
+  --color-brand-dark: 220 60 66;
+  --color-brand-light: 255 125 129;
+  --color-tint: 60 170 100;
+}
+[data-temporada="anio_nuevo"] {
+  --color-tint: 255 200 60;
+}
+[data-temporada="pascua"] {
+  --color-brand: 176 124 255;
+  --color-brand-dark: 143 92 224;
+  --color-brand-light: 198 156 255;
+  --color-tint: 255 150 200;
+}
+[data-temporada="dia_madre"] {
+  --color-brand: 255 110 170;
+  --color-brand-dark: 224 80 142;
+  --color-brand-light: 255 145 190;
+  --color-tint: 255 110 170;
+}
+[data-temporada="dia_padre"] {
+  --color-brand: 80 160 255;
+  --color-brand-dark: 52 130 224;
+  --color-brand-light: 120 185 255;
+  --color-tint: 80 160 255;
+}
+
+/* Efecto decorativo de temporada */
+.temporada-efecto span {
+  position: absolute;
+  font-size: 1.25rem;
+  opacity: 0.35;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.temporada-cae {
+  top: -2rem;
+  animation-name: temporada-cae;
+}
+.temporada-flota {
+  animation-name: temporada-flota;
+  animation-timing-function: ease-in-out !important;
+  animation-direction: alternate;
+}
+@keyframes temporada-cae {
+  0% { transform: translateY(0) translateX(0); }
+  100% { transform: translateY(110vh) translateX(30px); }
+}
+@keyframes temporada-flota {
+  0% { transform: translateY(0) rotate(-6deg); }
+  100% { transform: translateY(-26px) rotate(6deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .temporada-efecto {
+    display: none;
+  }
 }

@@ -19,9 +19,9 @@ const config: Config = {
           white: "rgb(var(--color-base-white) / <alpha-value>)",
         },
         brand: {
-          orange: "#FF6A00",
-          "orange-dark": "#E05A00",
-          "orange-light": "#FF8A33",
+          orange: "rgb(var(--color-brand) / <alpha-value>)",
+          "orange-dark": "rgb(var(--color-brand-dark) / <alpha-value>)",
+          "orange-light": "rgb(var(--color-brand-light) / <alpha-value>)",
         },
       },
       fontFamily: {
@@ -33,9 +33,9 @@ const config: Config = {
       },
       boxShadow: {
         card: "0 4px 24px -8px rgba(0,0,0,0.45)",
-        "card-hover": "0 8px 32px -8px rgba(255,106,0,0.25)",
-        glow: "0 0 50px -12px rgba(255,106,0,0.35)",
-        "glow-sm": "0 0 24px -8px rgba(255,106,0,0.4)",
+        "card-hover": "0 8px 32px -8px rgb(var(--color-brand) / 0.25)",
+        glow: "0 0 50px -12px rgb(var(--color-brand) / 0.35)",
+        "glow-sm": "0 0 24px -8px rgb(var(--color-brand) / 0.4)",
       },
       transitionTimingFunction: {
         smooth: "cubic-bezier(0.4, 0, 0.2, 1)",

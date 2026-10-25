@@ -17,7 +17,7 @@ export function TurnosCTA() {
           className="pointer-events-none absolute inset-0 opacity-[0.07]"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(45deg, rgba(255,106,0,0.6) 0px, rgba(255,106,0,0.6) 1px, transparent 1px, transparent 14px)",
+              "repeating-linear-gradient(45deg, rgb(var(--color-brand) / 0.6) 0px, rgb(var(--color-brand) / 0.6) 1px, transparent 1px, transparent 14px)",
           }}
         />
         <div

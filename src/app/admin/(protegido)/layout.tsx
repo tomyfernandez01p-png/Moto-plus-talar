@@ -34,7 +34,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const navVisible = nav.filter((item) => !item.soloAdmin || perfil.rol === "administrador");
 
   return (
-    <div className="flex min-h-screen bg-base-black">
+    <div data-temporada="ninguna" className="flex min-h-screen bg-base-black">
       <aside className="hidden w-60 shrink-0 flex-col overflow-y-auto border-r border-base-border bg-base-dark p-4 md:flex">
         <span className="mb-6 px-2 text-sm font-bold text-base-white">Moto Plus Talar</span>
         <nav className="flex flex-col gap-1">

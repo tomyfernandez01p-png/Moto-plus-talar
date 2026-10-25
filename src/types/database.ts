@@ -335,6 +335,7 @@ export interface Database {
           };
           anuncio_barra: { activo?: boolean; texto?: string; color?: string };
           cuentas_clientes_activas: boolean;
+          temporada: string;
           updated_at: string;
         };
         Insert: Partial<Database["public"]["Tables"]["configuracion"]["Row"]>;
