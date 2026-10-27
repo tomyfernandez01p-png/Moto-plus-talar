@@ -37,6 +37,11 @@ export async function crearSolicitudMecanicaAction(datos: DatosSolicitudMecanica
   if (datos.serviciosIds.length === 0) {
     return { ok: false as const, error: "Elegí al menos un servicio." };
   }
+  // El año de la moto es obligatorio: viaja dentro del modelo, entre paréntesis, como "(2018)".
+  if (!/\((19[5-9]\d|20\d{2})\)\s*$/.test(datos.motoModelo?.trim() ?? "")) {
+    return { ok: false as const, error: "Ingresá el año de tu moto." };
+  }
+
   if (!datos.nombre.trim() || !datos.apellido.trim() || !datos.telefono.trim()) {
     return { ok: false as const, error: "Completá nombre, apellido y teléfono." };
   }

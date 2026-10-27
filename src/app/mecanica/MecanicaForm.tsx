@@ -213,6 +213,12 @@ export function MecanicaForm({
     }
 
     const form = new FormData(e.currentTarget);
+    const anioIngresado = String(form.get("motoAnio") || "").trim();
+    const anioMaximo = new Date().getFullYear() + 1;
+    if (!/^\d{4}$/.test(anioIngresado) || Number(anioIngresado) < 1950 || Number(anioIngresado) > anioMaximo) {
+      setError(`Ingresá el año de tu moto con 4 números (por ejemplo 2018).`);
+      return;
+    }
     setEnviando(true);
 
     const nombre = String(form.get("nombre") || "");
@@ -442,7 +448,11 @@ export function MecanicaForm({
             name="motoAnio"
             inputMode="numeric"
             maxLength={4}
-            placeholder="Año (opcional)"
+            required
+            pattern="[0-9]{4}"
+            title="Año de la moto, con 4 números (por ejemplo 2018)"
+            aria-label="Año de la moto"
+            placeholder="Año (ej: 2018)"
             className={inputClass}
           />
         </div>
