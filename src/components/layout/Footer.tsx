@@ -141,7 +141,13 @@ export async function Footer() {
               <Link href="/privacidad" className="transition-colors hover:text-base-white">Política de privacidad</Link>
             </li>
             <li>
-              <Link href="/cambios-y-devoluciones" className="transition-colors hover:text-base-white">Cambios y devoluciones</Link>
+              <Link href="/cambios-y-devoluciones" className="transition-colors hover:text-base-white">Cambios, devoluciones y garantía</Link>
+            </li>
+            <li>
+              <Link href="/formas-de-pago" className="transition-colors hover:text-base-white">Formas de pago</Link>
+            </li>
+            <li>
+              <Link href="/como-comprar" className="transition-colors hover:text-base-white">Cómo comprar</Link>
             </li>
             {config.metodos_envio?.envio_activo && (
               <li>
