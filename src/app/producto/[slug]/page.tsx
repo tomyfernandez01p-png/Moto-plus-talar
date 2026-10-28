@@ -51,7 +51,7 @@ export default async function ProductoPage({ params }: Props) {
 
   const gruposCompat = Object.entries(
     compatibilidad.reduce<Record<string, typeof compatibilidad>>((acc, c) => {
-      (acc[c.marca_moto] ??= []).push(c);
+      (acc[c.marca_moto ?? "Otras"] ??= []).push(c);
       return acc;
     }, {})
   ).sort(([a], [b]) => a.localeCompare(b));
@@ -173,7 +173,7 @@ export default async function ProductoPage({ params }: Props) {
                       <ul className="mt-1.5 flex flex-col gap-1 text-sm text-brand-orange">
                         {motos.map((c) => (
                           <li key={c.id} className="font-semibold">
-                            {c.modelo_moto}
+                            {c.modelo_moto ?? ""}
                             <span className="font-normal text-base-muted">
                               {c.anio_desde && ` · ${c.anio_desde}${c.anio_hasta ? `–${c.anio_hasta}` : "+"}`}
                               {c.cilindrada && ` · ${c.cilindrada}cc`}

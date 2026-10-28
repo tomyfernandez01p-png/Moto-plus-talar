@@ -44,7 +44,7 @@ export function MarcasCarousel({ marcas }: { marcas: Marca[] }) {
     <section aria-label="Marcas" className="mx-auto max-w-7xl px-4 py-10 md:px-6">
       <SectionHeader titulo="Nuestras marcas" />
       <div className="fade-edge-x pointer-events-none select-none -mx-4 overflow-hidden px-4 md:-mx-6 md:px-6">
-        <ul className="flex w-max animate-marquee-brands items-center py-1 motion-reduce:mx-auto motion-reduce:animate-none">
+        <ul className="flex w-max animate-marquee-brands items-center py-1">
           {lista.map((m, i) => (
             <ItemMarca key={`${m.slug}-${i}`} marca={m} oculta={i >= marcas.length} />
           ))}

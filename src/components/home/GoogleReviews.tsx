@@ -61,7 +61,7 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
         </div>
 
         <div className="fade-edge-x group/reviews -mx-4 overflow-hidden px-4 py-4 md:-mx-6 md:px-6">
-          <div className="flex w-max animate-marquee-slow gap-4 group-hover/reviews:[animation-play-state:paused] group-focus-within/reviews:[animation-play-state:paused] motion-reduce:animate-none">
+          <div className="flex w-max animate-marquee-slow gap-4 group-hover/reviews:[animation-play-state:paused] group-focus-within/reviews:[animation-play-state:paused]">
             {tarjetas.map((r, i) => (
               <TarjetaVistaPrevia key={i} {...r} oculta={i >= EJEMPLOS_LAYOUT.length} />
             ))}

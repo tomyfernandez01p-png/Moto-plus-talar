@@ -149,7 +149,9 @@ export async function getProductoPorSlug(slug: string) {
   // se usa esa foto para que la ficha nunca quede sin imagen.
   let galeria = imagenes ?? [];
   if (galeria.length === 0 && producto.imagen_principal_url) {
-    galeria = [{ url: producto.imagen_principal_url, alt_text: producto.nombre }] as typeof galeria;
+    galeria = [
+      { url: producto.imagen_principal_url, alt_text: producto.nombre ?? null },
+    ] as unknown as typeof galeria;
   }
 
   return { producto, imagenes: galeria, compatibilidad: compatibilidad ?? [], relacionados: relacionados ?? [] };

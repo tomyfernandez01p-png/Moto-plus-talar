@@ -110,7 +110,9 @@ body {
 
 /* respeta la preferencia del sistema: apaga animaciones/transiciones largas */
 @media (prefers-reduced-motion: reduce) {
-  *,
+  /* Las tiras de marcas y reseñas se mantienen en movimiento lento: el
+     dueño pidió expresamente que se desplacen solas. */
+  *:not(.animate-marquee):not(.animate-marquee-slow):not(.animate-marquee-brands),
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
