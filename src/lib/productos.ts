@@ -145,5 +145,12 @@ export async function getProductoPorSlug(slug: string) {
       .limit(6),
   ]);
 
-  return { producto, imagenes: imagenes ?? [], compatibilidad: compatibilidad ?? [], relacionados: relacionados ?? [] };
+  // Productos cargados solo con imagen principal (sin filas en producto_imagenes):
+  // se usa esa foto para que la ficha nunca quede sin imagen.
+  let galeria = imagenes ?? [];
+  if (galeria.length === 0 && producto.imagen_principal_url) {
+    galeria = [{ url: producto.imagen_principal_url, alt_text: producto.nombre }] as typeof galeria;
+  }
+
+  return { producto, imagenes: galeria, compatibilidad: compatibilidad ?? [], relacionados: relacionados ?? [] };
 }

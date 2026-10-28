@@ -12,7 +12,8 @@ import { AddToCartActions } from "@/components/product/AddToCartActions";
 import { FavoritoButton } from "@/components/product/FavoritoButton";
 import { Price } from "@/components/ui/Price";
 import { Badge } from "@/components/ui/Badge";
-import { Tabs } from "@/components/ui/Tabs";
+import { Acordeon } from "@/components/ui/Acordeon";
+import { BackButton } from "@/components/ui/BackButton";
 import { IconWhatsApp, IconTruck, IconStore } from "@/components/ui/Icons";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
 
@@ -39,6 +40,22 @@ export default async function ProductoPage({ params }: Props) {
   const { producto, imagenes, compatibilidad, relacionados } = resultado;
   const config = await getConfiguracion();
 
+  // Ficha técnica: solo datos reales cargados (marca, categoría, código y las
+  // características del producto). Nada se completa por suposición.
+  const ficha: { label: string; value: string }[] = [
+    ...(producto.marca_nombre ? [{ label: "Marca", value: producto.marca_nombre }] : []),
+    ...(producto.categoria_nombre ? [{ label: "Categoría", value: producto.categoria_nombre }] : []),
+    ...producto.caracteristicas.map((c) => ({ label: c.label, value: c.value })),
+    { label: "Código", value: producto.codigo },
+  ];
+
+  const gruposCompat = Object.entries(
+    compatibilidad.reduce<Record<string, typeof compatibilidad>>((acc, c) => {
+      (acc[c.marca_moto] ??= []).push(c);
+      return acc;
+    }, {})
+  ).sort(([a], [b]) => a.localeCompare(b));
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -62,6 +79,8 @@ export default async function ProductoPage({ params }: Props) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 md:px-6">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
+
+      <BackButton fallbackHref={producto.categoria_slug ? `/categoria/${producto.categoria_slug}` : "/productos"} />
 
       <nav className="mb-6 text-xs text-base-muted">
         <Link href="/" className="hover:text-base-white">Inicio</Link>
@@ -124,106 +143,93 @@ export default async function ProductoPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="mt-10">
-        <Tabs
-          tabs={[
-            {
-              id: "descripcion",
-              label: "Descripción",
-              content: (
-                <p className="whitespace-pre-line text-sm text-base-muted">
-                  {producto.descripcion_completa || producto.descripcion_corta || "Sin descripción adicional."}
-                </p>
-              ),
-            },
-            ...(producto.caracteristicas.length > 0
-              ? [
-                  {
-                    id: "caracteristicas",
-                    label: "Características",
-                    content: (
-                      <dl className="grid grid-cols-1 gap-1.5 text-sm sm:grid-cols-2">
-                        {producto.caracteristicas.map((c, i) => (
-                          <div
-                            key={i}
-                            className="flex justify-between gap-2 border-b border-base-border/50 py-1.5"
-                          >
-                            <dt className="text-base-muted">{c.label}</dt>
-                            <dd className="font-medium text-base-white">{c.value}</dd>
-                          </div>
+      <div className="mt-10 flex flex-col gap-3">
+        <h2 className="text-lg font-bold text-base-white">Descripción</h2>
+        <p className="whitespace-pre-line text-sm leading-relaxed text-base-muted">
+          {producto.descripcion_completa || producto.descripcion_corta || "Sin descripción adicional."}
+        </p>
+
+        <div className="mt-2 flex flex-col gap-3">
+          <Acordeon titulo="Ficha técnica">
+            <dl className="grid grid-cols-1 gap-x-8 gap-y-0 text-sm sm:grid-cols-2">
+              {ficha.map((f) => (
+                <div key={f.label} className="flex justify-between gap-3 border-b border-base-border/50 py-2">
+                  <dt className="font-semibold text-base-white">{f.label}</dt>
+                  <dd className="text-right text-base-muted">{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </Acordeon>
+
+          <Acordeon titulo="Compatibilidad por moto">
+            {compatibilidad.length > 0 ? (
+              <>
+                <div className="flex flex-col gap-4">
+                  {gruposCompat.map(([marca, motos]) => (
+                    <div key={marca}>
+                      <p className="border-b border-base-border pb-1.5 text-sm font-bold uppercase text-base-white">
+                        {marca}
+                      </p>
+                      <ul className="mt-1.5 flex flex-col gap-1 text-sm text-brand-orange">
+                        {motos.map((c) => (
+                          <li key={c.id} className="font-semibold">
+                            {c.modelo_moto}
+                            <span className="font-normal text-base-muted">
+                              {c.anio_desde && ` · ${c.anio_desde}${c.anio_hasta ? `–${c.anio_hasta}` : "+"}`}
+                              {c.cilindrada && ` · ${c.cilindrada}cc`}
+                            </span>
+                          </li>
                         ))}
-                      </dl>
-                    ),
-                  },
-                ]
-              : []),
-            {
-              id: "compatibilidad",
-              label: "Compatibilidad",
-              content:
-                compatibilidad.length > 0 ? (
-                  <>
-                    <ul className="flex flex-col gap-1.5 text-sm text-base-muted">
-                      {compatibilidad.map((c) => (
-                        <li key={c.id} className="border-b border-base-border/50 py-1.5">
-                          <span className="font-medium text-base-white">
-                            {c.marca_moto} {c.modelo_moto}
-                          </span>
-                          {c.anio_desde && ` · ${c.anio_desde}${c.anio_hasta ? `–${c.anio_hasta}` : "+"}`}
-                          {c.cilindrada && ` · ${c.cilindrada}cc`}
-                        </li>
-                      ))}
-                    </ul>
-                    <a
-                      href={whatsappLink(config, mensajeCompatibilidad(producto))}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-block text-xs font-semibold text-[#25D366] underline"
-                    >
-                      Consultar por otra moto
-                    </a>
-                  </>
-                ) : (
-                  <div className="flex flex-col items-start gap-2 text-sm text-base-muted">
-                    <p>Todavía no cargamos la compatibilidad de este producto.</p>
-                    <a
-                      href={whatsappLink(config, mensajeCompatibilidad(producto))}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-semibold text-[#25D366] underline"
-                    >
-                      Consultanos si sirve para tu moto
-                    </a>
-                  </div>
-                ),
-            },
-            {
-              id: "envio",
-              label: "Envío",
-              content: (
-                <ul className="flex flex-col gap-3 text-sm text-base-muted">
-                  {config.metodos_envio?.retiro_activo !== false && (
-                    <li className="flex items-start gap-2.5">
-                      <IconStore className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
-                      Retiro en el local: {config.direccion}, {config.ciudad}.
-                    </li>
-                  )}
-                  {config.metodos_envio?.envio_activo !== false && (
-                    <li className="flex items-start gap-2.5">
-                      <IconTruck className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
-                      Envío a todo el país
-                      {config.metodos_envio?.envio_gratis_desde
-                        ? ` — gratis en compras desde ${formatPrecio(config.metodos_envio.envio_gratis_desde)}.`
-                        : config.metodos_envio?.costo_envio_fijo
-                        ? ` (${formatPrecio(config.metodos_envio.costo_envio_fijo)}).`
-                        : ". El costo se coordina por WhatsApp."}
-                    </li>
-                  )}
-                </ul>
-              ),
-            },
-          ]}
-        />
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <a
+                  href={whatsappLink(config, mensajeCompatibilidad(producto))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-block text-xs font-semibold text-[#25D366] underline"
+                >
+                  Consultar por otra moto
+                </a>
+              </>
+            ) : (
+              <div className="flex flex-col items-start gap-2 text-sm text-base-muted">
+                <p>Todavía no cargamos la compatibilidad de este producto.</p>
+                <a
+                  href={whatsappLink(config, mensajeCompatibilidad(producto))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-[#25D366] underline"
+                >
+                  Consultanos si sirve para tu moto
+                </a>
+              </div>
+            )}
+          </Acordeon>
+
+          <Acordeon titulo="Envío y retiro">
+            <ul className="flex flex-col gap-3 text-sm text-base-muted">
+              {config.metodos_envio?.retiro_activo !== false && (
+                <li className="flex items-start gap-2.5">
+                  <IconStore className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
+                  Retiro en el local: {config.direccion}, {config.ciudad}.
+                </li>
+              )}
+              {config.metodos_envio?.envio_activo !== false && (
+                <li className="flex items-start gap-2.5">
+                  <IconTruck className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
+                  Envío a todo el país
+                  {config.metodos_envio?.envio_gratis_desde
+                    ? ` — gratis en compras desde ${formatPrecio(config.metodos_envio.envio_gratis_desde)}.`
+                    : config.metodos_envio?.costo_envio_fijo
+                    ? ` (${formatPrecio(config.metodos_envio.costo_envio_fijo)}).`
+                    : ". El costo se coordina por WhatsApp."}
+                </li>
+              )}
+            </ul>
+          </Acordeon>
+        </div>
       </div>
 
       {relacionados.length > 0 && (
