@@ -45,6 +45,7 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
   const activo = config.google?.reviews_enabled;
   const tieneApiKey = !!process.env.GOOGLE_PLACES_API_KEY;
   const reviewUrl = config.google?.review_url;
+  const listaUrl = config.google?.reviews_list_url;
 
   if (!activo) return null;
 
@@ -68,17 +69,29 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
           </div>
         </div>
 
-        {reviewUrl && (
-          <div className="px-4 md:px-6">
-            <a
-              href={reviewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full border border-brand-orange/70 bg-base-black px-6 py-3 text-sm font-semibold text-base-white shadow-glow-sm transition-all duration-200 hover:scale-105 hover:border-brand-orange hover:bg-base-dark hover:shadow-glow active:scale-95 active:shadow-none"
-            >
-              <IconStar className="h-4 w-4" />
-              Dejá tu reseña
-            </a>
+        {(reviewUrl || listaUrl) && (
+          <div className="flex flex-wrap gap-3 px-4 md:px-6">
+            {reviewUrl && (
+              <a
+                href={reviewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border border-brand-orange/70 bg-base-black px-6 py-3 text-sm font-semibold text-base-white shadow-glow-sm transition-all duration-200 hover:scale-105 hover:border-brand-orange hover:bg-base-dark hover:shadow-glow active:scale-95 active:shadow-none"
+              >
+                <IconStar className="h-4 w-4" />
+                Dejá tu reseña
+              </a>
+            )}
+            {listaUrl && (
+              <a
+                href={listaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border border-base-border bg-base-dark px-6 py-3 text-sm font-semibold text-base-white transition-all duration-200 hover:border-brand-orange/60 active:scale-95"
+              >
+                Ver reseñas en Google
+              </a>
+            )}
           </div>
         )}
       </section>

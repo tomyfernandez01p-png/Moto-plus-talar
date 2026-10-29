@@ -241,6 +241,18 @@ export default async function AdminConfiguracionPage() {
                 link). Con esto cargado aparece un botón &quot;Dejar una reseña&quot; en la Home.
               </p>
             </div>
+            <div className="sm:col-span-2">
+              <label className={labelClass}>Link para ver las reseñas</label>
+              <input
+                name="google_reviews_list_url"
+                defaultValue={config.google?.reviews_list_url ?? ""}
+                placeholder="https://search.google.com/local/reviews?placeid=..."
+                className={inputClass}
+              />
+              <p className="mt-1 text-xs text-base-muted">
+                Con esto cargado aparece un botón &quot;Ver reseñas en Google&quot; en la Home.
+              </p>
+            </div>
           </div>
           <p className="mt-2 text-xs text-base-muted">
             Las reseñas reales requieren GOOGLE_PLACES_API_KEY y GOOGLE_PLACE_ID configurados como

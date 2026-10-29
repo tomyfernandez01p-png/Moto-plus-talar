@@ -321,6 +321,8 @@ export interface Database {
             search_console_verified?: boolean;
             /** Link real de "dejar una reseña" (Google Business Profile, ej. https://g.page/r/.../review). Nunca inventado. */
             review_url?: string | null;
+            /** Link para VER las reseñas de Google del local. */
+            reviews_list_url?: string | null;
           };
           mercadopago_public_key: string | null;
           cookies_texto: string | null;
