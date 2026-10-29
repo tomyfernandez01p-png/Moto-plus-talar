@@ -244,6 +244,7 @@ export function MecanicaForm({
       descripcionProblema,
       repuestoCliente,
       disclaimerAceptado,
+      sitioWeb: String(form.get("sitio_web") || ""),
     });
 
     setEnviando(false);
@@ -294,6 +295,13 @@ export function MecanicaForm({
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      {/* Anti-spam (honeypot): un campo que una persona no ve ni completa; los bots sí. */}
+      <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label>
+          No completar este campo
+          <input type="text" name="sitio_web" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
       <Bloque n={1} titulo="¿Qué necesita tu moto?">
         <div role="radiogroup" aria-label="Tipo de pedido" className="grid gap-2 sm:grid-cols-3">
           {MODOS.map((m) => {

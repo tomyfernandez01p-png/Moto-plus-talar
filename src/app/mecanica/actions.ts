@@ -13,6 +13,8 @@ export interface DatosSolicitudMecanica {
   descripcionProblema?: string;
   repuestoCliente?: string;
   disclaimerAceptado: boolean;
+  /** Campo trampa anti-spam: tiene que llegar vacío. */
+  sitioWeb?: string;
 }
 
 /**
@@ -28,6 +30,10 @@ export interface DatosSolicitudMecanica {
  * servicio elegido, por si alguien se saltea el formulario.
  */
 export async function crearSolicitudMecanicaAction(datos: DatosSolicitudMecanica) {
+  // Anti-spam: si el campo trampa viene completo es un bot; respondemos "ok" sin guardar nada.
+  if (datos.sitioWeb && datos.sitioWeb.trim() !== "") {
+    return { ok: true as const, solicitudId: "", numero: 0 };
+  }
   if (!datos.disclaimerAceptado) {
     return {
       ok: false as const,

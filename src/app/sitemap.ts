@@ -19,6 +19,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/nosotros`, changeFrequency: "monthly", priority: 0.3 },
     { url: `${siteUrl}/contacto`, changeFrequency: "monthly", priority: 0.3 },
     { url: `${siteUrl}/preguntas-frecuentes`, changeFrequency: "monthly", priority: 0.3 },
+    { url: `${siteUrl}/como-comprar`, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${siteUrl}/formas-de-pago`, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${siteUrl}/envios`, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${siteUrl}/cambios-y-devoluciones`, changeFrequency: "monthly", priority: 0.3 },
+    { url: `${siteUrl}/privacidad`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${siteUrl}/terminos`, changeFrequency: "yearly", priority: 0.2 },
   ];
 
   const deProductos = (productos ?? []).map((p) => ({

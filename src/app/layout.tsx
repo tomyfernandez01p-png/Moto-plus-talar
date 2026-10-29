@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { TurnosFloat } from "@/components/layout/TurnosFloat";
 import { CookieConsent } from "@/components/layout/CookieConsent";
+import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { SiteChrome } from "@/components/layout/SiteChrome";
@@ -102,6 +103,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {children}
             </SiteChrome>
             <CookieConsent texto={config.cookies_texto} />
+            <GoogleAnalytics id={config.google?.analytics_id} />
             <CartDrawer />
           </FavoritosProvider>
         </CartProvider>

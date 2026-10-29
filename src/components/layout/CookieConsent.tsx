@@ -28,6 +28,7 @@ export function CookieConsent({ texto }: { texto: string | null }) {
   function guardar(valor: "aceptado" | "rechazado" | "esenciales") {
     try {
       window.localStorage.setItem(STORAGE_KEY, valor);
+      window.dispatchEvent(new Event("mpt:cookie-consent"));
     } catch {
       // noop
     }
