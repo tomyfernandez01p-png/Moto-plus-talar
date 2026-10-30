@@ -45,7 +45,6 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
   const activo = config.google?.reviews_enabled;
   const tieneApiKey = !!process.env.GOOGLE_PLACES_API_KEY;
   const reviewUrl = config.google?.review_url;
-  const listaUrl = config.google?.reviews_list_url;
 
   if (!activo) return null;
 
@@ -61,15 +60,15 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
           </p>
         </div>
 
-        <div className="fade-edge-x group/reviews -mx-4 overflow-hidden px-4 py-4 md:-mx-6 md:px-6">
-          <div className="flex w-max animate-marquee-slow gap-4 group-hover/reviews:[animation-play-state:paused] group-focus-within/reviews:[animation-play-state:paused]">
+        <div className="fade-edge-x -mx-4 overflow-hidden px-4 py-4 md:-mx-6 md:px-6">
+          <div className="flex w-max animate-marquee-slow gap-4">
             {tarjetas.map((r, i) => (
               <TarjetaVistaPrevia key={i} {...r} oculta={i >= EJEMPLOS_LAYOUT.length} />
             ))}
           </div>
         </div>
 
-        {(reviewUrl || listaUrl) && (
+        {reviewUrl && (
           <div className="flex flex-wrap gap-3 px-4 md:px-6">
             {reviewUrl && (
               <a
@@ -80,16 +79,6 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
               >
                 <IconStar className="h-4 w-4" />
                 Dejá tu reseña
-              </a>
-            )}
-            {listaUrl && (
-              <a
-                href={listaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full border border-base-border bg-base-dark px-6 py-3 text-sm font-semibold text-base-white transition-all duration-200 hover:border-brand-orange/60 active:scale-95"
-              >
-                Ver reseñas en Google
               </a>
             )}
           </div>
