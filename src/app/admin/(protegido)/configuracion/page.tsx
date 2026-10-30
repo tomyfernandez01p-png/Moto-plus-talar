@@ -242,6 +242,30 @@ export default async function AdminConfiguracionPage() {
               </p>
             </div>
           </div>
+          <div className="mt-6 border-t border-base-border pt-4">
+            <h3 className="text-sm font-bold text-base-white">Reseñas de Google (copiadas a mano)</h3>
+            <p className="mb-3 mt-1 text-xs text-base-muted">
+              Copiá acá reseñas REALES de tu ficha de Google (hasta 8). Se muestran en el banner de la Home. No cargues
+              reseñas inventadas ni de personas que pidan que las saquen. Dejá vacío lo que no uses.
+            </p>
+            <div className="grid gap-4">
+              {Array.from({ length: 8 }, (_, i) => {
+                const r = config.google?.resenas?.[i];
+                return (
+                  <div key={i} className="grid gap-2 rounded-xl border border-base-border p-3 sm:grid-cols-[1fr_6rem_1fr]">
+                    <input name={`resena_nombre_${i}`} defaultValue={r?.nombre ?? ""} placeholder={`Nombre (reseña ${i + 1})`} className={inputClass} />
+                    <select name={`resena_estrellas_${i}`} defaultValue={String(r?.estrellas ?? 5)} className={inputClass}>
+                      {[5, 4, 3, 2, 1].map((n) => (
+                        <option key={n} value={n}>{n} ★</option>
+                      ))}
+                    </select>
+                    <input name={`resena_detalle_${i}`} defaultValue={r?.detalle ?? ""} placeholder="Detalle (ej: El Talar, Cliente)" className={inputClass} />
+                    <textarea name={`resena_texto_${i}`} rows={2} defaultValue={r?.texto ?? ""} placeholder="Texto de la reseña" className={`${inputClass} sm:col-span-3`} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           <p className="mt-2 text-xs text-base-muted">
             Las reseñas reales requieren GOOGLE_PLACES_API_KEY y GOOGLE_PLACE_ID configurados como
             variables de entorno del servidor; sin esas credenciales no se muestran reseñas

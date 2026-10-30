@@ -120,6 +120,12 @@ export async function guardarConfiguracionAction(formData: FormData) {
         reviews_enabled: formData.get("google_reviews_enabled") === "on",
         search_console_verified: formData.get("google_search_console_verified") === "on",
         review_url: String(formData.get("google_review_url") || "").trim() || null,
+        resenas: Array.from({ length: 8 }, (_, i) => ({
+          nombre: String(formData.get(`resena_nombre_${i}`) || "").trim(),
+          estrellas: Math.min(5, Math.max(1, Number(formData.get(`resena_estrellas_${i}`)) || 5)),
+          texto: String(formData.get(`resena_texto_${i}`) || "").trim(),
+          detalle: String(formData.get(`resena_detalle_${i}`) || "").trim(),
+        })).filter((r) => r.nombre && r.texto),
       },
       mercadopago_public_key: String(formData.get("mercadopago_public_key") || "").trim() || null,
       cookies_texto: String(formData.get("cookies_texto") || "").trim() || null,
