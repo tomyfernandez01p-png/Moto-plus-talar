@@ -68,9 +68,9 @@ function TarjetaResena({
   return (
     <figure
       aria-hidden={oculta}
-      className="flex w-[19rem] shrink-0 flex-col justify-between gap-5 rounded-3xl border border-base-border bg-base-dark p-6 sm:w-[22rem]"
+      className="flex h-[21rem] w-[19rem] shrink-0 flex-col justify-between gap-4 rounded-3xl border border-base-border bg-base-dark p-6 sm:h-[19rem] sm:w-[22rem]"
     >
-      <div>
+      <div className="min-h-0">
         <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-base-muted">
           <GoogleG className="h-4 w-4" />
           Reseña de Google
@@ -80,7 +80,7 @@ function TarjetaResena({
             <IconStar key={i} className={`h-4 w-4 ${i < estrellas ? "text-yellow-400" : "text-base-border"}`} />
           ))}
         </div>
-        <blockquote className="mt-4 text-sm italic leading-relaxed text-base-muted">&ldquo;{texto}&rdquo;</blockquote>
+        <blockquote className="mt-4 line-clamp-8 whitespace-pre-line text-sm italic leading-relaxed text-base-muted">&ldquo;{texto}&rdquo;</blockquote>
       </div>
       <figcaption className="flex items-center gap-3 border-t border-base-border pt-4">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-base-surface text-sm font-extrabold text-brand-orange">
