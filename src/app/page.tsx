@@ -2,8 +2,6 @@ import { createClient } from "@/lib/supabase/server";
 import { getConfiguracion } from "@/lib/config.server";
 import { BannerCarousel, type BannerCarouselItem } from "@/components/home/BannerCarousel";
 import { TurnosCTA } from "@/components/home/TurnosCTA";
-import { CategoriasGrid } from "@/components/home/CategoriasGrid";
-import { CATEGORIAS_SERVICIO } from "@/lib/categorias-servicio";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
 import { OfferBanner } from "@/components/home/OfferBanner";
 import { WhatsAppBanner } from "@/components/home/WhatsAppBanner";
@@ -25,7 +23,6 @@ export default async function HomePage() {
   const secciones = config.secciones_home ?? {};
 
   const [
-    { data: categoriasBase },
     { data: bannersBase },
     { data: destacados },
     { data: ofertas },
@@ -33,12 +30,6 @@ export default async function HomePage() {
     { data: marcas },
     { data: motos },
   ] = await Promise.all([
-    supabase
-      .from("categorias")
-      .select("id, nombre, slug, imagen_url")
-      .is("categoria_padre_id", null)
-      .eq("activo", true)
-      .order("orden"),
     // Banners de "publicidad" para el carrusel del tope (pedido del usuario,
     // boceto propio de referencia). La tabla y su pantalla de carga en
     // /admin/banners ya existían -- solo faltaba mostrarlos en el sitio.
@@ -60,12 +51,14 @@ export default async function HomePage() {
           .eq("en_oferta", true)
           .limit(12)
       : Promise.resolve({ data: [] }),
+    // "Recién llegados": los marcados como nuevos; si no hay ninguno marcado,
+    // los últimos productos realmente cargados (por fecha de alta).
     secciones.nuevos
       ? supabase
           .from("vista_productos")
           .select("*")
           .eq("activo", true)
-          .eq("es_nuevo", true)
+          .order("es_nuevo", { ascending: false })
           .order("fecha_alta", { ascending: false })
           .limit(12)
       : Promise.resolve({ data: [] }),
@@ -76,21 +69,6 @@ export default async function HomePage() {
       ? supabase.from("motos").select("*").eq("activo", true)
       : Promise.resolve({ data: [] }),
   ]);
-
-  // Conteo real de productos por categoría (brief #9: "+85 productos" solo
-  // si el dato existe de verdad). Son solo ~7 categorías de primer nivel,
-  // así que el costo de una query liviana por cada una es despreciable, y
-  // esta página ya está cacheada 60s (`revalidate` arriba).
-  const categorias = await Promise.all(
-    (categoriasBase ?? []).map(async (cat) => {
-      const { count } = await supabase
-        .from("productos")
-        .select("id", { count: "exact", head: true })
-        .eq("categoria_id", cat.id)
-        .eq("activo", true);
-      return { ...cat, cantidadProductos: count ?? undefined };
-    })
-  );
 
   // Vigencia real por fecha (brief del banner: "si no cargás fechas, queda
   // siempre visible mientras esté activo"). Se filtra acá en vez de en la
@@ -168,12 +146,6 @@ export default async function HomePage() {
     banners = respaldo;
   }
 
-  // Categorías + "categorías de servicio" (ver lib/categorias-servicio.ts):
-  // la dueña también hace mecánica, que no es algo que se vende sino algo
-  // que se hace, así que no vive en la tabla `categorias` de productos pero
-  // sí tiene que aparecer junto al resto en la sección "Equipá tu moto".
-  const categoriasParaMostrar = [...categorias, ...CATEGORIAS_SERVICIO];
-
   // Orden de secciones (vuelta 4 del rediseño, reestructuración completa
   // pedida por el usuario -- ver su lista numerada): el Hero de texto
   // ("Todo lo que tu moto necesita") queda reemplazado por el carrusel de
@@ -193,16 +165,6 @@ export default async function HomePage() {
       {secciones.buscador_moto && (
         <ScrollReveal className="bg-base-surface/30">
           <BuscadorMoto motos={motos ?? []} />
-        </ScrollReveal>
-      )}
-
-      {secciones.categorias !== false && (
-        <ScrollReveal className="bg-base-dark/40">
-          <CategoriasGrid
-            categorias={categoriasParaMostrar}
-            titulo="Equipá tu moto"
-            subtitulo="Todo lo que necesitás para mantenerla, mejorarla y personalizarla."
-          />
         </ScrollReveal>
       )}
 
@@ -233,7 +195,7 @@ export default async function HomePage() {
 
       {secciones.nuevos && (
         <ScrollReveal className="bg-base-dark/60">
-          <ProductCarousel titulo="Recién llegados" productos={nuevos ?? []} verTodoHref="/productos?nuevo=1" />
+          <ProductCarousel titulo="Recién llegados" productos={nuevos ?? []} verTodoHref="/productos" />
         </ScrollReveal>
       )}
 
