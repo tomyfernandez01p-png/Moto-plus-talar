@@ -213,23 +213,11 @@ export function MecanicaForm({
     }
 
     const form = new FormData(e.currentTarget);
-    const anioIngresado = String(form.get("motoAnio") || "").trim();
-    const anioMaximo = new Date().getFullYear() + 1;
-    if (!/^\d{4}$/.test(anioIngresado) || Number(anioIngresado) < 1950 || Number(anioIngresado) > anioMaximo) {
-      setError(`Ingresá el año de tu moto con 4 números (por ejemplo 2018).`);
-      return;
-    }
     setEnviando(true);
 
     const nombre = String(form.get("nombre") || "");
     const apellido = String(form.get("apellido") || "");
     const telefono = String(form.get("telefono") || "");
-    const motoMarca = String(form.get("motoMarca") || "");
-    const anio = String(form.get("motoAnio") || "").trim();
-    // La base no tiene una columna para el año: se guarda junto al modelo para que
-    // le llegue completo al taller.
-    const modeloBase = String(form.get("motoModelo") || "").trim();
-    const motoModelo = anio ? `${modeloBase}${modeloBase ? " " : ""}(${anio})` : modeloBase;
     const descripcionProblema = String(form.get("descripcionProblema") || "");
     const repuestoCliente = String(form.get("repuestoCliente") || "");
 
@@ -237,9 +225,6 @@ export function MecanicaForm({
       nombre,
       apellido,
       telefono,
-      email: String(form.get("email") || ""),
-      motoMarca,
-      motoModelo,
       serviciosIds: aEnviar.map((s) => s.id),
       descripcionProblema,
       repuestoCliente,
@@ -259,8 +244,6 @@ export function MecanicaForm({
       nombre,
       apellido,
       telefono,
-      motoMarca,
-      motoModelo,
       servicios: aEnviar.map((s) => s.nombre),
       descripcionProblema,
       repuestoCliente,
@@ -448,25 +431,7 @@ export function MecanicaForm({
         />
       </Bloque>
 
-      <Bloque n={2} titulo="Tu moto">
-        <div className="grid gap-3 sm:grid-cols-3">
-          <input name="motoMarca" placeholder="Marca (ej: Honda)" className={inputClass} />
-          <input name="motoModelo" placeholder="Modelo (ej: Wave 110)" className={inputClass} />
-          <input
-            name="motoAnio"
-            inputMode="numeric"
-            maxLength={4}
-            required
-            pattern="[0-9]{4}"
-            title="Año de la moto, con 4 números (por ejemplo 2018)"
-            aria-label="Año de la moto"
-            placeholder="Año (ej: 2018)"
-            className={inputClass}
-          />
-        </div>
-      </Bloque>
-
-      <Bloque n={3} titulo="Tus datos">
+      <Bloque n={2} titulo="Tus datos">
         <div className="grid gap-3 sm:grid-cols-2">
           <input name="nombre" required placeholder="Nombre" className={inputClass} />
           <input name="apellido" required placeholder="Apellido" className={inputClass} />
@@ -477,11 +442,10 @@ export function MecanicaForm({
             placeholder="Teléfono (ej: 11 2297-8803, sin 0 ni 15)"
             className={inputClass}
           />
-          <input name="email" type="email" placeholder="Email (opcional)" className={inputClass} />
         </div>
       </Bloque>
 
-      <Bloque n={4} titulo="Repuesto a usar (opcional)">
+      <Bloque n={3} titulo="Repuesto a usar (opcional)">
         <p className="text-xs text-base-muted">
           Si ya tenés en mente qué repuesto querés que te coloquemos (por marca, calidad o precio),
           contanoslo acá. Queda registrado tal cual lo pedís.
@@ -493,7 +457,7 @@ export function MecanicaForm({
         />
       </Bloque>
 
-      <Bloque n={5} titulo="Revisá y pedí el turno">
+      <Bloque n={4} titulo="Revisá y pedí el turno">
         <div className="rounded-xl border border-base-border bg-base-dark p-3 text-sm">
           <p className="text-xs text-base-muted">Servicios del pedido</p>
           {aEnviar.length > 0 ? (
