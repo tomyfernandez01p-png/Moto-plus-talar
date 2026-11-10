@@ -1,4 +1,3 @@
-import { TITULAR } from "@/lib/titular";
 import type { Metadata } from "next";
 import { getConfiguracion } from "@/lib/config.server";
 
@@ -17,11 +16,6 @@ export default async function TerminosPage() {
         Las ofertas tienen vigencia según la fecha indicada en cada producto. Una vez confirmado
         el pago, el pedido pasa a preparación según el estado informado en tu cuenta o por
         WhatsApp.
-      </p>
-      <p className="mb-4">
-        Proveedor: {TITULAR.nombre}, CUIT {TITULAR.cuit}, con domicilio en {config.direccion},{" "}
-        {config.ciudad}, {config.provincia}, que opera la tienda bajo el nombre comercial{" "}
-        {config.nombre_negocio}.
       </p>
       <p>
         Ante cualquier duda sobre tu compra, contactanos por WhatsApp o al email{" "}
