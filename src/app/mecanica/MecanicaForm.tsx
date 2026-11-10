@@ -219,7 +219,6 @@ export function MecanicaForm({
     const apellido = String(form.get("apellido") || "");
     const telefono = String(form.get("telefono") || "");
     const descripcionProblema = String(form.get("descripcionProblema") || "");
-    const repuestoCliente = String(form.get("repuestoCliente") || "");
 
     const respuesta = await crearSolicitudMecanicaAction({
       nombre,
@@ -227,7 +226,6 @@ export function MecanicaForm({
       telefono,
       serviciosIds: aEnviar.map((s) => s.id),
       descripcionProblema,
-      repuestoCliente,
       disclaimerAceptado,
       sitioWeb: String(form.get("sitio_web") || ""),
     });
@@ -246,7 +244,6 @@ export function MecanicaForm({
       telefono,
       servicios: aEnviar.map((s) => s.nombre),
       descripcionProblema,
-      repuestoCliente,
     });
 
     setResultado({ numero: respuesta.numero, mensajeWhatsapp });
@@ -445,19 +442,7 @@ export function MecanicaForm({
         </div>
       </Bloque>
 
-      <Bloque n={3} titulo="Repuesto a usar (opcional)">
-        <p className="text-xs text-base-muted">
-          Si ya tenés en mente qué repuesto querés que te coloquemos (por marca, calidad o precio),
-          contanoslo acá. Queda registrado tal cual lo pedís.
-        </p>
-        <input
-          name="repuestoCliente"
-          placeholder="Ej: quiero que me pongan una pastilla de freno marca X, la más económica"
-          className={inputClass}
-        />
-      </Bloque>
-
-      <Bloque n={4} titulo="Revisá y pedí el turno">
+      <Bloque n={3} titulo="Revisá y pedí el turno">
         <div className="rounded-xl border border-base-border bg-base-dark p-3 text-sm">
           <p className="text-xs text-base-muted">Servicios del pedido</p>
           {aEnviar.length > 0 ? (
@@ -476,10 +461,8 @@ export function MecanicaForm({
             className="mt-0.5 h-[18px] w-[18px] shrink-0 accent-brand-orange"
           />
           <span className="text-xs text-base-muted sm:text-sm">
-            Entiendo que el diagnóstico final lo confirma el mecánico al revisar la moto, y que si
-            yo elijo expresamente un repuesto puntual (por marca, calidad o precio), acepto esa
-            elección y no voy a reclamar por su rendimiento o duración frente a otras opciones
-            disponibles.
+            Entiendo que el diagnóstico final lo confirma el mecánico al revisar la moto y que el
+            turno queda sujeto a su confirmación.
           </span>
         </label>
 
