@@ -161,6 +161,7 @@ export default async function ProductoPage({ params }: Props) {
             </dl>
           </Acordeon>
 
+          {!(compatibilidad.length === 0 && ["cascos", "accesorios"].includes(producto.categoria_slug ?? "")) && (
           <Acordeon titulo="Compatibilidad por moto">
             {compatibilidad.length > 0 ? (
               <>
@@ -195,7 +196,11 @@ export default async function ProductoPage({ params }: Props) {
               </>
             ) : (
               <div className="flex flex-col items-start gap-2 text-sm text-base-muted">
-                <p>Todavía no cargamos la compatibilidad de este producto.</p>
+                <p>
+                  {["cubiertas", "kits-de-transmision"].includes(producto.categoria_slug ?? "")
+                    ? "Este producto se elige por medida, no por modelo de moto. Fijate la medida de tu moto o consultanos."
+                    : "Todavía no cargamos la compatibilidad de este producto."}
+                </p>
                 <a
                   href={whatsappLink(config, mensajeCompatibilidad(producto))}
                   target="_blank"
@@ -207,6 +212,7 @@ export default async function ProductoPage({ params }: Props) {
               </div>
             )}
           </Acordeon>
+          )}
 
           <Acordeon titulo="Envío y retiro">
             <ul className="flex flex-col gap-3 text-sm text-base-muted">

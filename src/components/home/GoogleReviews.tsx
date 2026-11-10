@@ -58,17 +58,19 @@ function TarjetaResena({
   texto,
   detalle,
   oculta,
+  href,
 }: {
   nombre: string;
   estrellas: number;
   texto: string;
   detalle?: string;
   oculta?: boolean;
+  href?: string;
 }) {
-  return (
+  const tarjeta = (
     <figure
       aria-hidden={oculta}
-      className="flex w-[19rem] shrink-0 flex-col justify-between gap-5 rounded-3xl border border-base-border bg-base-dark p-6 sm:w-[22rem]"
+      className="flex h-full w-[19rem] shrink-0 flex-col justify-between gap-5 rounded-3xl border border-base-border bg-base-dark p-6 transition-colors hover:border-brand-orange/50 sm:w-[22rem]"
     >
       <div>
         <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-base-muted">
@@ -93,12 +95,27 @@ function TarjetaResena({
       </figcaption>
     </figure>
   );
+  if (!href) return tarjeta;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      tabIndex={oculta ? -1 : undefined}
+      aria-hidden={oculta}
+      aria-label={`Ver la reseña de ${nombre} en Google`}
+      className="flex shrink-0"
+    >
+      {tarjeta}
+    </a>
+  );
 }
 
 export function GoogleReviews({ config }: { config: Configuracion }) {
   const activo = config.google?.reviews_enabled;
   const tieneApiKey = !!process.env.GOOGLE_PLACES_API_KEY;
   const reviewUrl = config.google?.review_url;
+  const mapsUrl = config.google?.maps_url;
 
   if (!activo) return null;
 
@@ -115,7 +132,7 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
         <div className="fade-edge-x -mx-4 overflow-hidden px-4 py-4 md:-mx-6 md:px-6">
           <div className="flex w-max animate-marquee-slow gap-4">
             {lista.map((r, i) => (
-              <TarjetaResena key={i} {...r} oculta={i >= base.length} />
+              <TarjetaResena key={i} {...r} oculta={i >= base.length} href={mapsUrl} />
             ))}
           </div>
         </div>
