@@ -1,3 +1,4 @@
+import { TITULAR } from "@/lib/titular";
 import type { Metadata } from "next";
 import { getConfiguracion } from "@/lib/config.server";
 
@@ -16,6 +17,10 @@ export default async function PrivacidadPage() {
       <p className="mb-4">
         Usamos cookies esenciales para el funcionamiento del sitio y, si las aceptás, cookies de
         analítica para entender cómo se usa la tienda.
+      </p>
+      <p className="mb-4">
+        Responsable de los datos: {TITULAR.nombre}, CUIT {TITULAR.cuit}, domicilio en{" "}
+        {config.direccion}, {config.ciudad}, {config.provincia}.
       </p>
       <p>
         Para ejercer tus derechos sobre tus datos personales, escribinos a {config.email}.

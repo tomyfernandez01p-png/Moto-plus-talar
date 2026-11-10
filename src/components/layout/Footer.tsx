@@ -1,3 +1,4 @@
+import { TITULAR } from "@/lib/titular";
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
@@ -50,6 +51,9 @@ export async function Footer() {
               {config.direccion}, {config.ciudad}, {config.provincia}
             </p>
           )}
+          <p className="text-xs text-base-muted">
+            {TITULAR.nombre} · CUIT {TITULAR.cuit}
+          </p>
           {config.whatsapp && (
             <p className="flex items-center gap-1.5 text-sm">
               <IconWhatsApp className="h-4 w-4 shrink-0 text-[#25D366]" />
