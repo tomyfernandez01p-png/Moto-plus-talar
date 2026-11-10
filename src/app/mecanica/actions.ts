@@ -43,6 +43,10 @@ export async function crearSolicitudMecanicaAction(datos: DatosSolicitudMecanica
   if (datos.serviciosIds.length === 0) {
     return { ok: false as const, error: "Elegí al menos un servicio." };
   }
+  if ((datos.descripcionProblema?.trim().length ?? 0) < 5) {
+    return { ok: false as const, error: "Contanos qué le pasa a tu moto." };
+  }
+
   if (!datos.nombre.trim() || !datos.apellido.trim() || !datos.telefono.trim()) {
     return { ok: false as const, error: "Completá nombre, apellido y teléfono." };
   }

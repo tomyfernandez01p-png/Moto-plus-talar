@@ -415,20 +415,21 @@ export function MecanicaForm({
               : "No hay problema: el mecánico la revisa y te dice qué necesita. No hace falta que marques servicios."}
           </p>
         )}
+      </Bloque>
 
+      <Bloque n={2} titulo="¿Qué le pasa a tu moto?">
         <textarea
           name="descripcionProblema"
           rows={3}
-          placeholder={
-            modo === "se"
-              ? "Contanos qué le pasa a la moto con tus palabras (opcional)"
-              : "Contanos qué le pasa o qué notás raro, con tus palabras (opcional)"
-          }
+          required
+          minLength={5}
+          aria-label="Qué le pasa a tu moto"
+          placeholder="Contanos qué le pasa o qué notás raro, con tus palabras"
           className={inputClass}
         />
       </Bloque>
 
-      <Bloque n={2} titulo="Tus datos">
+      <Bloque n={3} titulo="Tus datos">
         <div className="grid gap-3 sm:grid-cols-2">
           <input name="nombre" required placeholder="Nombre" className={inputClass} />
           <input name="apellido" required placeholder="Apellido" className={inputClass} />
@@ -442,7 +443,7 @@ export function MecanicaForm({
         </div>
       </Bloque>
 
-      <Bloque n={3} titulo="Revisá y pedí el turno">
+      <Bloque n={4} titulo="Revisá y pedí el turno">
         <div className="rounded-xl border border-base-border bg-base-dark p-3 text-sm">
           <p className="text-xs text-base-muted">Servicios del pedido</p>
           {aEnviar.length > 0 ? (
