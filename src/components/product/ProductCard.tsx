@@ -1,3 +1,4 @@
+import { pluralVariante, verboElegir, precioDesde } from "@/lib/variantes";
 "use client";
 
 import Image from "next/image";
@@ -81,10 +82,13 @@ export function ProductCard({ producto }: { producto: VistaProducto }) {
         </Link>
         {agrupado ? (
           <span className="text-[11px] text-base-muted">
-            {producto.variantes_total} {(producto.variante_tipo ?? "Color").toLowerCase() === "diseño" ? "diseños" : "colores"} disponibles
+            {producto.variantes_total} {pluralVariante(producto.variante_tipo)} disponibles
           </span>
         ) : (
           <span className="text-[11px] text-base-muted">Código: {producto.codigo}</span>
+        )}
+        {agrupado && precioDesde(producto.variante_tipo) && (
+          <span className="-mb-1 text-[11px] text-base-muted">Desde</span>
         )}
         <Price precio={producto.precio_vigente} precioAnterior={producto.precio_anterior} size="sm" />
 
@@ -103,7 +107,7 @@ export function ProductCard({ producto }: { producto: VistaProducto }) {
             href={`/producto/${producto.slug}`}
             className="mt-1 flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-orange py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-orange-dark hover:shadow-glow-sm active:scale-[0.96]"
           >
-            Elegir {(producto.variante_tipo ?? "Color").toLowerCase()}
+            {verboElegir(producto.variante_tipo)}
           </Link>
         ) : (
         <button
