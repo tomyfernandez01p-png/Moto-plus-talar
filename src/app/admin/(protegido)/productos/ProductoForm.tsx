@@ -184,6 +184,37 @@ export function ProductoForm({
       </section>
 
       <section className="rounded-2xl border border-base-border bg-base-surface p-5">
+        <h3 className="mb-1 text-sm font-bold text-brand-orange">Variantes (opcional)</h3>
+        <p className="mb-3 text-xs text-base-muted">
+          Para agrupar productos iguales que solo cambian de color o diseño: todos los de un grupo
+          usan la misma clave y en la tienda se ve un solo producto con selector. Solo uno del grupo
+          va marcado como principal (el que aparece en el catálogo).
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className={labelClass}>Clave del grupo (igual en todas las variantes)</label>
+            <input name="grupo_variante" defaultValue={producto?.grupo_variante ?? ""} placeholder="ej: punos-protaper" className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Nombre del grupo (lo que se ve en el catálogo)</label>
+            <input name="grupo_nombre" defaultValue={producto?.grupo_nombre ?? ""} className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Qué cambia (Color, Diseño…)</label>
+            <input name="variante_tipo" defaultValue={producto?.variante_tipo ?? ""} placeholder="Color" className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Esta variante (ej: Rojo)</label>
+            <input name="variante_etiqueta" defaultValue={producto?.variante_etiqueta ?? ""} className={inputClass} />
+          </div>
+        </div>
+        <label className="mt-3 flex items-center gap-2 text-sm text-base-white">
+          <input type="checkbox" name="variante_principal" defaultChecked={producto?.variante_principal ?? true} />
+          Es la variante principal del grupo (la que sale en el catálogo)
+        </label>
+      </section>
+
+      <section className="rounded-2xl border border-base-border bg-base-surface p-5">
         <h3 className="mb-3 text-sm font-bold text-brand-orange">SEO</h3>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>

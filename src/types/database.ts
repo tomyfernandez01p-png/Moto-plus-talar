@@ -131,6 +131,11 @@ export interface Database {
           fecha_modificacion: string;
           creado_por: string | null;
           modificado_por: string | null;
+          grupo_variante: string | null;
+          grupo_nombre: string | null;
+          variante_tipo: string | null;
+          variante_etiqueta: string | null;
+          variante_principal: boolean;
         };
         Insert: Partial<Database["public"]["Tables"]["productos"]["Row"]> & {
           sku: string;
@@ -431,6 +436,7 @@ export interface Database {
           en_oferta: boolean;
           precio_vigente: number;
           es_nuevo: boolean;
+          variantes_total: number;
         };
       };
     };

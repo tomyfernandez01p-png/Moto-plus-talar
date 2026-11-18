@@ -1,3 +1,4 @@
+import { SelectorVariante } from "@/components/product/SelectorVariante";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductoPage({ params }: Props) {
   const resultado = await getProductoPorSlug(params.slug);
   if (!resultado) notFound();
-  const { producto, imagenes, compatibilidad, relacionados } = resultado;
+  const { producto, imagenes, compatibilidad, relacionados, variantes } = resultado;
   const config = await getConfiguracion();
 
   // Ficha técnica: solo datos reales cargados (marca, categoría, código y las
@@ -111,7 +112,9 @@ export default async function ProductoPage({ params }: Props) {
               {producto.marca_nombre}
             </Link>
           )}
-          <h1 className="text-2xl font-bold text-base-white md:text-3xl">{producto.nombre}</h1>
+          <h1 className="text-2xl font-bold text-base-white md:text-3xl">
+            {producto.grupo_variante && variantes.length > 1 ? producto.grupo_nombre ?? producto.nombre : producto.nombre}
+          </h1>
           <p className="text-xs text-base-muted">Código: {producto.codigo}</p>
 
           <div className="flex flex-wrap gap-2">
@@ -124,6 +127,15 @@ export default async function ProductoPage({ params }: Props) {
           </div>
 
           <Price precio={producto.precio_vigente} precioAnterior={producto.precio_anterior} size="lg" />
+
+          {producto.grupo_variante && (
+            <SelectorVariante
+              tipo={producto.variante_tipo ?? "Color"}
+              actualId={producto.id}
+              actualEtiqueta={producto.variante_etiqueta}
+              variantes={variantes}
+            />
+          )}
 
           {producto.descripcion_corta && (
             <p className="text-sm text-base-muted">{producto.descripcion_corta}</p>

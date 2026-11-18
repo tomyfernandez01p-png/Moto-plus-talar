@@ -16,7 +16,9 @@ type VistaProducto = Database["public"]["Views"]["vista_productos"]["Row"];
 
 export function ProductCard({ producto }: { producto: VistaProducto }) {
   const { agregar } = useCart();
-  const sinStock = producto.estado_stock === "sin_stock";
+  const agrupado = !!producto.grupo_variante && producto.variantes_total > 1;
+  const nombreVisible = agrupado ? producto.grupo_nombre ?? producto.nombre : producto.nombre;
+  const sinStock = !agrupado && producto.estado_stock === "sin_stock";
   const [agregado, setAgregado] = useState(false);
 
   return (
@@ -33,7 +35,7 @@ export function ProductCard({ producto }: { producto: VistaProducto }) {
           // (object-cover recortaba los bordes del producto).
           <Image
             src={producto.imagen_principal_url}
-            alt={producto.nombre}
+            alt={nombreVisible}
             fill
             sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
             unoptimized={isDataUrl(producto.imagen_principal_url)}
@@ -75,21 +77,35 @@ export function ProductCard({ producto }: { producto: VistaProducto }) {
           href={`/producto/${producto.slug}`}
           className="line-clamp-2 text-sm font-medium text-base-white transition-colors hover:text-brand-orange"
         >
-          {producto.nombre}
+          {nombreVisible}
         </Link>
-        <span className="text-[11px] text-base-muted">Código: {producto.codigo}</span>
+        {agrupado ? (
+          <span className="text-[11px] text-base-muted">
+            {producto.variantes_total} {(producto.variante_tipo ?? "Color").toLowerCase() === "diseño" ? "diseños" : "colores"} disponibles
+          </span>
+        ) : (
+          <span className="text-[11px] text-base-muted">Código: {producto.codigo}</span>
+        )}
         <Price precio={producto.precio_vigente} precioAnterior={producto.precio_anterior} size="sm" />
 
-        {producto.estado_stock === "ultimas_unidades" && (
+        {!agrupado && producto.estado_stock === "ultimas_unidades" && (
           <span className="text-xs font-semibold text-brand-orange">● Últimas unidades</span>
         )}
-        {producto.estado_stock === "disponible" && (
+        {!agrupado && producto.estado_stock === "disponible" && (
           <span className="text-xs font-medium text-emerald-500">● En stock</span>
         )}
         {producto.estado_stock === "consultar" && (
           <span className="text-xs font-medium text-base-muted">● Consultar disponibilidad</span>
         )}
 
+        {agrupado ? (
+          <Link
+            href={`/producto/${producto.slug}`}
+            className="mt-1 flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-orange py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-orange-dark hover:shadow-glow-sm active:scale-[0.96]"
+          >
+            Elegir {(producto.variante_tipo ?? "Color").toLowerCase()}
+          </Link>
+        ) : (
         <button
           type="button"
           disabled={sinStock}
@@ -123,6 +139,7 @@ export function ProductCard({ producto }: { producto: VistaProducto }) {
             </>
           )}
         </button>
+        )}
       </div>
     </div>
   );

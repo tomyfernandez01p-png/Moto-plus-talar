@@ -40,6 +40,7 @@ export default async function HomePage() {
           .select("*")
           .eq("activo", true)
           .eq("destacado", true)
+          .eq("variante_principal", true)
           .order("fecha_alta", { ascending: false })
           .limit(12)
       : Promise.resolve({ data: [] }),
@@ -49,6 +50,7 @@ export default async function HomePage() {
           .select("*")
           .eq("activo", true)
           .eq("en_oferta", true)
+          .eq("variante_principal", true)
           .limit(12)
       : Promise.resolve({ data: [] }),
     // "Recién llegados": los marcados como nuevos; si no hay ninguno marcado,
@@ -58,6 +60,7 @@ export default async function HomePage() {
           .from("vista_productos")
           .select("*")
           .eq("activo", true)
+          .eq("variante_principal", true)
           .order("es_nuevo", { ascending: false })
           .order("fecha_alta", { ascending: false })
           .limit(12)

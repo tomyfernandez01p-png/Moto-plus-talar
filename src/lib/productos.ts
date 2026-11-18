@@ -88,6 +88,9 @@ export async function buscarProductos(filtros: FiltrosProductos) {
   if (filtros.oferta) query = query.eq("en_oferta", true);
   if (filtros.nuevo) query = query.eq("es_nuevo", true);
   if (idsCompatibles) query = query.in("id", idsCompatibles);
+  // Un solo producto por grupo de variantes (color/diseño) en el catálogo. Si se busca por
+  // texto o por moto se muestran las variantes que coinciden, cada una con su propio link.
+  if (!filtros.q && !idsCompatibles) query = query.eq("variante_principal", true);
   if (filtros.q) {
     const term = filtros.q.trim();
     query = query.or(
@@ -129,7 +132,7 @@ export async function getProductoPorSlug(slug: string) {
 
   if (!producto) return null;
 
-  const [{ data: imagenes }, { data: compatibilidad }, { data: relacionados }] = await Promise.all([
+  const [{ data: imagenes }, { data: compatibilidad }, { data: relacionados }, { data: variantes }] = await Promise.all([
     supabase
       .from("producto_imagenes")
       .select("*")
@@ -142,7 +145,16 @@ export async function getProductoPorSlug(slug: string) {
       .eq("categoria_id", producto.categoria_id ?? "")
       .eq("activo", true)
       .neq("id", producto.id)
+      .eq("variante_principal", true)
       .limit(6),
+    producto.grupo_variante
+      ? supabase
+          .from("vista_productos")
+          .select("id, slug, nombre, codigo, variante_etiqueta, variante_tipo, estado_stock, imagen_principal_url")
+          .eq("grupo_variante", producto.grupo_variante)
+          .eq("activo", true)
+          .order("codigo")
+      : Promise.resolve({ data: [] }),
   ]);
 
   // Productos cargados solo con imagen principal (sin filas en producto_imagenes):
@@ -154,5 +166,5 @@ export async function getProductoPorSlug(slug: string) {
     ] as unknown as typeof galeria;
   }
 
-  return { producto, imagenes: galeria, compatibilidad: compatibilidad ?? [], relacionados: relacionados ?? [] };
+  return { producto, imagenes: galeria, compatibilidad: compatibilidad ?? [], relacionados: relacionados ?? [], variantes: variantes ?? [] };
 }

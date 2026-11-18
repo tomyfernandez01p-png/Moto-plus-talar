@@ -87,6 +87,13 @@ export async function guardarProductoAction(formData: FormData) {
     activo: formData.get("activo") === "on",
     seo_title: String(formData.get("seo_title") || "").trim() || null,
     seo_description: String(formData.get("seo_description") || "").trim() || null,
+    grupo_variante: String(formData.get("grupo_variante") || "").trim() || null,
+    grupo_nombre: String(formData.get("grupo_nombre") || "").trim() || null,
+    variante_tipo: String(formData.get("variante_tipo") || "").trim() || null,
+    variante_etiqueta: String(formData.get("variante_etiqueta") || "").trim() || null,
+    // Un producto sin grupo siempre se muestra en el catálogo.
+    variante_principal:
+      !String(formData.get("grupo_variante") || "").trim() || formData.get("variante_principal") === "on",
     modificado_por: userId,
   };
 
