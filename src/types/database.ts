@@ -326,6 +326,7 @@ export interface Database {
             search_console_verified?: boolean;
             /** Link real de "dejar una reseña" (Google Business Profile, ej. https://g.page/r/.../review). Nunca inventado. */
             review_url?: string | null;
+            maps_url?: string | null;
             /** Reseñas reales de Google copiadas a mano por el admin (nunca inventadas). */
             resenas?: { nombre: string; estrellas: number; texto: string; detalle?: string }[];
           };
