@@ -1,5 +1,5 @@
-import { pluralVariante, verboElegir, precioDesde } from "@/lib/variantes";
 "use client";
+import { pluralVariante, verboElegir, precioDesde } from "@/lib/variantes";
 
 import Image from "next/image";
 import Link from "next/link";
