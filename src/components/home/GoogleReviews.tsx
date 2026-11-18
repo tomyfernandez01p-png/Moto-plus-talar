@@ -115,7 +115,7 @@ export function GoogleReviews({ config }: { config: Configuracion }) {
   const activo = config.google?.reviews_enabled;
   const tieneApiKey = !!process.env.GOOGLE_PLACES_API_KEY;
   const reviewUrl = config.google?.review_url;
-  const mapsUrl = config.google?.maps_url;
+  const mapsUrl = config.google?.maps_url ?? undefined;
 
   if (!activo) return null;
 
