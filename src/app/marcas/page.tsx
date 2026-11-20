@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { cn, isDataUrl, logoChipClass } from "@/lib/utils";
+import { LogoMarca } from "@/components/ui/LogoMarca";
 
 export const metadata: Metadata = { title: "Marcas" };
 
@@ -34,19 +33,11 @@ export default async function MarcasPage() {
             <Link
               key={m.slug}
               href={`/marca/${m.slug}`}
-              className="group flex h-24 flex-col items-center justify-center gap-2 transition-transform duration-200 ease-smooth hover:-translate-y-0.5"
+              className="group flex h-28 flex-col items-center justify-center gap-2 transition-transform duration-200 ease-smooth hover:-translate-y-0.5"
             >
               {m.logo_url ? (
                 <>
-                  <div className={cn("relative h-12 w-full transition-transform duration-200 ease-smooth group-hover:scale-110", logoChipClass(m.logo_url))}>
-                    <Image
-                      src={m.logo_url}
-                      alt=""
-                      fill
-                      unoptimized={isDataUrl(m.logo_url)}
-                      className="object-contain"
-                    />
-                  </div>
+                  <LogoMarca url={m.logo_url} className="w-full max-w-36 transition-transform duration-200 ease-smooth group-hover:scale-105" />
                   <span className="max-w-[120px] truncate text-center text-xs font-semibold text-base-muted transition-colors duration-200 group-hover:text-base-white">
                     {m.nombre}
                   </span>
