@@ -12,7 +12,7 @@ function ItemMarca({ marca, oculta }: { marca: Marca; oculta?: boolean }) {
     <li aria-hidden={oculta} className="mr-20 flex h-24 w-36 shrink-0 flex-col items-center justify-center gap-1.5 md:mr-28">
       {marca.logo_url ? (
         <>
-          <LogoMarca url={marca.logo_url} />
+          <LogoMarca url={marca.logo_url} className="w-32 md:w-36" />
           <span className="max-w-[124px] truncate text-[11px] font-semibold text-base-muted">{marca.nombre}</span>
         </>
       ) : (

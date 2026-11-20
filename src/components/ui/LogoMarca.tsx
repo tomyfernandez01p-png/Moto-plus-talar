@@ -12,7 +12,7 @@ export function LogoMarca({ url, className }: { url: string; className?: string 
   return (
     <div
       className={cn(
-        "relative h-14 w-32 overflow-hidden rounded-lg ring-1 ring-white/10 md:h-16 md:w-36",
+        "relative h-14 overflow-hidden rounded-lg ring-1 ring-white/10 md:h-16",
         logoChipClass(url),
         className,
       )}
