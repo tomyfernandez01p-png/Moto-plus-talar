@@ -9,6 +9,7 @@ import { CookieConsent } from "@/components/layout/CookieConsent";
 import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
+import { RecoveryRedirect } from "@/components/layout/RecoveryRedirect";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { CartProvider } from "@/lib/cart/cart-context";
 import { FavoritosProvider } from "@/lib/favoritos/FavoritosProvider";
@@ -76,6 +77,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="es-AR" data-temporada={temporada?.id ?? "ninguna"}>
       <body>
+        <RecoveryRedirect />
         {/* Aplica el tema guardado ANTES del primer paint, para que no se
             vea un flash del tema oscuro (default) si el usuario había
             elegido el claro. Ver ThemeToggle.tsx. */}
