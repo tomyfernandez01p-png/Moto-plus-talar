@@ -37,6 +37,7 @@ const CONFIG_POR_DEFECTO: Configuracion = {
     costo_envio_fijo: null,
     envio_gratis_desde: null,
   },
+  envio_zonas: [],
   dias_nuevo: 7,
   seo: {
     title: "Moto Plus Talar — Repuestos y accesorios para motos en El Talar",

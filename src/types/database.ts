@@ -318,6 +318,8 @@ export interface Database {
             costo_envio_fijo?: number | null;
             envio_gratis_desde?: number | null;
           };
+          /** Envío a domicilio por zona. El costo real lo calcula `crear_pedido` en el servidor. */
+          envio_zonas: { id: string; nombre: string; costo: number; gratis_desde?: number | null }[];
           dias_nuevo: number;
           seo: { title?: string; description?: string };
           google: {

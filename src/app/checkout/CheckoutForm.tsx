@@ -25,10 +25,15 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const envioActivo = config.metodos_envio?.envio_activo !== false;
+  const zonas = config.envio_zonas ?? [];
+  const hayZonas = zonas.length > 0;
+  const envioActivo = hayZonas || config.metodos_envio?.envio_activo !== false;
   const retiroActivo = config.metodos_envio?.retiro_activo !== false;
   const costoEnvioFijo = config.metodos_envio?.costo_envio_fijo ?? null;
   const envioGratisDesde = config.metodos_envio?.envio_gratis_desde ?? null;
+
+  const [zonaId, setZonaId] = useState<string>(zonas[0]?.id ?? "");
+  const zona = zonas.find((z) => z.id === zonaId) ?? null;
 
   const [tipoEntrega, setTipoEntrega] = useState<TipoEntrega>(
     retiroActivo ? "retiro_local" : "envio"
@@ -47,9 +52,14 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
   // validado con los precios reales de la base (ver 0010_crear_pedido_
   // costo_envio_servidor.sql). Lo que se manda acá en `costoEnvio` nunca se
   // usa para el total del pedido, el servidor lo ignora.
+  const gratisDesde = hayZonas ? zona?.gratis_desde ?? null : envioGratisDesde;
+  const costoBase = hayZonas ? zona?.costo ?? 0 : costoEnvioFijo;
   const envioGratis =
-    tipoEntrega === "envio" && envioGratisDesde != null && subtotal >= envioGratisDesde;
-  const costoEnvio = tipoEntrega === "envio" && !envioGratis ? costoEnvioFijo ?? 0 : 0;
+    tipoEntrega === "envio" &&
+    (hayZonas
+      ? costoBase === 0 || (gratisDesde != null && subtotal >= gratisDesde)
+      : gratisDesde != null && subtotal >= gratisDesde);
+  const costoEnvio = tipoEntrega === "envio" && !envioGratis ? costoBase ?? 0 : 0;
   const total = subtotal + costoEnvio;
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -79,6 +89,7 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
       ciudad: String(form.get("ciudad") || ""),
       provincia: String(form.get("provincia") || ""),
       codigoPostal: String(form.get("codigoPostal") || ""),
+      zona: hayZonas ? zonaId : undefined,
       costoEnvio,
       metodoPago,
       items: items.map((i) => ({ producto_id: i.productoId, cantidad: i.cantidad })),
@@ -169,7 +180,9 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
               />
               <span className="font-semibold text-base-white">Envío a domicilio</span>
               <p className="mt-1 text-xs text-base-muted">
-                {envioGratis
+                {hayZonas
+                  ? "El costo depende de tu zona"
+                  : envioGratis
                   ? "¡Envío gratis!"
                   : costoEnvioFijo != null
                   ? formatPrecio(costoEnvioFijo)
@@ -181,6 +194,32 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
 
         {tipoEntrega === "envio" && (
           <div className="grid gap-3 sm:grid-cols-2">
+            {hayZonas && (
+              <div className="sm:col-span-2">
+                <label htmlFor="zona" className="mb-1 block text-xs text-base-muted">
+                  Zona de entrega
+                </label>
+                <select
+                  id="zona"
+                  name="zona"
+                  value={zonaId}
+                  onChange={(e) => setZonaId(e.target.value)}
+                  className={inputClass}
+                >
+                  {zonas.map((z) => (
+                    <option key={z.id} value={z.id}>
+                      {z.nombre} — {z.costo === 0 ? "sin cargo" : formatPrecio(z.costo)}
+                    </option>
+                  ))}
+                </select>
+                <p className="mt-1 text-xs text-base-muted">
+                  {zona?.gratis_desde != null && zona.costo > 0
+                    ? `Sin cargo en compras desde ${formatPrecio(zona.gratis_desde)}. `
+                    : ""}
+                  ¿Tu zona no está? Escribinos por WhatsApp y coordinamos el envío.
+                </p>
+              </div>
+            )}
             <input name="direccion" required placeholder="Dirección" className={`sm:col-span-2 ${inputClass}`} />
             <input name="ciudad" required placeholder="Ciudad" className={inputClass} />
             <input name="provincia" required placeholder="Provincia" className={inputClass} />
@@ -201,8 +240,8 @@ export function CheckoutForm({ config }: { config: Configuracion }) {
             {tipoEntrega === "envio"
               ? envioGratis
                 ? "Gratis"
-                : costoEnvioFijo != null
-                ? formatPrecio(costoEnvioFijo)
+                : costoBase != null
+                ? formatPrecio(costoBase)
                 : "A coordinar"
               : "—"}
           </span>

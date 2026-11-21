@@ -19,6 +19,8 @@ export interface DatosCheckout {
   ciudad?: string;
   provincia?: string;
   codigoPostal?: string;
+  /** Id de la zona de envío elegida (el servidor valida y cobra según la configuración). */
+  zona?: string;
   /**
    * Solo informativo: la RPC `crear_pedido` lo ignora por completo y
    * recalcula el costo de envío server-side desde
@@ -48,6 +50,7 @@ export async function crearPedidoAction(datos: DatosCheckout) {
           ciudad: datos.ciudad,
           provincia: datos.provincia,
           codigo_postal: datos.codigoPostal,
+          zona: datos.zona,
         }
       : null;
 
