@@ -9,9 +9,7 @@ export default async function FaqPage() {
   const preguntas = [
     {
       q: "¿Hacen envíos a todo el país?",
-      a: config.metodos_envio?.envio_activo
-        ? "Sí, hacemos envíos. El costo se calcula según tu ubicación al finalizar la compra o se coordina por WhatsApp."
-        : "Por ahora solo trabajamos con retiro en el local.",
+      a: "Sí. En El Talar y zonas aledañas el envío es sin cargo en compras superiores a $300.000; en CABA y Gran Buenos Aires tenés 50 % de descuento en el envío en compras superiores a $300.000; y al interior del país el costo se cotiza según peso, dimensiones y destino. Mirá los plazos y condiciones en la página de Envíos o consultanos por WhatsApp.",
     },
     {
       q: "¿Puedo retirar en el local?",
@@ -25,6 +23,7 @@ export default async function FaqPage() {
         config.metodos_pago?.mercadopago && "Mercado Pago",
         config.metodos_pago?.transferencia && "Transferencia bancaria (Banco Nación o Banco Provincia)",
         config.metodos_pago?.efectivo && "Efectivo",
+        "Tarjetas de crédito en hasta 3 pagos sin interés, según las promociones bancarias vigentes",
       ]
         .filter(Boolean)
         .join(", ") || "Consultanos por WhatsApp los medios de pago disponibles.",

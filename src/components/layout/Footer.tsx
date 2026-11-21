@@ -149,11 +149,9 @@ export async function Footer() {
             <li>
               <Link href="/como-comprar" className="transition-colors hover:text-base-white">Cómo comprar</Link>
             </li>
-            {config.metodos_envio?.envio_activo && (
-              <li>
-                <Link href="/envios" className="transition-colors hover:text-base-white">Envíos</Link>
-              </li>
-            )}
+            <li>
+              <Link href="/envios" className="transition-colors hover:text-base-white">Envíos</Link>
+            </li>
           </ul>
         </div>
 
