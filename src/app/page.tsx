@@ -159,6 +159,10 @@ export default async function HomePage() {
   // detrás de su propio flag de `config.secciones_home` donde ya existía.
   return (
     <>
+      {/* Título principal de la página para buscadores y lectores de pantalla:
+          el carrusel de publicidad no tiene ningún h1. No se ve en pantalla. */}
+      <h1 className="sr-only">{config.seo?.title || config.nombre_negocio}</h1>
+
       <BannerCarousel banners={banners} />
 
       {secciones.beneficios !== false && <Beneficios />}

@@ -44,6 +44,9 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: config.nombre_negocio,
       locale: "es_AR",
       type: "website",
+      // Imagen que se ve al compartir el link (WhatsApp, Facebook, etc.):
+      // el logo real del negocio; si no hay, no se inventa ninguna.
+      ...(config.logo_url ? { images: [{ url: config.logo_url, alt: config.nombre_negocio }] } : {}),
     },
     icons: { icon: config.logo_url || config.favicon_url || "/brand/logo-placeholder.svg" },
   };
