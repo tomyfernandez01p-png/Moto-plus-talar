@@ -19,7 +19,7 @@ const PASOS = [
   {
     titulo: "Elegís tu medio de pago",
     texto:
-      "Aceptamos transferencia bancaria, efectivo y tarjetas de crédito en hasta 3 pagos sin interés, según las promociones bancarias vigentes.",
+      "En la tienda online pagás con Mercado Pago (tarjetas de crédito en hasta 3 pagos sin interés según las promociones bancarias vigentes, débito o QR) y el pedido se confirma al acreditarse el pago. Si preferís transferencia bancaria o efectivo, escribinos por WhatsApp o pasá por el local y coordinamos tu compra.",
     link: { href: "/formas-de-pago", texto: "Ver formas de pago y promociones" },
   },
   {

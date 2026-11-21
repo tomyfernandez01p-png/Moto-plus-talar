@@ -19,14 +19,7 @@ export default async function FaqPage() {
     },
     {
       q: "¿Qué medios de pago aceptan?",
-      a: [
-        config.metodos_pago?.mercadopago && "Mercado Pago",
-        config.metodos_pago?.transferencia && "Transferencia bancaria (Banco Nación o Banco Provincia)",
-        config.metodos_pago?.efectivo && "Efectivo",
-        "Tarjetas de crédito en hasta 3 pagos sin interés, según las promociones bancarias vigentes",
-      ]
-        .filter(Boolean)
-        .join(", ") || "Consultanos por WhatsApp los medios de pago disponibles.",
+      a: "En la tienda online pagás con Mercado Pago (tarjetas en hasta 3 pagos sin interés según las promociones bancarias vigentes, débito o QR). Si preferís transferencia bancaria o efectivo, coordinamos tu compra por WhatsApp o en el local.",
     },
     {
       q: "No sé si el repuesto sirve para mi moto, ¿cómo lo confirmo?",
