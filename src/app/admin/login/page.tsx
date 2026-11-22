@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { AdminLoginForm } from "./AdminLoginForm";
+import { getConfiguracion } from "@/lib/config.server";
 
 /**
  * Server Component: solo envuelve `AdminLoginForm` (que usa
@@ -7,10 +8,11 @@ import { AdminLoginForm } from "./AdminLoginForm";
  * prerenderizar la ruta estáticamente. Ver `AdminLoginForm.tsx` para la
  * lógica real del login de admin.
  */
-export default function AdminLoginPage() {
+export default async function AdminLoginPage() {
+  const config = await getConfiguracion();
   return (
     <Suspense fallback={null}>
-      <AdminLoginForm />
+      <AdminLoginForm logoUrl={config.logo_url} />
     </Suspense>
   );
 }

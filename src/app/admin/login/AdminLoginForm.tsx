@@ -12,7 +12,7 @@ import { createClient } from "@/lib/supabase/client";
  * exige estar envuelto en <Suspense> para poder prerenderizar la ruta
  * estáticamente — ver `page.tsx`.
  */
-export function AdminLoginForm() {
+export function AdminLoginForm({ logoUrl }: { logoUrl?: string | null }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
@@ -56,7 +56,7 @@ export function AdminLoginForm() {
       <div className="w-full max-w-sm rounded-2xl border border-base-border bg-base-surface p-8">
         <div className="mb-6 flex flex-col items-center gap-2">
           <div className="relative h-14 w-14 overflow-hidden rounded-full">
-            <Image src="/brand/logo-placeholder.svg" alt="Moto Plus Talar" fill className="object-cover" />
+            <Image src={logoUrl || "/brand/logo-placeholder.svg"} alt="Moto Plus Talar" fill sizes="56px" className="object-cover" />
           </div>
           <h1 className="text-lg font-bold text-base-white">Panel de administración</h1>
         </div>
