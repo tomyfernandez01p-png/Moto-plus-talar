@@ -18,8 +18,19 @@ export function NuevaContrasenaForm() {
   const [error, setError] = useState<string | null>(null);
   const [guardado, setGuardado] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  // Link nuevo del mail: trae un token que SOLO se canjea cuando la persona
+  // toca el botón. Así los antivirus/escáneres de mail que "abren" el link
+  // por su cuenta no lo gastan antes de que llegues vos.
+  const [tokenHash, setTokenHash] = useState<string | null>(null);
+  const [verificando, setVerificando] = useState(false);
 
   useEffect(() => {
+    const th = new URLSearchParams(window.location.search).get("token_hash");
+    if (th) {
+      setTokenHash(th);
+      setListo("no");
+      return;
+    }
     const supabase = createClient();
     let cancelado = false;
     // El cliente toma la sesión del link (en el # de la URL) al iniciar; se
@@ -37,6 +48,23 @@ export function NuevaContrasenaForm() {
       sub.subscription.unsubscribe();
     };
   }, []);
+
+  async function canjearToken() {
+    if (!tokenHash) return;
+    setError(null);
+    setVerificando(true);
+    const supabase = createClient();
+    const { error: err } = await supabase.auth.verifyOtp({ type: "recovery", token_hash: tokenHash });
+    setVerificando(false);
+    if (err) {
+      setTokenHash(null);
+      setListo("no");
+      return;
+    }
+    window.history.replaceState(null, "", "/auth/nueva-contrasena");
+    setTokenHash(null);
+    setListo("si");
+  }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -75,6 +103,18 @@ export function NuevaContrasenaForm() {
             >
               Ir al panel
             </a>
+          </div>
+        ) : tokenHash ? (
+          <div className="flex flex-col gap-4 text-sm text-base-muted">
+            <p>Tocá el botón para elegir tu contraseña nueva.</p>
+            <button
+              type="button"
+              onClick={canjearToken}
+              disabled={verificando}
+              className="rounded-xl bg-brand-orange py-3 font-bold text-white hover:bg-brand-orange-dark disabled:opacity-60"
+            >
+              {verificando ? "Verificando…" : "Continuar"}
+            </button>
           </div>
         ) : listo === "cargando" ? (
           <p className="text-sm text-base-muted">Verificando el link…</p>
