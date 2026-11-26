@@ -100,14 +100,30 @@ export function BannerCarousel({ banners }: { banners: BannerCarouselItem[] }) {
               className={`relative max-h-[80vh] w-full shrink-0 sm:aspect-[21/9] ${hayFotoCampana ? "aspect-[4/5]" : "aspect-square"}`}
             >
               {banner.imagen_url ? (
-                <Image
-                  src={banner.imagen_url}
-                  alt={banner.titulo ?? ""}
-                  fill
-                  unoptimized={isDataUrl(banner.imagen_url)}
-                  priority={i === 0}
-                  className="object-cover"
-                />
+                <>
+                  {/* Fondo: la misma imagen ampliada y desenfocada, para que un
+                      flyer vertical o cuadrado no quede con barras vacías. */}
+                  <Image
+                    src={banner.imagen_url}
+                    alt=""
+                    aria-hidden
+                    fill
+                    sizes="(max-width: 640px) 100vw, 1280px"
+                    unoptimized={isDataUrl(banner.imagen_url)}
+                    className="scale-125 object-cover opacity-50 blur-2xl"
+                  />
+                  {/* Imagen completa, sin recortar (los flyers de promos traen
+                      texto hasta los bordes). */}
+                  <Image
+                    src={banner.imagen_url}
+                    alt={banner.titulo ?? ""}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 1280px"
+                    unoptimized={isDataUrl(banner.imagen_url)}
+                    priority={i === 0}
+                    className="object-contain"
+                  />
+                </>
               ) : (
                 // Sin foto real todavía: mismo lenguaje visual que el Hero
                 // (gradiente de marca + ícono propio), nunca una imagen de
