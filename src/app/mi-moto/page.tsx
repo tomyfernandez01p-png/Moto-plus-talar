@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { COMPATIBILIDAD_ACTIVA } from "@/lib/features";
 import { createClient } from "@/lib/supabase/server";
 import { buscarProductos } from "@/lib/productos";
 import { ProductGrid } from "@/components/product/ProductGrid";
@@ -15,6 +17,7 @@ export default async function MiMotoPage({
 }: {
   searchParams: Record<string, string | undefined>;
 }) {
+  if (!COMPATIBILIDAD_ACTIVA) redirect("/");
   const supabase = createClient();
   const config = await getConfiguracion();
   const { data: motos } = await supabase.from("motos").select("*").eq("activo", true);

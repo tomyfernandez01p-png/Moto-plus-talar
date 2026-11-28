@@ -3,6 +3,7 @@ import { whatsappLink, type Configuracion } from "@/lib/config";
 import { mensajeGenerico } from "@/lib/whatsapp";
 import { formatPrecio } from "@/lib/format";
 import { IconTruck, IconTag } from "@/components/ui/Icons";
+import { COMPATIBILIDAD_ACTIVA } from "@/lib/features";
 
 /**
  * Hero. El repo no tiene ninguna foto real (ni del local ni de producto) en
@@ -136,9 +137,11 @@ export function Hero({
               </span>
             </ButtonLink>
           </div>
-          <ButtonLink href="/mi-moto" variant="secondary" size="lg">
-            Buscar por mi moto
-          </ButtonLink>
+          {COMPATIBILIDAD_ACTIVA && (
+            <ButtonLink href="/mi-moto" variant="secondary" size="lg">
+              Buscar por mi moto
+            </ButtonLink>
+          )}
           {config.whatsapp_link && (
             <ButtonLink
               href={whatsappLink(config, mensajeGenerico())}

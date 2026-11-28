@@ -9,6 +9,7 @@ import { Beneficios } from "@/components/home/Beneficios";
 import { MARCAS_RELEVANTES, ordenarMarcasRelevantes } from "@/lib/marcas-relevantes";
 import { MarcasCarousel } from "@/components/home/MarcasCarousel";
 import { BuscadorMoto } from "@/components/home/BuscadorMoto";
+import { COMPATIBILIDAD_ACTIVA } from "@/lib/features";
 import { GoogleReviews } from "@/components/home/GoogleReviews";
 import { StoreLocation } from "@/components/home/StoreLocation";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -169,7 +170,7 @@ export default async function HomePage() {
 
       <TurnosCTA />
 
-      {secciones.buscador_moto && (
+      {COMPATIBILIDAD_ACTIVA && secciones.buscador_moto && (
         <ScrollReveal className="bg-base-surface/30">
           <BuscadorMoto motos={motos ?? []} />
         </ScrollReveal>

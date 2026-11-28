@@ -7,6 +7,7 @@ import { whatsappLink } from "@/lib/config";
 import { getConfiguracion } from "@/lib/config.server";
 import { jsonLdScript } from "@/lib/json-ld";
 import { mensajeConsultaProducto, mensajeCompatibilidad } from "@/lib/whatsapp";
+import { COMPATIBILIDAD_ACTIVA } from "@/lib/features";
 import { formatPrecio } from "@/lib/format";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { AddToCartActions } from "@/components/product/AddToCartActions";
@@ -173,7 +174,7 @@ export default async function ProductoPage({ params }: Props) {
             </dl>
           </Acordeon>
 
-          {!(compatibilidad.length === 0 && ["cascos", "accesorios"].includes(producto.categoria_slug ?? "")) && (
+          {COMPATIBILIDAD_ACTIVA && !(compatibilidad.length === 0 && ["cascos", "accesorios"].includes(producto.categoria_slug ?? "")) && (
           <Acordeon titulo="Compatibilidad por moto">
             {compatibilidad.length > 0 ? (
               <>
