@@ -4,7 +4,6 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
-import { TurnosFloat } from "@/components/layout/TurnosFloat";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
 import { CartDrawer } from "@/components/layout/CartDrawer";
@@ -102,7 +101,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               header={<Header />}
               footer={<Footer />}
               whatsappFloat={<WhatsAppFloat config={config} />}
-              turnosFloat={<TurnosFloat />}
               bottomNav={<MobileBottomNav cuentasActivas={config.cuentas_clientes_activas} />}
             >
               {children}

@@ -70,6 +70,30 @@ export function Hero({
           );
         })}
       </svg>
+      {/* silueta sutil de moto deportiva (trazo original, baja opacidad): solo
+          en pantallas anchas y pegada al borde derecho, para que no compita
+          con los textos ni con los productos */}
+      <svg
+        aria-hidden
+        viewBox="0 0 600 300"
+        className="pointer-events-none absolute -right-6 bottom-6 hidden h-auto w-[520px] text-white/[0.06] lg:block xl:right-6 xl:w-[600px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="110" cy="215" r="62" />
+        <circle cx="110" cy="215" r="40" strokeWidth="3" />
+        <circle cx="500" cy="215" r="62" />
+        <circle cx="500" cy="215" r="40" strokeWidth="3" />
+        <path d="M110 215L250 205L330 215L400 190" />
+        <path d="M500 215L455 112L475 100" />
+        <path d="M455 112Q405 80 330 100Q300 90 260 108L215 118Q170 118 140 135L95 150L120 172" />
+        <path d="M215 118L250 205" />
+        <path d="M455 112Q430 170 380 190L330 205" />
+        <path d="M250 205Q200 236 120 232" />
+      </svg>
       {/* segundo motivo, más chico y desplazado: rompe la simetría del
           anillo principal sin agregar una segunda imagen */}
       <svg

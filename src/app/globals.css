@@ -9,10 +9,10 @@
      rgb(var(--x) / <alpha-value>) desde Tailwind. Coinciden exactamente
      con los hex que el sitio ya usaba, para no cambiar nada visualmente
      hasta que alguien elija el tema claro. */
-  --color-base-black: 47 47 51; /* #2F2F33  gris de fondo */
-  --color-base-dark: 56 56 61; /* #38383D */
-  --color-base-surface: 66 66 72; /* #424248 */
-  --color-base-border: 90 90 97; /* #5A5A61 */
+  --color-base-black: 24 24 27; /* #18181B  negro grafito de fondo */
+  --color-base-dark: 38 38 43; /* #26262B  superficies (tarjetas, paneles) */
+  --color-base-surface: 50 50 56; /* #323238 */
+  --color-base-border: 78 78 86; /* #4E4E56 */
   --color-base-muted: 178 178 187; /* #B2B2BB */
   --color-base-white: 255 255 255; /* #FFFFFF */
 
@@ -183,6 +183,86 @@ body {
   outline-offset: 2px;
 }
 
+
+
+/* ====================================================================
+   Fondo general "competición" (2026-11): capas CSS livianas, solo tema
+   oscuro, fijas (no se repintan al scrollear) y detrás de todo el
+   contenido. Sin imágenes pesadas: tejido de fibra de carbono con
+   gradientes, franjas diagonales, rejilla hexagonal en los bordes y
+   reflejos naranja suaves. Las tarjetas y paneles conservan sus
+   superficies propias (bg-base-dark / surface) para que el contenido
+   siempre destaque.
+   ==================================================================== */
+html:not(.theme-light) body::before,
+html:not(.theme-light) body::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  z-index: -1;
+}
+/* capa 1: fibra de carbono (tejido muy sutil, con zonas más y menos
+   marcadas para que no se lea como un patrón repetido) + degradado
+   grafito + reflejos naranja chicos */
+html:not(.theme-light) body::before {
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 38% 26% at 8% 6%, rgb(var(--color-tint) / 0.09), transparent 70%),
+    radial-gradient(ellipse 30% 22% at 96% 78%, rgb(var(--color-tint) / 0.06), transparent 70%),
+    linear-gradient(180deg, rgba(70, 70, 78, 0.22) 0%, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 0.35) 100%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.022) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.28) 0 2px, transparent 2px 4px);
+  -webkit-mask-image: radial-gradient(ellipse 120% 90% at 50% 40%, #000 35%, rgba(0, 0, 0, 0.55) 100%);
+  mask-image: radial-gradient(ellipse 120% 90% at 50% 40%, #000 35%, rgba(0, 0, 0, 0.55) 100%);
+}
+/* capa 2: franjas diagonales racing (negro / grafito / naranja) en la
+   esquina superior derecha + rejilla hexagonal naranja de baja
+   intensidad sobre el borde izquierdo */
+html:not(.theme-light) body::after {
+  top: 0;
+  right: 0;
+  width: min(46vw, 560px);
+  height: min(46vw, 420px);
+  background-image:
+    linear-gradient(115deg, transparent 0 58%, rgb(var(--color-brand) / 0.55) 58% 59.2%, transparent 59.2% 62%, rgba(110, 110, 120, 0.35) 62% 66%, transparent 66% 69%, rgb(var(--color-brand) / 0.28) 69% 69.8%, transparent 69.8% 100%),
+    linear-gradient(115deg, rgba(0, 0, 0, 0.35) 0 55%, transparent 55% 100%);
+  -webkit-mask-image: linear-gradient(200deg, #000 0%, transparent 70%);
+  mask-image: linear-gradient(200deg, #000 0%, transparent 70%);
+  opacity: 0.55;
+}
+@media (min-width: 1024px) {
+  html:not(.theme-light) body {
+    background-image:
+      radial-gradient(ellipse 60% 420px at 0% 0%, rgb(var(--color-tint) / 0.10), transparent 70%),
+      radial-gradient(ellipse 55% 380px at 100% 55%, rgb(var(--color-tint) / 0.07), transparent 70%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34zM28 0v34L0 50v34l28 16 28-16V50L28 34' fill='none' stroke='%23ff6a00' stroke-opacity='.10' stroke-width='1.2'/%3E%3C/svg%3E"),
+      var(--mancha-img);
+    background-size: 100% 1400px, 100% 1400px, 56px 100px, 1200px 1200px;
+    background-repeat: repeat-y, repeat-y, repeat-y, repeat;
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+}
+
+/* Botón flotante "Solicitar turno": fondo propio (carbono + franjas
+   naranja + hexágonos) y forma angular con esquinas cortadas. */
+.turno-clip {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+}
+.turno-clip-in {
+  clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+}
+.turno-fondo {
+  background-color: #141417;
+  background-image:
+    radial-gradient(circle at 26px 50%, rgb(var(--color-brand) / 0.38), transparent 62%),
+    linear-gradient(118deg, transparent 0 66%, rgb(var(--color-brand) / 0.75) 66% 67.4%, transparent 67.4% 70%, rgba(255, 255, 255, 0.14) 70% 71%, transparent 71% 73.5%, rgb(var(--color-brand) / 0.45) 73.5% 74.3%, transparent 74.3% 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34zM28 0v34L0 50v34l28 16 28-16V50L28 34' fill='none' stroke='%23ff6a00' stroke-opacity='.30' stroke-width='1.2'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.4) 0 2px, transparent 2px 4px),
+    linear-gradient(135deg, #2a2a30, #121215);
+  background-size: auto, auto, 28px 50px, auto, auto, auto;
+  background-blend-mode: normal, normal, soft-light, normal, normal, normal;
+}
 
 /* ====================================================================
    Temporadas: solo cambian el color de acento y el tinte del fondo.
